@@ -1,8 +1,9 @@
 const http = require('http')
 const https = require('https')
 const path = require('path')
-const fs = require('fs')
+//const fs = require('fs')
 const express = require('express')
+const bodyParser = require('body-parser')
 const { OAuth2Client } = require('google-auth-library');
 
 const port = 80
@@ -10,6 +11,7 @@ const port = 80
 const app=express()
 
 app.use(express.static(path.join(__dirname,'public')));
+app.use(bodyParser.json());
 
 app.post('/tokensignin',function(req,res){
     console.log('post: '+Object.keys(req))
@@ -18,6 +20,14 @@ app.post('/tokensignin',function(req,res){
     console.log(req['params'])
     console.log(req['query'])*/
     res.send('POST request to the homepage')
+})
+app.post('/findRide',function(req,res){
+    //console.log(JSON.stringify(req))
+    console.log(req.body.departDate)
+    console.log(req.params);
+    console.log(req.body);
+    console.log(req.query);
+    res.send('recieved')
 })
 app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/views/index.html'));
