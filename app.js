@@ -1,4 +1,5 @@
 const http = require('http')
+const https = require('https')
 const path = require('path')
 const fs = require('fs')
 const express = require('express')
@@ -11,7 +12,11 @@ const app=express()
 app.use(express.static(path.join(__dirname,'public')));
 
 app.post('/tokensignin',function(req,res){
-    console.log('post: '+req)
+    console.log('post: '+Object.keys(req))
+    /*console.log('statusMsg: '+req['statusMessage'])
+    console.log(req['headers'])
+    console.log(req['params'])
+    console.log(req['query'])*/
     res.send('POST request to the homepage')
 })
 app.get('/',function(req,res) {
