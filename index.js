@@ -1,10 +1,10 @@
-http = require('http')
-fs = require('fs')
-GoogleAuth = require('google-auth-library');
+const http = require('http')
+const fs = require('fs')
+const { OAuth2Client } = require('google-auth-library');
 
 const port = 80
 
-auth=new GoogleAuth;
+/*var auth=new GoogleAuth();
 client=new auth.OAuth2('312484233782-6q2cd48kt6ptuotlcs5mv59vk1n9q9hp.apps.googleusercontent.com','','');
 
 client.verifyIdToken(
@@ -13,7 +13,7 @@ client.verifyIdToken(
     function(e,login) {
         payload=login.getPayload();
         userid=payload['sub'];
-    });
+    });*/
 
 fs.readFile('./html/index.html',function(err,html) {
     if(err){
