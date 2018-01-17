@@ -9,6 +9,19 @@ const port = 80
 const app=express()
 
 app.use(express.static(path.join(__dirname,'public')));
+
+app.post('/tokensignin',function(req,res){
+    console.log('post: '+req)
+    res.send('POST request to the homepage')
+})
+app.get('/',function(req,res) {
+    res.sendFile(path.join(__dirname+'/views/index.html'));
+});
+app.use(function(req,res,next){
+    //res.status(404).send("Sorry can't find that!")
+    res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
+})
+app.listen(port);
 /*var auth=new GoogleAuth();
 client=new auth.OAuth2('312484233782-6q2cd48kt6ptuotlcs5mv59vk1n9q9hp.apps.googleusercontent.com','','');
 
@@ -20,7 +33,7 @@ client.verifyIdToken(
         userid=payload['sub'];
     });*/
 
-fs.readFile('./views/index.html',function(err,html) {
+/*fs.readFile('./views/index.html',function(err,html) {
     if(err){
         throw err;
     }
@@ -29,7 +42,7 @@ fs.readFile('./views/index.html',function(err,html) {
         response.write(html);
         response.end();
     }).listen(port);
-});
+});*/
 /*const requestHandler = (request, response) => {
     console.log(request.url)
     response.end('Hello Node.js Server!')
