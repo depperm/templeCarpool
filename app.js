@@ -25,6 +25,11 @@ app.post('/tokensignin',function(req,res){
 app.post('/postRide',function(req,res){
     console.log('driver:'+req.body.driver)
     console.log('email:'+req.body.email)
+    console.log('depD:'+req.body.dDate)
+    console.log('depT:'+req.body.dTime)
+    console.log('retD:'+req.body.rDate)
+    console.log('retT:'+req.body.rTime)
+    console.log('seat:'+req.body.maxSeats)
     res.send('post ride received')
 })
 app.post('/findRide',function(req,res){
