@@ -22,6 +22,11 @@ app.post('/tokensignin',function(req,res){
     console.log(req['query'])*/
     res.send('POST request to the homepage')
 })
+app.post('/postRide',function(req,res){
+    console.log('driver:'+req.body.driver)
+    console.log('email:'+req.body.email)
+    res.send('post ride received')
+})
 app.post('/findRide',function(req,res){
     console.log('dept:'+req.body.departDate)
     console.log('ret: '+req.body.returnDate)
@@ -29,7 +34,7 @@ app.post('/findRide',function(req,res){
     console.log(req.params);
     console.log(req.body);
     console.log(req.query);*/
-    res.send('recieved')
+    res.send('find a recieved')
 })
 app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/views/index.html'));
