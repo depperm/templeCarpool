@@ -12,6 +12,7 @@ const app=express()
 
 app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
 
 app.post('/tokensignin',function(req,res){
     console.log('post: '+Object.keys(req))
@@ -22,11 +23,12 @@ app.post('/tokensignin',function(req,res){
     res.send('POST request to the homepage')
 })
 app.post('/findRide',function(req,res){
-    //console.log(JSON.stringify(req))
-    console.log(req.body.departDate)
+    console.log('dept:'+req.body.departDate)
+    console.log('ret: '+req.body.returnDate)
+    /*console.log(req.body.departDate)
     console.log(req.params);
     console.log(req.body);
-    console.log(req.query);
+    console.log(req.query);*/
     res.send('recieved')
 })
 app.get('/',function(req,res) {
