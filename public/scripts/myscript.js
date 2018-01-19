@@ -4,15 +4,17 @@ $(function(){
     var validator = $('#postRideForm').validate();
     $('#postRideForm').submit(function(e){
         e.preventDefault();
-        $.ajax({
-            url:'/postRide',
-            type:'post',
-            data:$('#postRideForm').serialize(),
-            success:function(){
-                //whatever you wanna do after the form is successfully submitted
-                console.log('sent post ride data');
-            }
-        });
+        if(validator.valid()){
+            $.ajax({
+                url:'/postRide',
+                type:'post',
+                data:$('#postRideForm').serialize(),
+                success:function(){
+                    //whatever you wanna do after the form is successfully submitted
+                    console.log('sent post ride data');
+                }
+            });
+        }
     });
 
     //console.log('is user signed in: '+GoogleAuth.isSignedIn());

@@ -29,7 +29,7 @@ app.post('/postRide',function(req,res){
     console.log('depT:'+req.body.dTime)
     console.log('retD:'+req.body.rDate)
     console.log('retT:'+req.body.rTime)
-    console.log('seat:'+req.body.maxSeats)
+    console.log('seat:'+req.body.numSeats)
     res.send('post ride received')
 })
 app.post('/findRide',function(req,res){
