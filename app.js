@@ -8,6 +8,9 @@ const { OAuth2Client } = require('google-auth-library');
 
 const port = 80
 
+var MongoClient=require('mongodb').MongoClient;
+var url="mongodb://localhost:27017/templeCarpoolDB";
+
 const app=express()
 
 app.use(express.static(path.join(__dirname,'public')));
@@ -47,6 +50,17 @@ app.get('/',function(req,res) {
 app.use(function(req,res,next){
     //res.status(404).send("Sorry can't find that!")
     res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
+})
+MongoClient.connect(url,function(err,db){
+    if(err) throw err;
+
+    console.log("Database created");
+    db.close();
+        /*db.collection('trips').find().toArray(function(err,result){
+            if(err) throw err
+
+            console.log(result)
+        })*/
 })
 app.listen(port);
 /*var auth=new GoogleAuth();
