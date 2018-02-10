@@ -51,7 +51,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
     res.send('post seat received')
 })
 //create a trip
-app.post('/api/trips',function(req,res){
+app.post('/api/trips/add',function(req,res){
     /*console.log('driver:'+req.body.driver)
     console.log('driverId:'+req.body.driverId)
     console.log('email:'+req.body.email)
@@ -64,18 +64,18 @@ app.post('/api/trips',function(req,res){
     var query={dDate:req.body.dDate, driverId:req.body.driverId};
     var cursor=db.collection('Trips').find(query).toArray(function(err, results) {
         if(err) throw err;
-        console.log('query results:'+results)
+        console.log('depart query results:'+results)
         if(results){
-            res.status(400).send('You already have scheduled trip leaving on '+req.body.dDate)
+            res.status(500).send('You already have scheduled trip leaving on '+req.body.dDate)
             return;
         }
     })
     query={rDate:req.body.rDate, driverId:req.body.driverId};
     cursor=db.collection('Trips').find(query).toArray(function(err, results) {
         if(err) throw err;
-        console.log('query results:'+results)
+        console.log('return query results:'+results)
         if(results){
-            res.status(400).send('You already have scheduled trip returning on '+req.body.rDate)
+            res.status(500).send('You already have scheduled trip returning on '+req.body.rDate)
             return;
         }
     })

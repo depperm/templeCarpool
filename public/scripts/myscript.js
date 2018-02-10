@@ -16,7 +16,7 @@ $(function(){
             data.push({name:"driverId", value:profile.getId()});//add driver id
             console.log('sending:'+JSON.stringify(data))
             $.ajax({
-                url:'/api/trips',
+                url:'/api/trips/add',
                 type:'post',
                 data:$.param(data),//$('#postRideForm').serialize(),
                 error:function(){
@@ -34,7 +34,7 @@ $(function(){
                         //console.log('sent post ride data');
                         alert(response);
                     },
-                    400: function(response){
+                    500: function(response){
                         alert(response);
                     }
                 }
