@@ -60,6 +60,7 @@ $(function(){
         $.get('/api/trips',function(data,status){
             $('#trips tr:not(.header)').remove();
             $.each(data,function(index,trip){
+                console.log('trip '+index.toString()+':'+JSON.stringify(trip))
                 //Departure, Return, Seats, Driver, Reserve
                 var dep=trip['dDate']+trip['dTime']=='select'?'':', '+trip['dTime'];
                 var ret=trip['rDate']+trip['rTime']=='select'?'':', '+trip['rTime'];
