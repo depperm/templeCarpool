@@ -58,13 +58,13 @@ $(function(){
         returnDate=$('#returnDate').val();
         console.log('depart: '+departDate+' return: '+returnDate);
         $.get('/api/trips',function(data,status){
+            $('#trips tr:not(.header)').remove();
             $.each(data,function(index,trip){
                 //Departure, Return, Seats, Driver, Reserve
-                var dep='';
-                var ret='';
+                var dep=trip['dDate']+trip['dTime']=='select'?'':', '+trip['dTime'];
+                var ret=trip['rDate']+trip['rTime']=='select'?'':', '+trip['rTime'];
                 var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
                 var driver=trip['driver'];
-                $('#trips tr:not(.header)').remove();
                 $('#trips tr:last').after('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
             });
             console.log(JSON.stringify(data));
