@@ -1,6 +1,11 @@
 $(function(){
     console.log('ready');
 
+    var mdStakes=["Annapolis","Seneca","Baltimore","Columbia","Suitland","Washington, DC","Frederick","Silver Spring"];
+    var paStakes=["Altoona","Pitsburgh","Chambersburg"];
+    var vaStakes=["Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Washington DC(YSA)","Winchester","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Waynesboro","Woodbridge"];
+    var wvStakes=["Clarksburg","Martinsburg"];
+
     var validator = $('#postRideForm').validate();
     $('#postRideForm').submit(function(e){
         e.preventDefault();
