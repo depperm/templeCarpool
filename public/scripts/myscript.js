@@ -12,7 +12,7 @@ $(function(){
         e.preventDefault();
         if(validator.valid()){
             var data=$('#postRideForm').serializeArray();//form to array
-            data.push({name:"driver", value:profile.getId()});//add driver id
+            data.push({name:"driverId", value:profile.getId()});//add driver id
             $.ajax({
                 url:'/api/trips',
                 type:'post',
@@ -57,6 +57,14 @@ $(function(){
         returnDate=$('#returnDate').val();
         console.log('depart: '+departDate+' return: '+returnDate);
         $.get('/api/trips',function(data,status){
+            $.each(data,function(index,trip){
+                //Departure, Return, Seats, Driver, Reserve
+                var dep=;
+                var ret=;
+                var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
+                var driver=trip['driver'];
+                $('#trips tr:last').after('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
+            });
             console.log(JSON.stringify(data));
         });
         /*$.ajax({
@@ -92,13 +100,20 @@ $(function(){
     });
     $('#departDate').on('change',function(){
         $('#dDate').val($('#departDate').val());
+        //TODO update table if visible
+        //TODO change returnDate to this date or later
     });
     $('#returnDate').on('change',function(){
         $('#rDate').val($('#returnDate').val());
+        //TODO update table if visible
     });
 
     var hours=["12:00","12:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30"];
-    $('#departDate').datepicker({minDate:0}).datepicker('setDate',new Date());
+    $('#departDate').datepicker({minDate:0,onSelect:function(date){
+        var selDate=new Date(date);
+        var stDate=new Date(selDate.getTime()-86400000);
+        $('#returnDate').datepicker('option','minDate',stDate)
+    }}).datepicker('setDate',new Date());
     $('#returnDate').datepicker({minDate:0}).datepicker('setDate',new Date());
     $('#dDate').datepicker({minDate:0}).datepicker('setDate',new Date());
     $('#rDate').datepicker({minDate:0}).datepicker('setDate',new Date());

@@ -76,6 +76,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
 //create a trip
 app.post('/api/trips',function(req,res){
     console.log('driver:'+req.body.driver)
+    console.log('driverId:'+req.body.driverId)
     console.log('email:'+req.body.email)
     console.log('depD:'+req.body.dDate)
     console.log('depT:'+req.body.dTime)
