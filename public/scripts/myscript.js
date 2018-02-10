@@ -66,8 +66,8 @@ $(function(){
                 var ret=trip['rDate']+trip['rTime']=='select'?'':', '+trip['rTime'];
                 var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
                 var driver=trip['driver'];
-                //$('#trips tr:last').after('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
-                $('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
+                $('#trips tr:last').after('<tr><td>...</td><td>...</td><td>'+seats+'</td><td>'+driver+'</td><td>...</td></tr>');
+                //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
             });
             console.log(JSON.stringify(data));
         });
