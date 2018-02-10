@@ -62,8 +62,8 @@ $(function(){
             $.each(data,function(index,trip){
                 console.log('trip '+index.toString()+':'+JSON.stringify(trip))
                 //Departure, Return, Seats, Driver, Reserve
-                var dep=trip['dDate']+trip['dTime']=='select'?'':', '+trip['dTime'];
-                var ret=trip['rDate']+trip['rTime']=='select'?'':', '+trip['rTime'];
+                var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
+                var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
                 var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
                 var driver=trip['driver'];
                 $('#trips tr:last').after('<tr class="trip"><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td>'+driver+'</td><td>...</td></tr>');
@@ -71,12 +71,12 @@ $(function(){
             });
             var trips=$('.trip td[data-depart-date]')
             $.each(trips,function(index,trip){
-                if($(this).val()==$('#departDate'))
+                if($(this).attr('data-depart-date')==$('#departDate'))
                     $(this).addClass('match')
             });
             var trips=$('.trip td[data-return-date]')
             $.each(trips,function(index,trip){
-                if($(this).val()==$('#returnDate'))
+                if($(this).attr('data-return-date')==$('#returnDate'))
                     $(this).addClass('match')
             });
             console.log(JSON.stringify(data));
