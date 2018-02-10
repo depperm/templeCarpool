@@ -11,12 +11,26 @@ $(function(){
         e.preventDefault();
         if(validator.valid()){
             $.ajax({
-                url:'/postRide',
+                url:'/api/trips',
                 type:'post',
                 data:$('#postRideForm').serialize(),
                 success:function(){
+                    $('#dDate').val('');
+                    $('#dTime').val('select');
+                    $('#rDate').val('');
+                    $('#rTime').val('select');
+                    $('#numSeats').val(1);
+                    alert('successfully posted your trip')
                     //whatever you wanna do after the form is successfully submitted
                     console.log('sent post ride data');
+                },
+                error:function(){
+                    alert('some error occured');
+                },
+                statusCode: {
+                    404: function(){
+                        alert('page not found');
+                    }
                 }
             });
         }
@@ -39,14 +53,37 @@ $(function(){
         departDate=$('#departDate').val();
         returnDate=$('#returnDate').val();
         console.log('depart: '+departDate+' return: '+returnDate);
-        $.post('/findRide', {
+        $.ajax({
+                url:'/api/trips',
+                type:'get',
+                data:{},
+                success:function(){
+                    /*$('#dDate').val('');
+                    $('#dTime').val('select');
+                    $('#rDate').val('');
+                    $('#rTime').val('select');
+                    $('#numSeats').val(1);*/
+                    alert('successfully got trips')
+                    //whatever you wanna do after the form is successfully submitted
+                    console.log('got trips data');
+                },
+                error:function(){
+                    alert('some error occured');
+                },
+                statusCode: {
+                    404: function(){
+                        alert('page not found');
+                    }
+                }
+            });
+        /*$.post('/api/trips', {
             "departDate":departDate,
             "returnDate":returnDate
         }).done(function(serverResponse){
             console.log('server response: '+serverResponse);
         }).fail(function(xhr,status,error){
             console.log('error posting: '+error+' status: '+status+' xhr: '+JSON.stringify(xhr));
-        })
+        })*/
     });
     $('#departDate').on('change',function(){
         $('#dDate').val($('#departDate').val());

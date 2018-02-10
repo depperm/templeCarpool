@@ -25,6 +25,7 @@ app.post('/tokensignin',function(req,res){
     console.log(req['query'])*/
     res.send('POST request to the homepage')
 })
+//OBSOLETE?
 app.post('/postRide',function(req,res){
     console.log('driver:'+req.body.driver)
     console.log('email:'+req.body.email)
@@ -35,6 +36,7 @@ app.post('/postRide',function(req,res){
     console.log('seat:'+req.body.numSeats)
     res.send('post ride received')
 })
+//OBSOLETE?
 app.post('/findRide',function(req,res){
     console.log('dept:'+req.body.departDate)
     console.log('ret: '+req.body.returnDate)
@@ -43,6 +45,70 @@ app.post('/findRide',function(req,res){
     console.log(req.body);
     console.log(req.query);*/
     res.send('find a recieved')
+})
+//reserve a seat for a trip
+app.post('/api/trips/:trip/:passenger',function(req,res){
+    console.log('trip:'+req.params.trip)
+    console.log('passenger:'+req.params.passenger)
+    //console.log('depD:'+req.body.dDate)
+    //console.log('depT:'+req.body.dTime)
+    //console.log('retD:'+req.body.rDate)
+    //console.log('retT:'+req.body.rTime)
+    //console.log('seat:'+req.body.numSeats)
+    res.send('post seat received')
+})
+//create a trip
+app.post('/api/trips',function(req,res){
+    console.log('driver:'+req.body.driver)
+    console.log('email:'+req.body.email)
+    console.log('depD:'+req.body.dDate)
+    console.log('depT:'+req.body.dTime)
+    console.log('retD:'+req.body.rDate)
+    console.log('retT:'+req.body.rTime)
+    console.log('seat:'+req.body.numSeats)
+    res.send('post ride received')
+})
+//update a trip as driver
+app.put('/api/trips/:trip',function(req,res){
+    console.log('trip:'+req.params.trip)
+    console.log('driver:'+req.body.driver)
+    console.log('email:'+req.body.email)
+    console.log('depD:'+req.body.dDate)
+    console.log('depT:'+req.body.dTime)
+    console.log('retD:'+req.body.rDate)
+    console.log('retT:'+req.body.rTime)
+    console.log('seat:'+req.body.numSeats)
+    res.send('update ride received')
+})
+//get all trips
+app.get('/api/trips',function(req,res){
+    res.send('get trips received')
+})
+//get trip with ID
+app.get('/api/trips/:trip',function(req,res){
+    console.log('trip:'+req.params.trip)
+    res.send('get ride received')
+})
+//remove a trip with ID
+app.delete('/api/trips/:trip',function(req,res){
+    console.log('trip:'+req.params.trip)
+    res.send('remove ride received')
+})
+//remove a passenger from a trip
+app.delete('/api/trips/:trip/:passenger',function(req,res){
+    console.log('trip:'+req.params.trip)
+    console.log('trip:'+req.params.passenger)
+    res.send('delete passenger received')
+})
+//get list of trip ids with driver id
+app.get('/api/users/:driver',function(req,res){
+    console.log('trip:'+req.params.driver)
+    res.send('get trips for driver received')
+})
+//get list of trips with user as passenger
+app.get('/api/users/:passenger',function(req,res){
+    console.log('trip:'+req.params.passenger)
+    res.send('get trips for passenger received')
 })
 app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/views/index.html'));
