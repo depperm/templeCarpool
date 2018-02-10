@@ -10,6 +10,22 @@ const port = 80
 
 var MongoClient=require('mongodb').MongoClient;
 var url="mongodb://localhost:27017/templeCarpoolDB";
+var db;
+
+MongoClient.connect(url,function(err,client){
+    if(err) throw err;
+    db=client.db('templeCarpoolDB')
+    app.listen(port,()=>{
+        console.log('listening on '+port.toString());
+    });
+    //console.log("Database created");
+    //db.close();
+        /*db.collection('trips').find().toArray(function(err,result){
+            if(err) throw err
+
+            console.log(result)
+        })*/
+})
 
 const app=express()
 
@@ -66,6 +82,13 @@ app.post('/api/trips',function(req,res){
     console.log('retD:'+req.body.rDate)
     console.log('retT:'+req.body.rTime)
     console.log('seat:'+req.body.numSeats)
+
+    db.collection('Trips').save(req.body,(err,result)=>{
+        if(err) return console.log(err)
+
+        console.log('saved trip to db')
+    })
+    //res.redirect('/')
     res.send('post ride received')
 })
 //update a trip as driver
@@ -82,7 +105,8 @@ app.put('/api/trips/:trip',function(req,res){
 })
 //get all trips
 app.get('/api/trips',function(req,res){
-    res.send('get trips received')
+    var trips=db.collection('Trips').find({})
+    res.send(trips)
 })
 //get trip with ID
 app.get('/api/trips/:trip',function(req,res){
@@ -117,18 +141,7 @@ app.use(function(req,res,next){
     //res.status(404).send("Sorry can't find that!")
     res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
 })
-MongoClient.connect(url,function(err,db){
-    if(err) throw err;
-
-    console.log("Database created");
-    db.close();
-        /*db.collection('trips').find().toArray(function(err,result){
-            if(err) throw err
-
-            console.log(result)
-        })*/
-})
-app.listen(port);
+//app.listen(port);
 /*var auth=new GoogleAuth();
 client=new auth.OAuth2('312484233782-6q2cd48kt6ptuotlcs5mv59vk1n9q9hp.apps.googleusercontent.com','','');
 

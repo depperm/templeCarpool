@@ -53,19 +53,21 @@ $(function(){
         departDate=$('#departDate').val();
         returnDate=$('#returnDate').val();
         console.log('depart: '+departDate+' return: '+returnDate);
-        $.ajax({
+        $.get('/api/trips',function(data,status){
+            console.log(JSON.stringify(data));
+        });
+        /*$.ajax({
                 url:'/api/trips',
                 type:'get',
-                data:{},
-                success:function(){
+                success:function(data,status){
                     /*$('#dDate').val('');
                     $('#dTime').val('select');
                     $('#rDate').val('');
                     $('#rTime').val('select');
-                    $('#numSeats').val(1);*/
+                    $('#numSeats').val(1);*//*
                     alert('successfully got trips')
                     //whatever you wanna do after the form is successfully submitted
-                    console.log('got trips data');
+                    console.log('got trips data'+JSON.stringify(data));
                 },
                 error:function(){
                     alert('some error occured');
@@ -75,7 +77,7 @@ $(function(){
                         alert('page not found');
                     }
                 }
-            });
+            });*/
         /*$.post('/api/trips', {
             "departDate":departDate,
             "returnDate":returnDate
