@@ -66,8 +66,18 @@ $(function(){
                 var ret=trip['rDate']+trip['rTime']=='select'?'':', '+trip['rTime'];
                 var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
                 var driver=trip['driver'];
-                $('#trips tr:last').after('<tr><td>...</td><td>...</td><td>'+seats+'</td><td>'+driver+'</td><td>...</td></tr>');
+                $('#trips tr:last').after('<tr class="trip"><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td>'+driver+'</td><td>...</td></tr>');
                 //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
+            });
+            var trips=$('.trip td[data-depart-date]')
+            $.each(trips,function(index,trip){
+                if($(this).val()==$('#departDate'))
+                    $(this).addClass('match')
+            });
+            var trips=$('.trip td[data-return-date]')
+            $.each(trips,function(index,trip){
+                if($(this).val()==$('#returnDate'))
+                    $(this).addClass('match')
             });
             console.log(JSON.stringify(data));
         });
