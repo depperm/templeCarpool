@@ -41,48 +41,34 @@ app.post('/tokensignin',function(req,res){
     console.log(req['query'])*/
     res.send('POST request to the homepage')
 })
-//OBSOLETE?
-app.post('/postRide',function(req,res){
-    console.log('driver:'+req.body.driver)
-    console.log('email:'+req.body.email)
-    console.log('depD:'+req.body.dDate)
-    console.log('depT:'+req.body.dTime)
-    console.log('retD:'+req.body.rDate)
-    console.log('retT:'+req.body.rTime)
-    console.log('seat:'+req.body.numSeats)
-    res.send('post ride received')
-})
-//OBSOLETE?
-app.post('/findRide',function(req,res){
-    console.log('dept:'+req.body.departDate)
-    console.log('ret: '+req.body.returnDate)
-    /*console.log(req.body.departDate)
-    console.log(req.params);
-    console.log(req.body);
-    console.log(req.query);*/
-    res.send('find a recieved')
-})
 //reserve a seat for a trip
 app.post('/api/trips/:trip/:passenger',function(req,res){
     console.log('trip:'+req.params.trip)
     console.log('passenger:'+req.params.passenger)
-    //console.log('depD:'+req.body.dDate)
-    //console.log('depT:'+req.body.dTime)
-    //console.log('retD:'+req.body.rDate)
-    //console.log('retT:'+req.body.rTime)
-    //console.log('seat:'+req.body.numSeats)
+    //check if passenger has a seat
+    //check if trip is full
+    //reserve the seat
     res.send('post seat received')
 })
 //create a trip
 app.post('/api/trips',function(req,res){
-    console.log('driver:'+req.body.driver)
+    /*console.log('driver:'+req.body.driver)
     console.log('driverId:'+req.body.driverId)
     console.log('email:'+req.body.email)
     console.log('depD:'+req.body.dDate)
     console.log('depT:'+req.body.dTime)
     console.log('retD:'+req.body.rDate)
     console.log('retT:'+req.body.rTime)
-    console.log('seat:'+req.body.numSeats)
+    console.log('seat:'+req.body.numSeats)*/
+    //check if driver has trip with same return or depart date-msg edit or remove trip
+    var query={dDate:req.body.dDate};
+    var cursor=db.collection('Trips').find(query).toArray(function(err, results) {
+        if(err) throw err;
+        console.log('query results:'+results)
+        //res.send(results)
+        // send HTML file populated with quotes here
+    })
+    query={rDate:req.body.rDate};
 
     db.collection('Trips').save(req.body,(err,result)=>{
         if(err) return console.log(err)

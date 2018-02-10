@@ -116,7 +116,7 @@ $(function(){
         $('#rDate').val('');
         $('#dDate').val(date);
         //update table if visible
-        $('.trip td').removeClass('match');
+        $('.trip td[data-depart-date]').removeClass('match');
         var trips=$('.trip td[data-depart-date]')
         $.each(trips,function(index,trip){
             if($(this).attr('data-depart-date')==$('#departDate').val())
@@ -126,7 +126,7 @@ $(function(){
     $('#returnDate').datepicker({minDate:0,onSelect:function(date){
         $('#rDate').val(date);
         //update table if visible
-        $('.trip td').removeClass('match');
+        $('.trip td[data-return-date]').removeClass('match');
         var trips=$('.trip td[data-return-date]')
         $.each(trips,function(index,trip){
             if($(this).attr('data-return-date')==$('#returnDate').val())
