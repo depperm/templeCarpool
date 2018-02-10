@@ -61,14 +61,22 @@ app.post('/api/trips',function(req,res){
     console.log('retT:'+req.body.rTime)
     console.log('seat:'+req.body.numSeats)*/
     //check if driver has trip with same return or depart date-msg edit or remove trip
-    var query={dDate:req.body.dDate};
+    var query={dDate:req.body.dDate, driverId:req.body.driverId};
     var cursor=db.collection('Trips').find(query).toArray(function(err, results) {
         if(err) throw err;
         console.log('query results:'+results)
-        //res.send(results)
-        // send HTML file populated with quotes here
+        if(results){
+            res.status(400).send('You already have scheduled trip leaving on '+req.body.dDate)
+        }
     })
-    query={rDate:req.body.rDate};
+    query={rDate:req.body.rDate, driverId:req.body.driverId};
+    cursor=db.collection('Trips').find(query).toArray(function(err, results) {
+        if(err) throw err;
+        console.log('query results:'+results)
+        if(results){
+            res.status(400).send('You already have scheduled trip returning on '+req.body.rDate)
+        }
+    })
 
     db.collection('Trips').save(req.body,(err,result)=>{
         if(err) return console.log(err)
@@ -76,7 +84,7 @@ app.post('/api/trips',function(req,res){
         console.log('saved trip to db')
     })
     //res.redirect('/')
-    res.send('post ride received')
+    res.send('Your ride has been posted')
 })
 //update a trip as driver
 app.put('/api/trips/:trip',function(req,res){
