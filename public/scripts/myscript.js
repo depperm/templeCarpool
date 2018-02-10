@@ -19,21 +19,21 @@ $(function(){
                 url:'/api/trips',
                 type:'post',
                 data:$.param(data),//$('#postRideForm').serialize(),
-                success:function(response){
-                    $('#dDate').val('');
-                    $('#dTime').val('select');
-                    $('#rDate').val('');
-                    $('#rTime').val('select');
-                    $('#numSeats').val(1);
-                    alert('successfully posted your trip')
-                    //whatever you wanna do after the form is successfully submitted
-                    //console.log('sent post ride data');
-                    console.log(response);
-                },
                 error:function(){
                     alert('some error occured');
                 },
                 statusCode: {
+                    200: function(response){
+                        $('#dDate').val('');
+                        $('#dTime').val('select');
+                        $('#rDate').val('');
+                        $('#rTime').val('select');
+                        $('#numSeats').val(1);
+                        //alert('successfully posted your trip')
+                        //whatever you wanna do after the form is successfully submitted
+                        //console.log('sent post ride data');
+                        alert(response);
+                    },
                     400: function(response){
                         alert(response);
                     }

@@ -67,6 +67,7 @@ app.post('/api/trips',function(req,res){
         console.log('query results:'+results)
         if(results){
             res.status(400).send('You already have scheduled trip leaving on '+req.body.dDate)
+            return;
         }
     })
     query={rDate:req.body.rDate, driverId:req.body.driverId};
@@ -75,6 +76,7 @@ app.post('/api/trips',function(req,res){
         console.log('query results:'+results)
         if(results){
             res.status(400).send('You already have scheduled trip returning on '+req.body.rDate)
+            return;
         }
     })
 
