@@ -85,7 +85,7 @@ $(function(){
             //console.log(JSON.stringify(data));
         });
     });
-    $('#departDate').on('change',function(){
+    /*$('#departDate').on('change',function(){
         //$('#dDate').val($('#departDate').val());
         //update table if visible
         $('.trip td').removeClass('match');
@@ -105,17 +105,33 @@ $(function(){
             if($(this).attr('data-return-date')==$('#returnDate').val())
                 $(this).addClass('match')
         });
-    });
+    });*/
 
     var hours=["12:00","12:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30"];
     $('#departDate').datepicker({minDate:0,onSelect:function(date){
         var selDate=new Date(date);
         //var stDate=new Date(selDate.getTime()-86400000);
         $('#returnDate').datepicker('option','minDate',selDate)
+        $('#rDate').datepicker('option','minDate',selDate)
+        $('#rDate').val('');
         $('#dDate').val(date);
+        //update table if visible
+        $('.trip td').removeClass('match');
+        var trips=$('.trip td[data-depart-date]')
+        $.each(trips,function(index,trip){
+            if($(this).attr('data-depart-date')==$('#departDate').val())
+                $(this).addClass('match')
+        });
     }}).datepicker('setDate',new Date());
     $('#returnDate').datepicker({minDate:0,onSelect:function(date){
         $('#rDate').val(date);
+        //update table if visible
+        $('.trip td').removeClass('match');
+        var trips=$('.trip td[data-return-date]')
+        $.each(trips,function(index,trip){
+            if($(this).attr('data-return-date')==$('#returnDate').val())
+                $(this).addClass('match')
+        });
     }}).datepicker('setDate',new Date());
     $('#dDate').datepicker({minDate:0,onSelect:function(date){
         var selDate=new Date(date);
