@@ -105,8 +105,12 @@ app.put('/api/trips/:trip',function(req,res){
 })
 //get all trips
 app.get('/api/trips',function(req,res){
-    var trips=db.collection('Trips').find({})
-    res.send(trips)
+    var cursor=db.collection('Trips').find().toArray(function(err, results) {
+        console.log(results)
+        res.send(trips)
+        // send HTML file populated with quotes here
+    })
+    //res.send(trips)
 })
 //get trip with ID
 app.get('/api/trips/:trip',function(req,res){
