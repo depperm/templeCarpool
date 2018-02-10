@@ -107,7 +107,7 @@ app.put('/api/trips/:trip',function(req,res){
 app.get('/api/trips',function(req,res){
     var cursor=db.collection('Trips').find().toArray(function(err, results) {
         console.log(results)
-        res.send(trips)
+        res.send(results)
         // send HTML file populated with quotes here
     })
     //res.send(trips)

@@ -1,3 +1,4 @@
+var profile;
 $(function(){
     console.log('ready');
 
@@ -10,10 +11,12 @@ $(function(){
     $('#postRideForm').submit(function(e){
         e.preventDefault();
         if(validator.valid()){
+            var data=$('#postRideForm').serializeArray();//form to array
+            data.push({name:"driver", value:profile.getId()});//add driver id
             $.ajax({
                 url:'/api/trips',
                 type:'post',
-                data:$('#postRideForm').serialize(),
+                data:$.param(data),//$('#postRideForm').serialize(),
                 success:function(){
                     $('#dDate').val('');
                     $('#dTime').val('select');
@@ -102,13 +105,13 @@ $(function(){
     for(var i=0;i<2;i++){
         var t=i==0?' am':' pm';
         $.each(hours,function(index,value){
-            $('#rTime').append($('<option></option>').attr('value',hours.length*i+index).text(value+t));
-            $('#dTime').append($('<option></option>').attr('value',hours.length*i+index).text(value+t));
+            $('#rTime').append($('<option></option>').attr('value',value+t).text(value+t));//hours.length*i+index
+            $('#dTime').append($('<option></option>').attr('value',value+t).text(value+t));
         });
     }
 });
 function onSignIn(googleUser) {
-    var profile=googleUser.getBasicProfile();
+    profile=googleUser.getBasicProfile();
     console.log("ID: "+profile.getId());
     console.log("Full Name: "+profile.getName());
     $('#driver').val(profile.getName());
