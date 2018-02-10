@@ -13,6 +13,7 @@ $(function(){
         if(validator.valid()){
             var data=$('#postRideForm').serializeArray();//form to array
             data.push({name:"driverId", value:profile.getId()});//add driver id
+            console.log('sending:'+JSON.stringify(data))
             $.ajax({
                 url:'/api/trips',
                 type:'post',
@@ -63,7 +64,7 @@ $(function(){
                 var ret='';
                 var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
                 var driver=trip['driver'];
-                $('#trips tr.not(.header)').html('')
+                $('#trips tr:not(.header)').remove();
                 $('#trips tr:last').after('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
             });
             console.log(JSON.stringify(data));
