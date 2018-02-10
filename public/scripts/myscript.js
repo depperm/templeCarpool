@@ -1,4 +1,5 @@
 var profile;
+var tripList;
 $(function(){
     console.log('ready');
 
@@ -59,67 +60,51 @@ $(function(){
         console.log('depart: '+departDate+' return: '+returnDate);
         $.get('/api/trips',function(data,status){
             $('#trips tr:not(.header)').remove();
+            tripList=data;
             $.each(data,function(index,trip){
-                console.log('trip '+index.toString()+':'+JSON.stringify(trip))
+                //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
                 //Departure, Return, Seats, Driver, Reserve
                 var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
                 var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
                 var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
                 var driver=trip['driver'];
-                $('#trips tr:last').after('<tr class="trip"><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td>'+driver+'</td><td>...</td></tr>');
+                $('#trips tr:last').after('<tr class="trip"><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td>'+driver+'</td><td><input type="button" value="Reserve" data-trip-id="'+index+'"></td></tr>');
                 //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
             });
+            $('.trip td').removeClass('match');
             var trips=$('.trip td[data-depart-date]')
             $.each(trips,function(index,trip){
-                if($(this).attr('data-depart-date')==$('#departDate'))
+                if($(this).attr('data-depart-date')==$('#departDate').val())
                     $(this).addClass('match')
             });
             var trips=$('.trip td[data-return-date]')
             $.each(trips,function(index,trip){
-                if($(this).attr('data-return-date')==$('#returnDate'))
+                if($(this).attr('data-return-date')==$('#returnDate').val())
                     $(this).addClass('match')
             });
-            console.log(JSON.stringify(data));
+            //console.log(JSON.stringify(data));
         });
-        /*$.ajax({
-                url:'/api/trips',
-                type:'get',
-                success:function(data,status){
-                    /*$('#dDate').val('');
-                    $('#dTime').val('select');
-                    $('#rDate').val('');
-                    $('#rTime').val('select');
-                    $('#numSeats').val(1);*//*
-                    alert('successfully got trips')
-                    //whatever you wanna do after the form is successfully submitted
-                    console.log('got trips data'+JSON.stringify(data));
-                },
-                error:function(){
-                    alert('some error occured');
-                },
-                statusCode: {
-                    404: function(){
-                        alert('page not found');
-                    }
-                }
-            });*/
-        /*$.post('/api/trips', {
-            "departDate":departDate,
-            "returnDate":returnDate
-        }).done(function(serverResponse){
-            console.log('server response: '+serverResponse);
-        }).fail(function(xhr,status,error){
-            console.log('error posting: '+error+' status: '+status+' xhr: '+JSON.stringify(xhr));
-        })*/
     });
     $('#departDate').on('change',function(){
-        $('#dDate').val($('#departDate').val());
-        //TODO update table if visible
+        //$('#dDate').val($('#departDate').val());
+        //update table if visible
+        $('.trip td').removeClass('match');
+        var trips=$('.trip td[data-depart-date]')
+        $.each(trips,function(index,trip){
+            if($(this).attr('data-depart-date')==$('#departDate').val())
+                $(this).addClass('match')
+        });
         //TODO change returnDate to this date or later
     });
     $('#returnDate').on('change',function(){
-        $('#rDate').val($('#returnDate').val());
-        //TODO update table if visible
+        //$('#rDate').val($('#returnDate').val());
+        //update table if visible
+        $('.trip td').removeClass('match');
+        var trips=$('.trip td[data-return-date]')
+        $.each(trips,function(index,trip){
+            if($(this).attr('data-return-date')==$('#returnDate').val())
+                $(this).addClass('match')
+        });
     });
 
     var hours=["12:00","12:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30"];
@@ -127,8 +112,11 @@ $(function(){
         var selDate=new Date(date);
         //var stDate=new Date(selDate.getTime()-86400000);
         $('#returnDate').datepicker('option','minDate',selDate)
+        $('#dDate').val(date);
     }}).datepicker('setDate',new Date());
-    $('#returnDate').datepicker({minDate:0}).datepicker('setDate',new Date());
+    $('#returnDate').datepicker({minDate:0,onSelect:function(date){
+        $('#rDate').val(date);
+    }}).datepicker('setDate',new Date());
     $('#dDate').datepicker({minDate:0,onSelect:function(date){
         var selDate=new Date(date);
         //var stDate=new Date(selDate.getTime()-86400000);
