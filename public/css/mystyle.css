@@ -11,6 +11,9 @@
 #datepicker {
     padding:10px;
 }
+.match{
+    background-color: green;
+}
 .error{
     border-color:red;
 }
