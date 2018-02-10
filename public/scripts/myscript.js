@@ -59,8 +59,8 @@ $(function(){
         $.get('/api/trips',function(data,status){
             $.each(data,function(index,trip){
                 //Departure, Return, Seats, Driver, Reserve
-                var dep=;
-                var ret=;
+                var dep='';
+                var ret='';
                 var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
                 var driver=trip['driver'];
                 $('#trips tr.not(.header)').html('')
