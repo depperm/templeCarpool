@@ -69,7 +69,7 @@ app.post('/api/trips/add',function(req,res){
         } 
         console.log('depart query results:'+results)
         console.log(results=='')
-        if(results){
+        if(results!=''){
             console.log('add error')
             res.status(500).send('You already have scheduled trip on '+req.body.dDate+' or '+req.body.rDate)
         }else{

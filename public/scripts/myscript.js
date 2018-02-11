@@ -32,7 +32,7 @@ $(function(){
                         //alert('successfully posted your trip')
                         //whatever you wanna do after the form is successfully submitted
                         //console.log('sent post ride data');
-                        alert(response);
+                        alert(response['responseText']);
                     },
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
