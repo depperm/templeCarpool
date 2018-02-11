@@ -73,8 +73,8 @@ app.post('/api/trips/add',function(req,res){
             res.status(500).send('You already have scheduled trip on '+req.body.dDate+' or '+req.body.rDate)
         }else{
             db.collection('Trips').save(req.body,(err,result)=>{
-                if(err) return console.log(err)
-                    
+                if(err) return console.log('An error: '+err)
+
                 console.log('saved trip to db')
             })
             //res.redirect('/')
