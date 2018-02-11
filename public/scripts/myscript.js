@@ -18,10 +18,7 @@ $(function(){
             $.ajax({
                 url:'/api/trips/add',
                 type:'post',
-                data:$.param(data),//$('#postRideForm').serialize(),
-                /*error:function(){
-                    alert('some error occured');
-                },*/
+                data:$.param(data),
                 statusCode: {
                     200: function(response){
                         $('#dDate').val('');
@@ -30,9 +27,7 @@ $(function(){
                         $('#rTime').val('select');
                         $('#numSeats').val(1);
                         //alert('successfully posted your trip')
-                        //whatever you wanna do after the form is successfully submitted
-                        //console.log('sent post ride data');
-                        alert(response['responseText']);
+                        alert(response);
                     },
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
@@ -70,7 +65,8 @@ $(function(){
                 var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
                 var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
                 var driver=trip['driver'];
-                $('#trips tr:last').after('<tr class="trip"><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td>'+driver+'</td><td><input type="button" value="Reserve" data-trip-id="'+index+'"></td></tr>');
+                var disabled=('passengers' in trip?trip['passengers'].length:0)==trip['numSeats']?'disabled':'';
+                $('#trips tr:last').after('<tr class="trip"><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td>'+driver+'</td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
                 //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
             });
             $('.trip td').removeClass('match');
@@ -87,6 +83,28 @@ $(function(){
             //console.log(JSON.stringify(data));
         });
     });
+    $('.reserveTrip').on('click',function(){
+        $.ajax({
+            url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]['_id']+'/'+profile.getId(),
+            type:'post',
+            //data:$.param(data),
+            statusCode: {
+                200: function(response){
+                    /*$('#dDate').val('');
+                    $('#dTime').val('select');
+                    $('#rDate').val('');
+                    $('#rTime').val('select');
+                    $('#numSeats').val(1);*/
+                    //alert('successfully posted your trip')
+                    alert(response);
+                },
+                500: function(response){
+                    //response={'readyState','responseText','status','statusText'}
+                    alert(response['responseText']);
+                }
+            }
+        });
+    })
 
     var hours=["12:00","12:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30"];
     $('#departDate').datepicker({minDate:0,onSelect:function(date){

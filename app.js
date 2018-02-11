@@ -47,8 +47,35 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
     console.log('passenger:'+req.params.passenger)
     //check if passenger has a seat
     //check if trip is full
+    var pquery={passengers:{$in:[req.params.passenger]}};
+    var passLen=(db.collection('Trips').findOne({'_id':req.params.trip}))['passengers'].length
+    var fquery={'numSeats:{$eq:'+passLen.toString+'}'};
+    var cursor=db.collection('Trips').find({$or:[pquery,fquery]}).toArray(function(err, results) {
+        if(err){
+            res.status(501).send('Some error:'+err)
+        } 
+        console.log('reserve query results:'+results)
+        console.log(results=='')
+        if(results!=''){
+            console.log('reserve error')
+            if(req.params.passenger in results['passengers']){
+                res.status(500).send('You already have a seat reserved')
+            }else{
+                res.status(500).send('There are no more available seats')
+            }
+            //res.status(500).send('You already have a reserved seat OR there are no more seats')
+        }else{
+            db.collection('Trips').update({'_id':req.params.trip},{ "$push": { "passengers": req.params.passenger },(err,result)=>{
+                if(err) return console.log('An error: '+err)
+
+                console.log('reserved seat on trip ')
+            })
+            //res.redirect('/')
+            res.send('Your seat has been reservd')
+        }
+    })
     //reserve the seat
-    res.send('post seat received')
+    //res.send('post seat received')
 })
 //create a trip
 app.post('/api/trips/add',function(req,res){
@@ -71,7 +98,12 @@ app.post('/api/trips/add',function(req,res){
         console.log(results=='')
         if(results!=''){
             console.log('add error')
-            res.status(500).send('You already have scheduled trip on '+req.body.dDate+' or '+req.body.rDate)
+            if(req.body.dDate==results['dDate']){
+                res.status(500).send('You already have scheduled depart trip on '+req.body.dDate)
+            }else{
+                res.status(500).send('You already have scheduled return trip on '+req.body.rDate)
+            }
+            //res.status(500).send('You already have scheduled trip on '+req.body.dDate+' or '+req.body.rDate)
         }else{
             db.collection('Trips').save(req.body,(err,result)=>{
                 if(err) return console.log('An error: '+err)
@@ -82,22 +114,6 @@ app.post('/api/trips/add',function(req,res){
             res.send('Your ride has been posted')
         }
     })
-    /*cursor=db.collection('Trips').find(rquery).toArray(function(err, results) {
-        if(err) throw err;
-        console.log('return query results:'+results)
-        if(results){
-            console.log('return add error')
-            res.status(500).send('You already have scheduled trip returning on '+req.body.rDate)
-        }
-    })*/
-
-    /*db.collection('Trips').save(req.body,(err,result)=>{
-        if(err) return console.log(err)
-
-        console.log('saved trip to db')
-    })
-    //res.redirect('/')
-    res.send('Your ride has been posted')*/
 })
 //update a trip as driver
 app.put('/api/trips/:trip',function(req,res){
