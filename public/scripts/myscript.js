@@ -83,7 +83,8 @@ $(function(){
             //console.log(JSON.stringify(data));
         });
     });
-    $('.reserveTrip').on('click',function(){
+    $('#trips').on('click','.reserveTrip',function(){
+    //$('.reserveTrip').on('click',function(){
         $.ajax({
             url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]['_id']+'/'+profile.getId(),
             type:'post',
