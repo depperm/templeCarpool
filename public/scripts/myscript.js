@@ -19,9 +19,9 @@ $(function(){
                 url:'/api/trips/add',
                 type:'post',
                 data:$.param(data),//$('#postRideForm').serialize(),
-                error:function(){
+                /*error:function(){
                     alert('some error occured');
-                },
+                },*/
                 statusCode: {
                     200: function(response){
                         $('#dDate').val('');
