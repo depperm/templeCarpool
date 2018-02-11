@@ -35,7 +35,8 @@ $(function(){
                         alert(response);
                     },
                     500: function(response){
-                        alert(JSON.stringify(response));
+                        //response={'readyState','responseText','status','statusText'}
+                        alert(response['responseText']);
                     }
                 }
             });
