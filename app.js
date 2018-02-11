@@ -49,7 +49,10 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
     //check if trip is full
     var pquery={passengers:{$in:[req.params.passenger]}};
     var passLen=(db.collection('Trips').findOne({'_id':req.params.trip}))['passengers'].length
-    var fquery={'numSeats:{$eq:'+passLen.toString+'}'};
+    var t={}
+    t['$eq']=passLen.toString()
+    var fquery={'numSeats':t};
+    //var fquery={'numSeats:{$eq:'+passLen.toString()+'}'};
     var cursor=db.collection('Trips').find({$or:[pquery,fquery]}).toArray(function(err, results) {
         if(err){
             res.status(501).send('Some error:'+err)
