@@ -61,32 +61,42 @@ app.post('/api/trips/add',function(req,res){
     console.log('retT:'+req.body.rTime)
     console.log('seat:'+req.body.numSeats)*/
     //check if driver has trip with same return or depart date-msg edit or remove trip
-    var query={dDate:req.body.dDate, driverId:req.body.driverId};
-    var cursor=db.collection('Trips').find(query).toArray(function(err, results) {
-        if(err) throw err;
+    var dquery={dDate:req.body.dDate, driverId:req.body.driverId};
+    var rquery={rDate:req.body.rDate, driverId:req.body.driverId};
+    var cursor=db.collection('Trips').find({$or:[dquery,rquery]}).toArray(function(err, results) {
+        if(err){
+            res.status(501).send('Some error:'+err)
+        } 
         console.log('depart query results:'+results)
         if(results){
-            res.status(500).send('You already have scheduled trip leaving on '+req.body.dDate)
-            return;
+            console.log('add error')
+            res.status(500).send('You already have scheduled trip on '+req.body.dDate+' or '+req.body.rDate)
+        }else{
+            db.collection('Trips').save(req.body,(err,result)=>{
+                if(err) return console.log(err)
+                    
+                console.log('saved trip to db')
+            })
+            //res.redirect('/')
+            res.send('Your ride has been posted')
         }
     })
-    query={rDate:req.body.rDate, driverId:req.body.driverId};
-    cursor=db.collection('Trips').find(query).toArray(function(err, results) {
+    /*cursor=db.collection('Trips').find(rquery).toArray(function(err, results) {
         if(err) throw err;
         console.log('return query results:'+results)
         if(results){
+            console.log('return add error')
             res.status(500).send('You already have scheduled trip returning on '+req.body.rDate)
-            return;
         }
-    })
+    })*/
 
-    db.collection('Trips').save(req.body,(err,result)=>{
+    /*db.collection('Trips').save(req.body,(err,result)=>{
         if(err) return console.log(err)
 
         console.log('saved trip to db')
     })
     //res.redirect('/')
-    res.send('Your ride has been posted')
+    res.send('Your ride has been posted')*/
 })
 //update a trip as driver
 app.put('/api/trips/:trip',function(req,res){
