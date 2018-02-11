@@ -1,5 +1,34 @@
 var profile;
 var tripList;
+function getTrips(){
+    $.get('/api/trips',function(data,status){
+        $('#trips tr:not(.header)').remove();
+        tripList=data;
+        $.each(data,function(index,trip){
+            //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
+            //Departure, Return, Seats, Driver, Reserve
+            var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
+            var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
+            var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
+            var driver=trip['driver'];
+            var disabled=('passengers' in trip?trip['passengers'].length:0)==trip['numSeats']?'disabled':'';
+            $('#trips tr:last').after('<tr class="trip"><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td>'+driver+'</td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
+            //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
+        });
+        $('.trip td').removeClass('match');
+        var trips=$('.trip td[data-depart-date]')
+        $.each(trips,function(index,trip){
+            if($(this).attr('data-depart-date')==$('#departDate').val())
+                $(this).addClass('match')
+        });
+        var trips=$('.trip td[data-return-date]')
+        $.each(trips,function(index,trip){
+            if($(this).attr('data-return-date')==$('#returnDate').val())
+                $(this).addClass('match')
+        });
+        //console.log(JSON.stringify(data));
+    });
+}
 $(function(){
     console.log('ready');
 
@@ -52,36 +81,7 @@ $(function(){
         });
     });
     $('#fa').on('click',function(){
-        departDate=$('#departDate').val();
-        returnDate=$('#returnDate').val();
-        console.log('depart: '+departDate+' return: '+returnDate);
-        $.get('/api/trips',function(data,status){
-            $('#trips tr:not(.header)').remove();
-            tripList=data;
-            $.each(data,function(index,trip){
-                //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
-                //Departure, Return, Seats, Driver, Reserve
-                var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
-                var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
-                var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
-                var driver=trip['driver'];
-                var disabled=('passengers' in trip?trip['passengers'].length:0)==trip['numSeats']?'disabled':'';
-                $('#trips tr:last').after('<tr class="trip"><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td>'+driver+'</td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
-                //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
-            });
-            $('.trip td').removeClass('match');
-            var trips=$('.trip td[data-depart-date]')
-            $.each(trips,function(index,trip){
-                if($(this).attr('data-depart-date')==$('#departDate').val())
-                    $(this).addClass('match')
-            });
-            var trips=$('.trip td[data-return-date]')
-            $.each(trips,function(index,trip){
-                if($(this).attr('data-return-date')==$('#returnDate').val())
-                    $(this).addClass('match')
-            });
-            //console.log(JSON.stringify(data));
-        });
+        getTrips();
     });
     $('#trips').on('click','.reserveTrip',function(){
     //$('.reserveTrip').on('click',function(){
@@ -98,6 +98,7 @@ $(function(){
                     $('#numSeats').val(1);*/
                     //alert('successfully posted your trip')
                     alert(response);
+                    getTrips();
                 },
                 500: function(response){
                     //response={'readyState','responseText','status','statusText'}
@@ -159,6 +160,7 @@ function onSignIn(googleUser) {
     $('#welcomeMsg').hide();
     $('#content').show();
     $('.g-signout2').show();
+    getTrips();
 }
 function openTab(evt,choice){
     $('.tabContent').hide();
