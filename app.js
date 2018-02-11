@@ -48,7 +48,8 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
     //check if passenger has a seat
     //check if trip is full
     var pquery={passengers:{$in:[req.params.passenger]}};
-    var passLen=(db.collection('Trips').findOne({'_id':req.params.trip}))['passengers'].length
+    var trip=db.collection('Trips').findOne({'_id':req.params.trip})//['passengers'].length
+    var passLen='passengers' in trip?trip['passengers'].length:0
     var t={}
     t['$eq']=passLen.toString()
     var fquery={'numSeats':t};
