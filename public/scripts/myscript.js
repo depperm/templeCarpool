@@ -32,6 +32,10 @@ function getTrips(){
 $(function(){
     console.log('ready');
 
+    if(!$('#welcomeMsg').is(":visible")){
+        getTrips();
+    }
+
     var mdStakes=["Annapolis","Seneca","Baltimore","Columbia","Suitland","Washington, DC","Frederick","Silver Spring"];
     var paStakes=["Altoona","Pitsburgh","Chambersburg"];
     var vaStakes=["Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Washington DC(YSA)","Winchester","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Waynesboro","Woodbridge"];
@@ -69,6 +73,7 @@ $(function(){
 
     //console.log('is user signed in: '+GoogleAuth.isSignedIn());
     $('.g-signout2').on('click',function(e){
+        $('#trips tr:not(.header)').remove();
         console.log('click sign out');
         var auth2=gapi.auth2.getAuthInstance();
         auth2.signOut().then(function(){
