@@ -70,12 +70,13 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
             }
             //res.status(500).send('You already have a reserved seat OR there are no more seats')
         }else{
-            db.collection('Trips').update({'_id':req.params.trip},{ "$push": { "passengers": req.params.passenger }},(err,result)=>{
+            db.collection('Trips').update({'_id':req.params.trip},{ $push: { "passengers": req.params.passenger }}})/*,(err,result)=>{
                 if(err) return console.log('An error: '+err)
 
                 console.log('reserved seat on trip ')
-            })
+            })*/
             //res.redirect('/')
+            console.log('reserved seat on trip ')
             res.send('Your seat has been reservd')
         }
     })
