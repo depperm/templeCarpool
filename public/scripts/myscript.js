@@ -35,7 +35,7 @@ $(function(){
                         alert(response);
                     },
                     500: function(response){
-                        alert(response);
+                        alert(JSON.stringify(response));
                     }
                 }
             });
