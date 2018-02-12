@@ -231,6 +231,6 @@ function fillTempleInfo(){
     })
     $('#templeNotes').html()
     $.each(templeInfo[temple]['notes'],function(index,note){
-        $('#templeClosings').append('<p>'+note+'</p>')
+        $('#templeNotes').append('<p>'+note+'</p>')
     });
 }
