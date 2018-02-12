@@ -200,7 +200,7 @@ function onSignIn(googleUser) {
     $('#content').show();
     $('.g-signout2').show();
     getTrips();
-    #('#fa').click();
+    $('#fa').click();
 }
 function openTab(evt,choice){
     $('.tabContent').hide();
@@ -229,5 +229,5 @@ function fillTempleInfo(){
     $('#templeNotes').html()
     $.each(templeInfo[temple]['notes'],function(index,note){
         $('#templeClosings').append('<p>'+note+'</p>')
-    })
+    });
 }
