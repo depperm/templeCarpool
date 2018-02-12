@@ -74,23 +74,23 @@ label{
     border 1px solid #ccc;
     border-top:none;
 }
-ul{
+#navbar{
     list-style-type:none;
     margin:0;
     overflow:hidden;
     background-color:#333;
 }
-li{
+#navbar li{
     float:left;
 }
-li a{
+#navbar li a{
     display: block;
     color: white;
     text-align:center;
     padding:14px 16px;
     text-decoration:none;
 }
-li a:hover{
+#navbar li a:hover{
     background-color:#111;
 }
 .oauth{
