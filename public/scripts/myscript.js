@@ -225,11 +225,11 @@ function fillTempleInfo(){
     $.each(days,function(index,day){
         $('#Baptistry-'+day).html(templeInfo[temple][currentYear]['Baptistry'][day].toString())
     })
-    $('#templeClosings').html();
+    $('#templeClosings').empty();
     $.each(templeInfo[temple][currentYear]['Closings'],function(index,closing){
         $('#templeClosings').append('<li>'+closing+'</li>')
     })
-    $('#templeNotes').html()
+    $('#templeNotes').empty()
     $.each(templeInfo[temple]['notes'],function(index,note){
         $('#templeNotes').append('<p>'+note+'</p>')
     });

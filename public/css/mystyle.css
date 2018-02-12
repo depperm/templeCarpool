@@ -105,10 +105,10 @@ html,body{
 }
 
 #body{
-    padding-bottom: 100px;    /* height of footer */
+    padding-bottom: 50px;    /* height of footer */
 }
 .footer {
-    height:100px;
+    height:50px;
     width:100%;
     position: absolute;
     //right: 0;
@@ -125,4 +125,5 @@ html,body{
 .column{
     width:50%;
     display:table-cell;
+    vertical-align:top;
 }
