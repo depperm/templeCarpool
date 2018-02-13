@@ -1,9 +1,9 @@
 var profile;
 var tripList;
 
-var mdStakes=["Annapolis","Seneca","Baltimore","Columbia","Suitland","Washington, DC","Frederick","Silver Spring"];
-var paStakes=["Altoona","Pitsburgh","Chambersburg"];
-var vaStakes=["Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Washington DC(YSA)","Winchester","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Waynesboro","Woodbridge"];
+var mdStakes=["Annapolis","Baltimore","Columbia","Frederick","Seneca","Silver Spring","Suitland","Washington, DC"];
+var paStakes=["Altoona","Chambersburg","Pitsburgh"];
+var vaStakes=["Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Washington DC(YSA)","Winchester","Waynesboro","Woodbridge"];
 var wvStakes=["Clarksburg","Martinsburg"];
 
 var temples=['Philadelphia','Columbus']
@@ -98,11 +98,41 @@ $(function(){
     }
 
     
-    $('#temple').html();
+    $('#temple').empty();
     $.each(temples,function(index,temple){
-        if(temple in templeInfo)
-            $('#temple').append('<option value="'+temple+'">'+temple+'</option>')
+        if(temple in templeInfo){
+            $('#temple').append('<option value="'+temple+'">'+temple+'</option>');
+            $('#templeDest').append('<option value="'+temple+'">'+temple+'</option>');
+        }
     });
+    $('#temple').on('change',function(){
+        $('#templeDest').val($(this).val());
+        fillTempleInfo();
+    });
+
+    $('#departStake').append('<optgroup label="Maryland Stakes">')
+    $.each(mdStakes,function(index,stake){
+        if(stake=='Seneca')
+            $('#departStake').append('<option value="'+stake+'" selected>'+stake+'</option>')
+        else
+            $('#departStake').append('<option value="'+stake+'">'+stake+'</option>')
+    })
+    $('#departStake').append('</optgroup>')
+    $('#departStake').append('<optgroup label="Pennsylvania Stakes">')
+    $.each(paStakes,function(index,stake){
+        $('#departStake').append('<option value="'+stake+'">'+stake+'</option>')
+    })
+    $('#departStake').append('</optgroup>')
+    $('#departStake').append('<optgroup label="Virginia Stakes">')
+    $.each(vaStakes,function(index,stake){
+        $('#departStake').append('<option value="'+stake+'">'+stake+'</option>')
+    })
+    $('#departStake').append('</optgroup>')
+    $('#departStake').append('<optgroup label="West Virginia Stakes">')
+    $.each(wvStakes,function(index,stake){
+        $('#departStake').append('<option value="'+stake+'">'+stake+'</option>')
+    })
+    $('#departStake').append('</optgroup>')
     //see https://jqueryvalidation.org for info
     var validator = $('#postRideForm').validate();
     $('#postRideForm').submit(function(e){
