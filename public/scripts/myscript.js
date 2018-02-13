@@ -187,12 +187,12 @@ $(function(){
         buttons: {
             "Edit Trip": editDriverTrip,
             Cancel: function() {
-                dialog.dialog( "close" );
+                driverDialog.dialog( "close" );
             }
         },
         close:function(){
             driverForm[0].reset();
-            allFields.removeClass('ui-state-error');
+            //allFields.removeClass('ui-state-error');
         }
     });
     driverForm=driverDialog.find('form').on('submit',function(event){
@@ -204,6 +204,8 @@ $(function(){
     });
     
     $('#editingDrivingRides').on('click','.editTrip',function(){
+        //TODO fill driverTemple
+        //TODO fill driverStake
         driverDialog.dialog( "open" );
         //TODO fill with relevant info
     });
