@@ -1,11 +1,12 @@
 var profile;
 var tripList;
+
 var mdStakes=["Annapolis","Seneca","Baltimore","Columbia","Suitland","Washington, DC","Frederick","Silver Spring"];
 var paStakes=["Altoona","Pitsburgh","Chambersburg"];
 var vaStakes=["Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Washington DC(YSA)","Winchester","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Waynesboro","Woodbridge"];
 var wvStakes=["Clarksburg","Martinsburg"];
 
-var temples=['Philadelphia']
+var temples=['Philadelphia','Columbus']
 
 var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm'],
                                                    'Wednesday':['10:00 am','11:30 am','6:30 pm','8:00 pm'], 
@@ -21,9 +22,42 @@ var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm
                                      },
                                 'phone':'(215)-398-3040',
                                 'address':['1739 Vine Street<br />Philadelphia, PA 19103','https://www.google.com/maps/place/1739+Vine+St,+Philadelphia,+PA+19103/@39.9590674,-75.1704057,17z/data=!3m1!4b1!4m5!3m4!1s0x89c6c632c60581e1:0x63c8ff5ad48bf115!8m2!3d39.9590674!4d-75.168217?q=1739+Vine+Street,+Philadelphia,+PA+19103&um=1&ie=UTF-8&sa=X&ved=0ahUKEwij5djRs6HZAhWENd8KHXTfDrUQ_AUICigB','<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.209550692896!2d-75.17040568461795!3d39.959067379420915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c6c632c60581e1%3A0x63c8ff5ad48bf115!2s1739+Vine+St%2C+Philadelphia%2C+PA+19103!5e0!3m2!1sen!2sus!4v1518473790164" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>'],
-                                'notes':['Family baptistry priority times on Fridays 6:00 pm-7:30 pm and Saturdays 12:00 pm-1:30 pm','All living ordinances and baptistry appointments must be scheduled in advance. Reservations are strongly envouraged for all proxy endowments. Endowment reservations will be released to those without reservations 15 minutes prior to the session\'s start time']
+                                'notes':['<strong>Family baptistry priority times on</strong> Fridays 6:00 pm-7:30 pm and Saturdays 12:00 pm-1:30 pm',
+                                         '<strong>Reservations: </strong>All living ordinances and baptistry appointments must be scheduled in advance. Reservations are strongly envouraged for all proxy endowments. Endowment reservations will be released to those without reservations 15 minutes prior to the session\'s start time',
+                                         '<strong>Temple Clothing: </strong>If needed, temple clothing may be rented at the temple. There is no Distribution Services Center at the Philadelphia Temple. Please visit <a href="store.lds.org">store.lds.org</a> online for your clothing needs.',
+                                         '<strong>Dining: </strong>There are no patron dining or vending services at the Philadelphia Temple, but there are many nearby restaurants. Food is not permitted on temple grounds, including the Arrival Center.',
+                                         '<strong>Parking: </strong>Garage parking is available. Enter on 18th Street. Ticket should be validated at recommend desk.',
+                                         '<strong>Family Names: </strong>You are encouraged to use <a href="familysearch.org">FamilySearch.org</a> to share your family names with the temple, especially if you have a large number of names.',
+                                         '<strong>Arrival Center: </strong>The Arrival Center next to the temple is available for non-patron guests waiting for friends and family.',
+                                         '<strong>Children: </strong>The Youth Center inside the temple is for children waiting to be sealed to parents or to observe the sealing of siblings to parents.',
+                                         '<strong>Electronic Devices: </strong>If you choose to bring an electronic device (such as a camera, phone or tablet) into the temple, it must be turned off and stored inside a locker.',
+                                         '<strong>Recommends: </strong>A Temple Recommend from your bishop and stake president is required to enter the temple. A Recommend for Living Ordinances is also needed by members being endowed or sealed to a spouse. Youth must be at least 12 years old to perform temple baptisms and must have a Limited-Use Recommend from their bishop. Males must hold the priesthood.',
+                                         '<strong>Languages: </strong>English is available for all endowment sessions. Many languages, including American Sign Language, are availabe upon request:<br />Spanish Endowment Sessions<ul><li>1st and 3rd Saturday of the month: 7:00 am</li><li>2nd and 4th Saturday of the month: 2:30 pm</li></ul>'],
+                                'website':'https://www.lds.org/temples/details/philadelphia-pennsylvania-temple?lang=eng'
+                                },
+                'Columbus':{2018:{'Endowment':{'Tuesday':['11:00 am','1:00 pm','6:00 pm','7:30 pm'],
+                                                   'Wednesday':['9:00 am','11:00 am','1:00 pm','6:00 pm','7:30 pm'], 
+                                                   'Thursday':['11:00 am','1:00 pm','6:00 pm','7:30 pm'],
+                                                   'Friday':['11:00 am','1:00 pm','6:00 pm','7:30 pm'],
+                                                   'Saturday':['9:00 am','11:00 am','1:00 pm', '3:00 pm', '5:00 pm']},
+                                      'Baptistry':{'Tuesday':['10:00 - 11:00 am','6:30 - 7:30 pm'],
+                                                   'Wednesday':['10:00 - 11:00 am','6:30 - 7:30 pm'], 
+                                                   'Thursday':['10:00 - 11:00 am','6:30 - 7:30 pm'],
+                                                   'Friday':['10:00 - 11:00 am','6:30 - 7:30 pm'],
+                                                   'Saturday':['7:30 - 8:30 am','9:30 - 10:30 am','11:30 am - 12:30 pm','1:30 - 2:30 pm','3:30 - 4:30 pm']},
+                                      'Closings':['March 20-March 31(Maintenance Closure)','July 4(Independence Day)','September 25-October 6(Maintenance Closure)','November 21-22(Thanksgiving)','December 25-26(Christmas)']
+                                     },
+                                'phone':'(614)-351-5001',
+                                'address':['3870 Gateway Blvd<br />Columbus, OH 43228-9747','https://www.google.com/maps/place/Columbus+Ohio+Temple/@39.9937324,-83.1150495,17z/data=!4m13!1m7!3m6!1s0x883891a5a2f32d5f:0xa1b2442d0db9c04d!2s3870+Gateway+Blvd,+Columbus,+OH+43228!3b1!8m2!3d39.9937283!4d-83.1128608!3m4!1s0x883891a50c45f185:0x3f1ae281f17229b0!8m2!3d39.9940836!4d-83.1132708','<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3056.65867843366!2d-83.11504948437536!3d39.99373238917973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883891a50c45f185%3A0x3f1ae281f17229b0!2sColumbus+Ohio+Temple!5e0!3m2!1sen!2sus!4v1518479032638" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>'],
+                                'notes':['<strong>Family baptistry priority times on</strong> Monday through Friday at 10:00 - 11:00 am, Friday 6:30 - 7:30 pm, and Saturdays 11:30 am - 12:30 pm',
+                                         '<strong>Living Ordinances: </strong>To schedule an appointment for living ordinances (such as your own endowment, marriage, or sealing), please call the temple.',
+                                         '<strong>Temple Clothing: </strong>No temple clothing may be rented at the temple. There is no Distribution Services Center at the Philadelphia Temple. Please visit <a href="store.lds.org">store.lds.org</a> online for your clothing needs.',
+                                         '<strong>Dining: </strong>There are no patron dining or vending services at the Columbus Temple. Food is not permitted on temple grounds.',
+                                         '<strong>Family Names: </strong>You are encouraged to use <a href="familysearch.org">FamilySearch.org</a> to share your family names with the temple, especially if you have a large number of names.',
+                                         '<strong>Electronic Devices: </strong>If you choose to bring an electronic device (such as a camera, phone or tablet) into the temple, it must be turned off and stored inside a locker.',
+                                         '<strong>Recommends: </strong>A Temple Recommend from your bishop and stake president is required to enter the temple. A Recommend for Living Ordinances is also needed by members being endowed or sealed to a spouse. Youth must be at least 12 years old to perform temple baptisms and must have a Limited-Use Recommend from their bishop. Males must hold the priesthood.'],
+                                'website':'https://www.lds.org/temples/details/columbus-ohio-temple?lang=eng'
                                 }
-                                
                 };
 
 function getTrips(){
@@ -38,7 +72,7 @@ function getTrips(){
             var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
             var driver=trip['driver'];
             var disabled=('passengers' in trip?trip['passengers'].length:0)==trip['numSeats']?'disabled':'';
-            $('#trips tr:last').after('<tr class="trip"><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td title="'+trip['email']+'" class="driver">'+driver+'<input type="text" hidden value="'+trip['email']+'" /></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
+            $('#trips tr:last').after('<tr class="trip"><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td title="'+trip['email']+'" class="driver"><a href="mailto:'+trip['email']+'?Temple%20Trip" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
             //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
         });
         $('.trip td').removeClass('match');
@@ -143,10 +177,6 @@ $(function(){
                 }
             }
         });
-    })
-    $('#trips').on('click','.driver',function(){
-        $(this)
-        document.execCommand('copy');
     })
 
     var hours=["12:00","12:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30"];
