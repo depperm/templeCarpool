@@ -356,17 +356,6 @@ function fillEditInfo(){
             $('#trips tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td><input type="button" value="Edit" class="editTrip" data-trip-id="'+index+'"></td></tr>');
             //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
         });
-        $('.trip td').removeClass('match');
-        var trips=$('.trip td[data-depart-date]')
-        $.each(trips,function(index,trip){
-            if($(this).attr('data-depart-date')==$('#departDate').val())
-                $(this).addClass('match')
-        });
-        var trips=$('.trip td[data-return-date]')
-        $.each(trips,function(index,trip){
-            if($(this).attr('data-return-date')==$('#returnDate').val())
-                $(this).addClass('match')
-        });
         //console.log(JSON.stringify(data));
     });
 }

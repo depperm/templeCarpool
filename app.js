@@ -163,6 +163,7 @@ app.get('/api/users/driver/:driver',function(req,res){
     console.log('trips driver:'+req.params.driver)
     res.send('get trips for driver received')
     var cursor=db.collection('Trips').find({'driverId':req.params.driver}).toArray(function(err, results) {
+        if (err) throw err;
         console.log(results)
         res.send(results)
     })
