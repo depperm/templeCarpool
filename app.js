@@ -175,16 +175,11 @@ app.get('/api/users/passenger/:passenger',function(req,res){
 
 })
 app.post('/api/users/add',function(req,res){
-    /*console.log('driver:'+req.body.driver)
-    console.log('driverId:'+req.body.driverId)
+    /*console.log('driver:'+req.body.user-id)
     console.log('email:'+req.body.email)
-    console.log('depD:'+req.body.dDate)
-    console.log('depT:'+req.body.dTime)
-    console.log('retD:'+req.body.rDate)
-    console.log('retT:'+req.body.rTime)
-    console.log('seat:'+req.body.numSeats)*/
+    console.log('depD:'+req.body.name)*/
     //check if driver has trip with same return or depart date-msg edit or remove trip
-    var query={'driverId':req.body.driverId};
+    var query={'user-id':req.body.user-id};
     var cursor=db.collection('Users').find(query).toArray(function(err, results) {
         if(err){
             res.status(501).send('Some error:'+err)
