@@ -293,13 +293,7 @@ function onSignIn(googleUser) {
         data:$.param(data),
         statusCode: {
             200: function(response){
-                $('#dDate').val('');
-                $('#dTime').val('select');
-                $('#rDate').val('');
-                $('#rTime').val('select');
-                $('#numSeats').val(1);
-                //alert('successfully posted your trip')
-                alert(response);
+                console.log(response);
             },
             500: function(response){
                 //response={'readyState','responseText','status','statusText'}
@@ -352,9 +346,7 @@ function fillEditInfo(){
             var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
             var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
             var driver=trip['driver'];
-            var disabled=('passengers' in trip?trip['passengers'].length:0)==trip['numSeats']?'disabled':'';
             $('#trips tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td><input type="button" value="Edit" class="editTrip" data-trip-id="'+index+'"></td></tr>');
-            //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
         });
         //console.log(JSON.stringify(data));
     });

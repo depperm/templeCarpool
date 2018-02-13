@@ -184,32 +184,26 @@ app.post('/api/users/add',function(req,res){
     console.log('retT:'+req.body.rTime)
     console.log('seat:'+req.body.numSeats)*/
     //check if driver has trip with same return or depart date-msg edit or remove trip
-    /*var dquery={dDate:req.body.dDate, driverId:req.body.driverId};
-    var rquery={rDate:req.body.rDate, driverId:req.body.driverId};
-    var cursor=db.collection('Users').find({$or:[dquery,rquery]}).toArray(function(err, results) {
+    var query={'driverId':req.body.driverId};
+    var cursor=db.collection('Users').find(query).toArray(function(err, results) {
         if(err){
             res.status(501).send('Some error:'+err)
         } 
         console.log('depart query results:'+results)
         console.log(results=='')
         if(results!=''){
-            console.log('add error')
-            if(req.body.dDate==results['dDate']){
-                res.status(500).send('You already have scheduled depart trip on '+req.body.dDate)
-            }else{
-                res.status(500).send('You already have scheduled return trip on '+req.body.rDate)
-            }
-            //res.status(500).send('You already have scheduled trip on '+req.body.dDate+' or '+req.body.rDate)
+            console.log('add user error')
+            res.status(200).send('User already in DB')
         }else{
             db.collection('Users').save(req.body,(err,result)=>{
                 if(err) return console.log('An error: '+err)
 
-                console.log('saved trip to db')
+                console.log('saved user to db')
             })
             //res.redirect('/')
-            res.send('Your ride has been posted')
+            res.send('Your user has been saved')
         }
-    })*/
+    })
 })
 app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/views/index.html'));
