@@ -2,12 +2,16 @@ var profile;
 var tripList;
 var driverList;
 
+var driverDialog,passengerDialog,driverForm,passengerForm;
+
 var mdStakes=["Annapolis","Baltimore","Columbia","Frederick","Seneca","Silver Spring","Suitland","Washington, DC"];
 var paStakes=["Altoona","Chambersburg","Pitsburgh"];
 var vaStakes=["Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Washington DC(YSA)","Winchester","Waynesboro","Woodbridge"];
 var wvStakes=["Clarksburg","Martinsburg"];
 
 var temples=['Philadelphia','Columbus']
+
+var hours=["12:00","12:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30"];
 
 var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm'],
                                                    'Wednesday':['10:00 am','11:30 am','6:30 pm','8:00 pm'], 
@@ -174,6 +178,36 @@ $(function(){
     $('#er').on('click',function(){
         fillEditInfo();
     })
+    
+    driverDialog=$('#editDriverForm').dialog({
+        autoOpen:false,
+        height:400,
+        width:350,
+        modal:true,
+        buttons: {
+            "Edit Trip": editDriverTrip,
+            Cancel: function() {
+                dialog.dialog( "close" );
+            }
+        },
+        close:function(){
+            driverForm[0].reset();
+            allFields.removeClass('ui-state-error');
+        }
+    });
+    driverForm=dialog.find('form').on('submit',function(event){
+        event.preventDefault();
+        //TODO validate
+        //TODO put/update trip
+        //editDriverTrip();
+        //TODO update edit table
+    });
+    
+    $('#editingDrivingRides').on('click','.editTrip',function(){
+        driverDialog.dialog( "open" );
+        //TODO fill with relevant info
+    });
+    
     $('#trips').on('click','.reserveTrip',function(){
     //$('.reserveTrip').on('click',function(){
         $.ajax({
@@ -199,7 +233,7 @@ $(function(){
         });
     })
 
-    var hours=["12:00","12:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30"];
+    
     $('#departDate').datepicker({minDate:0,onSelect:function(date){
         var selDate=new Date(date);
         //var stDate=new Date(selDate.getTime()-86400000);
@@ -365,4 +399,10 @@ function fillTempleSelect(selectId,selectedTemple){
             }
         }
     });
+}
+function editDriverTrip(){
+    //TODO validate form
+    //if validated
+    //post/put to server
+    driverDialog.dialog( "close" );
 }
