@@ -179,7 +179,7 @@ app.post('/api/users/add',function(req,res){
     console.log('email:'+req.body.email)
     console.log('depD:'+req.body.name)*/
     //check if driver has trip with same return or depart date-msg edit or remove trip
-    var query={'user-id':req.body.user-id};
+    var query={'userId':req.body.userId};
     var cursor=db.collection('Users').find(query).toArray(function(err, results) {
         if(err){
             res.status(501).send('Some error:'+err)

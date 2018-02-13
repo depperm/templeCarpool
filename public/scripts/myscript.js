@@ -283,7 +283,7 @@ function onSignIn(googleUser) {
     $('#content').show();
     $('.g-signout2').show();
     var data=[];
-    data.push({name:"user-id", value:profile.getId()});
+    data.push({name:"userId", value:profile.getId()});
     data.push({name:"name", value:profile.getName()});
     data.push({name:"email", value:profile.getEmail()});
     console.log('sending:'+JSON.stringify(data))
