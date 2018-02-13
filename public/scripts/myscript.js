@@ -195,7 +195,7 @@ $(function(){
             allFields.removeClass('ui-state-error');
         }
     });
-    driverForm=dialog.find('form').on('submit',function(event){
+    driverForm=driverDialog.find('form').on('submit',function(event){
         event.preventDefault();
         //TODO validate
         //TODO put/update trip
