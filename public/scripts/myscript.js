@@ -101,20 +101,11 @@ $(function(){
         getTrips();
     }
 
-    
     $('#temple').empty();
     $('#templeDest').empty();
-    $.each(temples,function(index,temple){
-        if(temple in templeInfo){
-            if(temple=='Philadelphia'){
-                $('#temple').append('<option value="'+temple+'" selected>'+temple+'</option>');
-                $('#templeDest').append('<option value="'+temple+'" selected>'+temple+'</option>');
-            }else{
-                $('#temple').append('<option value="'+temple+'">'+temple+'</option>');
-                $('#templeDest').append('<option value="'+temple+'">'+temple+'</option>');
-            }
-        }
-    });
+    fillTempleSelect('#temple','Philadelphia');
+    fillTempleSelect('#templeDest','Philadelphia');
+
     $('#temple').on('change',function(){
         $('#templeDest').val($(this).val());
         fillTempleInfo();
@@ -126,30 +117,9 @@ $(function(){
                 $(this).addClass('match')
         });
     });
-
-    $('#departStake').append('<optgroup label="Maryland Stakes">')
-    $.each(mdStakes,function(index,stake){
-        if(stake=='Seneca')
-            $('#departStake').append('<option value="'+stake+'" selected>'+stake+'</option>')
-        else
-            $('#departStake').append('<option value="'+stake+'">'+stake+'</option>')
-    })
-    $('#departStake').append('</optgroup>')
-    $('#departStake').append('<optgroup label="Pennsylvania Stakes">')
-    $.each(paStakes,function(index,stake){
-        $('#departStake').append('<option value="'+stake+'">'+stake+'</option>')
-    })
-    $('#departStake').append('</optgroup>')
-    $('#departStake').append('<optgroup label="Virginia Stakes">')
-    $.each(vaStakes,function(index,stake){
-        $('#departStake').append('<option value="'+stake+'">'+stake+'</option>')
-    })
-    $('#departStake').append('</optgroup>')
-    $('#departStake').append('<optgroup label="West Virginia Stakes">')
-    $.each(wvStakes,function(index,stake){
-        $('#departStake').append('<option value="'+stake+'">'+stake+'</option>')
-    })
-    $('#departStake').append('</optgroup>')
+    
+    $('#departStake').empty();
+    fillStakeSelect('#departStake','Seneca');
     
     var validator = $('#postRideForm').validate();
     $('#postRideForm').submit(function(e){
@@ -349,5 +319,50 @@ function fillEditInfo(){
             $('#editingDrivingRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td><input type="button" value="Edit" class="editTrip" data-trip-id="'+index+'"></td></tr>');
         });
         //console.log(JSON.stringify(data));
+    });
+}
+function fillStakeSelect(selectId,selectedStake){
+    $(selectId).append('<optgroup label="Maryland Stakes">')
+    $.each(mdStakes,function(index,stake){
+        if(stake==selectedStake)
+            $(selectId).append('<option value="'+stake+'" selected>'+stake+'</option>')
+        else
+            $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
+    })
+    $('#departStake').append('</optgroup>')
+    $('#departStake').append('<optgroup label="Pennsylvania Stakes">')
+    $.each(paStakes,function(index,stake){
+        if(stake==selectedStake)
+            $(selectId).append('<option value="'+stake+'" selected>'+stake+'</option>')
+        else
+            $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
+    })
+    $('#departStake').append('</optgroup>')
+    $('#departStake').append('<optgroup label="Virginia Stakes">')
+    $.each(vaStakes,function(index,stake){
+        if(stake==selectedStake)
+            $(selectId).append('<option value="'+stake+'" selected>'+stake+'</option>')
+        else
+            $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
+    })
+    $('#departStake').append('</optgroup>')
+    $('#departStake').append('<optgroup label="West Virginia Stakes">')
+    $.each(wvStakes,function(index,stake){
+        if(stake==selectedStake)
+            $(selectId).append('<option value="'+stake+'" selected>'+stake+'</option>')
+        else
+            $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
+    })
+    $(selectId).append('</optgroup>')
+}
+function fillTempleSelect(selectId,selectedTemple){
+    $.each(temples,function(index,temple){
+        if(temple in templeInfo){
+            if(temple==selectedTemple){
+                $(selectId).append('<option value="'+temple+'" selected>'+temple+'</option>');
+            }else{
+                $(selectId).append('<option value="'+temple+'">'+temple+'</option>');
+            }
+        }
     });
 }
