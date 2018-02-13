@@ -159,14 +159,56 @@ app.delete('/api/trips/:trip/:passenger',function(req,res){
     res.send('delete passenger received')
 })
 //get list of trip ids with driver id
-app.get('/api/users/:driver',function(req,res){
-    console.log('trip:'+req.params.driver)
+app.get('/api/users/driver/:driver',function(req,res){
+    console.log('trips driver:'+req.params.driver)
     res.send('get trips for driver received')
+    var cursor=db.collection('Trips').find({'driver':req.params.driver}).toArray(function(err, results) {
+        console.log(results)
+        res.send(results)
+    })
 })
 //get list of trips with user as passenger
-app.get('/api/users/:passenger',function(req,res){
+app.get('/api/users/passenger/:passenger',function(req,res){
     console.log('trip:'+req.params.passenger)
     res.send('get trips for passenger received')
+
+})
+app.post('/api/users/add',function(req,res){
+    /*console.log('driver:'+req.body.driver)
+    console.log('driverId:'+req.body.driverId)
+    console.log('email:'+req.body.email)
+    console.log('depD:'+req.body.dDate)
+    console.log('depT:'+req.body.dTime)
+    console.log('retD:'+req.body.rDate)
+    console.log('retT:'+req.body.rTime)
+    console.log('seat:'+req.body.numSeats)*/
+    //check if driver has trip with same return or depart date-msg edit or remove trip
+    /*var dquery={dDate:req.body.dDate, driverId:req.body.driverId};
+    var rquery={rDate:req.body.rDate, driverId:req.body.driverId};
+    var cursor=db.collection('Users').find({$or:[dquery,rquery]}).toArray(function(err, results) {
+        if(err){
+            res.status(501).send('Some error:'+err)
+        } 
+        console.log('depart query results:'+results)
+        console.log(results=='')
+        if(results!=''){
+            console.log('add error')
+            if(req.body.dDate==results['dDate']){
+                res.status(500).send('You already have scheduled depart trip on '+req.body.dDate)
+            }else{
+                res.status(500).send('You already have scheduled return trip on '+req.body.rDate)
+            }
+            //res.status(500).send('You already have scheduled trip on '+req.body.dDate+' or '+req.body.rDate)
+        }else{
+            db.collection('Users').save(req.body,(err,result)=>{
+                if(err) return console.log('An error: '+err)
+
+                console.log('saved trip to db')
+            })
+            //res.redirect('/')
+            res.send('Your ride has been posted')
+        }
+    })*/
 })
 app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/views/index.html'));
