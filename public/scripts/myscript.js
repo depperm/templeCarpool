@@ -336,9 +336,9 @@ function fillTempleInfo(){
 function fillEditInfo(){
     $.get('/api/users/driver/'+profile.getId(),function(data,status){
         $('#editingDrivingRides tr:not(.header)').remove();
-        driverList=data;
+        //driverList=data;
         console.log(data);
-        /*$.each(data,function(index,trip){
+        $.each(data,function(index,trip){
             //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
             //Stake,Temple,Departure,Return,Seats,Edit
             var stk=trip['departStake'];
@@ -348,7 +348,7 @@ function fillEditInfo(){
             var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
             var driver=trip['driver'];
             $('#trips tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td><input type="button" value="Edit" class="editTrip" data-trip-id="'+index+'"></td></tr>');
-        });*/
+        });
         //console.log(JSON.stringify(data));
     });
 }
