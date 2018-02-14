@@ -19,13 +19,6 @@ MongoClient.connect(url,function(err,client){
     app.listen(port,()=>{
         console.log('listening on '+port.toString());
     });
-    //console.log("Database created");
-    //db.close();
-        /*db.collection('trips').find().toArray(function(err,result){
-            if(err) throw err
-
-            console.log(result)
-        })*/
 })
 
 const app=express()
@@ -49,24 +42,40 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
     //check if passenger has a seat
     //check if trip is full
     var pquery={passengers:{$in:[req.params.passenger]}};
-    var trip=db.collection('Trips').findOne({'_id':ObjectId(req.params.trip)})//['passengers'].length
-    var passLen='passengers' in trip?trip['passengers'].length:0
+    //var trip={};//=db.collection('Trips').find(ObjectId(req.params.trip)).toArray()[0]
+    
+    /*db.collection('Trips').find().toArray(function(err,trips){
+        console.log('trips:'+JSON.stringify(trips))    
+    });*/
+    db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(err,result){
+        var trip=result[0];
+        console.log('trip:'+JSON.stringify(trip))
+        console.log('passengers' in trip)
+    })
+    //console.log('trip:'+JSON.stringify(trip))
+    //console.log('passengers' in trip)
+    var passLen='passengers' in trip?trip['passengers'].length:0;
+    console.log('passengers:'+passLen.toString());
     var t={}
-    t['$eq']=passLen.toString()
-    var fquery={'numSeats':t};
+    t['$size']=trip['numSeats']
+    var fquery={'_id':ObjectId(req.params.trip),'passenger':t};
     //check if you are the driver
     //var fquery={'numSeats:{$eq:'+passLen.toString()+'}'};
     var cursor=db.collection('Trips').find({$or:[pquery,fquery]}).toArray(function(err, results) {
         if(err){
+            console.log('some error 501')
             res.status(501).send('Some error:'+err)
+            return;
         } 
-        console.log('reserve query results:'+results)
+        console.log('reserve query results:'+JSON.stringify(results))
         console.log(results=='')
-        if(results!=''){
+        if(results!=null){
             console.log('reserve error')
             if(req.params.passenger in results['passengers']){
+                console.log('already have a seat')
                 res.status(500).send('You already have a seat reserved')
             }else{
+                console.log('no more seats')
                 res.status(500).send('There are no more available seats')
             }
             //res.status(500).send('You already have a reserved seat OR there are no more seats')
@@ -141,11 +150,9 @@ app.put('/api/trips/:trip',function(req,res){
 //get all trips
 app.get('/api/trips',function(req,res){
     var cursor=db.collection('Trips').find().toArray(function(err, results) {
-        console.log(results)
+        //console.log(results)
         res.send(results)
-        // send HTML file populated with quotes here
     })
-    //res.send(trips)
 })
 //get trip with ID
 app.get('/api/trips/:trip',function(req,res){
