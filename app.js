@@ -41,7 +41,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
     console.log('passenger param:'+req.params.passenger)
     //check if passenger has a seat
     
-    var pquery={passengers:{$in:[req.params.passenger]}};
+    var pquery={'_id':ObjectId(req.params.trip),passengers:{$in:[req.params.passenger]}};
     //var trip={};//=db.collection('Trips').find(ObjectId(req.params.trip)).toArray()[0]
     
     /*db.collection('Trips').find().toArray(function(err,trips){
@@ -65,7 +65,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
 
             name=user['name']
             console.log('name:'+name)
-            var dquery={'driver':name};
+            var dquery={'_id':ObjectId(req.params.trip),'driver':name};
             console.log('queries: '+JSON.stringify(pquery)+','+JSON.stringify(fquery)+','+JSON.stringify(dquery))
             var cursor=db.collection('Trips').find({$or:[pquery,fquery,dquery]}).toArray(function(err, results) {
                 if(err){
