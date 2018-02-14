@@ -56,16 +56,25 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
         var passLen='passengers' in trip?trip['passengers'].length:0;
         
         t['$size']=parseInt(trip['numSeats'])
-        var fquery={'_id':ObjectId(req.params.trip),'passenger':t};
     })
+    print('t:'+JSON.stringify(t))
+    var fquery={'_id':ObjectId(req.params.trip),'passenger':t};
     //console.log('trip:'+JSON.stringify(trip))
     //console.log('passengers' in trip)
     
     //console.log('passengers:'+passLen.toString());
     
     //check if you are the driver
-    //var fquery={'numSeats:{$eq:'+passLen.toString()+'}'};
-    var cursor=db.collection('Trips').find({$or:[pquery,fquery]}).toArray(function(err, results) {
+    var name='';
+    db.collection('Users').find({'userId':ObjectId(req.params.passenger)}).toArray(function(err,result){
+        var user=result[0];
+        console.log('user:'+JSON.stringify(user))
+
+        name=user['name']
+    })
+    print('name:'+name)
+    var dquery={'driver':name};
+    var cursor=db.collection('Trips').find({$or:[pquery,fquery,dquery]}).toArray(function(err, results) {
         if(err){
             console.log('some error 501')
             res.status(501).send('Some error:'+err)
@@ -75,10 +84,15 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
         console.log(results=='')
         if(results!=null){
             console.log('reserve error')
-            if(req.params.passenger in results['passengers']){
+            if(name==results['driver']){
+                console.log('you\'re the driver')
+                res.status(500).send('You\'re the driver')
+            }
+            else if(req.params.passenger in results['passengers']){
                 console.log('already have a seat')
                 res.status(500).send('You already have a seat reserved')
-            }else{
+            }
+            else{
                 console.log('no more seats')
                 res.status(500).send('There are no more available seats')
             }
