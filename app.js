@@ -57,7 +57,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
         
         t['$size']=parseInt(trip['numSeats'])
     })
-    print('t:'+JSON.stringify(t))
+    console.log('t:'+JSON.stringify(t))
     var fquery={'_id':ObjectId(req.params.trip),'passenger':t};
     //console.log('trip:'+JSON.stringify(trip))
     //console.log('passengers' in trip)
@@ -72,7 +72,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
 
         name=user['name']
     })
-    print('name:'+name)
+    console.log('name:'+name)
     var dquery={'driver':name};
     var cursor=db.collection('Trips').find({$or:[pquery,fquery,dquery]}).toArray(function(err, results) {
         if(err){
