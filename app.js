@@ -22,8 +22,9 @@ MongoClient.connect(url,function(err,client){
     });
 })
 
-var cleanUp = schedule.scheduleJob('0 23 * * *',function(){
-    console.log('should remove any trip that has a return date == today-1')
+//see https://www.npmjs.com/package/node-schedule
+var cleanUp = schedule.scheduleJob('0 0 23 * * *',function(){
+    console.log((new Date()).toLocaleString()+': should remove any trip that has a return date == today-1')
 });
 
 const app=express()
