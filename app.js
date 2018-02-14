@@ -70,13 +70,17 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
             }
             //res.status(500).send('You already have a reserved seat OR there are no more seats')
         }else{
-            db.collection('Trips').update({'_id':req.params.trip},{ $push: { "passengers": req.params.passenger }})/*,(err,result)=>{
+            db.collection('Trips').update({'_id':req.params.trip},{ $push: { "passengers": req.params.passenger }},function(err,res){
+                if(err) throw err
+
+                console.log('reserved seat on trip ')
+            })/*,(err,result)=>{
                 if(err) return console.log('An error: '+err)
 
                 console.log('reserved seat on trip ')
             })*/
             //res.redirect('/')
-            console.log('reserved seat on trip ')
+            //console.log('reserved seat on trip ')
             res.send('Your seat has been reservd')
         }
     })
@@ -156,23 +160,31 @@ app.delete('/api/trips/:trip',function(req,res){
 app.delete('/api/trips/:trip/:passenger',function(req,res){
     console.log('trip:'+req.params.trip)
     console.log('trip:'+req.params.passenger)
-    res.send('delete passenger received')
+    //res.send('delete passenger received')
+    var cursor=db.collection('Trips').update({'_id':req.params.trip},{ $pull: { passenger: req.params.passenger} },function(err, results) {
+        if (err) throw err;
+        //console.log(results)
+        res.send('removed')
+    })
 })
 //get list of trip ids with driver id
 app.get('/api/users/driver/:driver',function(req,res){
     console.log('trips driver:'+req.params.driver)
-    //res.send('get trips for driver received')
     var cursor=db.collection('Trips').find({'driverId':req.params.driver}).toArray(function(err, results) {
         if (err) throw err;
-        console.log(results)
+        //console.log(results)
         res.send(results)
     })
 })
 //get list of trips with user as passenger
 app.get('/api/users/passenger/:passenger',function(req,res){
     console.log('trip:'+req.params.passenger)
-    res.send('get trips for passenger received')
-
+    //res.send('get trips for passenger received')
+    var cursor=db.collection('Trips').find({'passenger':req.params.passenger}).toArray(function(err, results) {
+        if (err) throw err;
+        //console.log(results)
+        res.send(results)
+    })
 })
 app.post('/api/users/add',function(req,res){
     /*console.log('driver:'+req.body.user-id)
@@ -207,39 +219,3 @@ app.use(function(req,res,next){
     //res.status(404).send("Sorry can't find that!")
     res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
 })
-//app.listen(port);
-/*var auth=new GoogleAuth();
-client=new auth.OAuth2('312484233782-6q2cd48kt6ptuotlcs5mv59vk1n9q9hp.apps.googleusercontent.com','','');
-
-client.verifyIdToken(
-    token,
-    '312484233782-6q2cd48kt6ptuotlcs5mv59vk1n9q9hp.apps.googleusercontent.com',
-    function(e,login) {
-        payload=login.getPayload();
-        userid=payload['sub'];
-    });*/
-
-/*fs.readFile('./views/index.html',function(err,html) {
-    if(err){
-        throw err;
-    }
-    http.createServer(function(request,response) {
-        response.writeHeader(200,{"Content-Type": "text/html"});
-        response.write(html);
-        response.end();
-    }).listen(port);
-});*/
-/*const requestHandler = (request, response) => {
-    console.log(request.url)
-    response.end('Hello Node.js Server!')
-}
-
-const server = http.createServer(requestHandler)
-
-server.listen(port, (err) => {
-    if(err){
-        return console.log('something bad happened',err)
-    }
-
-    console.log(`server is listening on ${port}`)
-})*/
