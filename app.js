@@ -37,8 +37,8 @@ app.post('/tokensignin',function(req,res){
 })
 //reserve a seat for a trip
 app.post('/api/trips/:trip/:passenger',function(req,res){
-    console.log('trip:'+req.params.trip)
-    console.log('passenger:'+req.params.passenger)
+    console.log('trip param:'+req.params.trip)
+    console.log('passenger param:'+req.params.passenger)
     //check if passenger has a seat
     
     var pquery={passengers:{$in:[req.params.passenger]}};
@@ -59,7 +59,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
         console.log('t:'+JSON.stringify(t))
         var fquery={'_id':ObjectId(req.params.trip),'passenger':t};
         var name='';
-        db.collection('Users').find({'userId':ObjectId(req.params.passenger)}).toArray(function(err,result){
+        db.collection('Users').find({'userId':req.params.passenger}).toArray(function(err,result){
             var user=result[0];
             console.log('user:'+JSON.stringify(user))
 
