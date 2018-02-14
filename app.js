@@ -78,12 +78,12 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
                 if(results!=''){
                     console.log('reserve error')
                     console.log(name+' equal '+results[0]['driver']+' - '+(name==results[0]['driver']).toString())
-                    console.log(req.params.passenger+' in '+JSON.stringify(results[0]['passengers'])+' - '+(results[0]['passengers'].indexOf(req.params.passenger)>-1).toString())
+                    console.log(req.params.passenger+' in '+JSON.stringify(results[0]['passengers'])+' - '+('passengers' in results[0] && results[0]['passengers'].indexOf(req.params.passenger)>-1).toString())
                     if(name==results[0]['driver']){
                         console.log('you\'re the driver')
                         res.status(500).send('You\'re the driver')
                     }
-                    else if(results[0]['passengers'].indexOf(req.params.passenger)>-1){
+                    else if('passengers' in results[0] && results[0]['passengers'].indexOf(req.params.passenger)>-1){
                         console.log('already have a seat')
                         res.status(500).send('You already have a seat reserved')
                     }
