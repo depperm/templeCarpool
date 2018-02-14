@@ -33,7 +33,7 @@ label{
     border-bottom: 1px solid #ddd; 
 }
 
-#trips,#editingDrivingRides,#editingPassengerRides tr.header, #trips,#editingDrivingRides,#editingPassengerRides tr:hover {
+#trips tr.header,#editingDrivingRides tr.header,#editingPassengerRides tr.header, #trips tr:hover,#editingDrivingRides tr:hover,#editingPassengerRides tr:hover {
     /* Add a grey background color to the table header and on hover */
     background-color: #f1f1f1;
 }

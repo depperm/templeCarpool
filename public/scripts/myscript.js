@@ -213,7 +213,10 @@ $(function(){
     $('#editingPassengerRides').on('click','.editTrip',function(){
         var choice=confirm('Are you sure you want to leave this trip?')
         if(choice){
-            console.log('should delete')
+            $.delete('/api/trips/'+passengerList[$(this).attr('data-trip-id')]['_id']+'/'+profile.getId(),function(data,status){
+                fillEditInfo();
+                //console.log(JSON.stringify(data));
+            });
         }
     });
     
