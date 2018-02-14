@@ -191,7 +191,7 @@ $(function(){
     driverDialog=$('#editDriverForm').dialog({
         autoOpen:false,
         height:400,
-        width:550,
+        width:600,
         modal:true,
         buttons: {
             "Delete Trip": deleteTrip,
