@@ -77,8 +77,8 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
                 console.log(results=='')
                 if(results!=''){
                     console.log('reserve error')
-                    console.log(name+' equal '+results[0]['driver']+' - '+name==results[0]['driver'])
-                    console.log(req.params.passenger+' in '+results[0]['passengers']+' - '+req.params.passenger in results[0]['passengers'])
+                    console.log(name+' equal '+results[0]['driver']+' - '+(name==results[0]['driver']).toString())
+                    console.log(req.params.passenger+' in '+results[0]['passengers']+' - '+(req.params.passenger in results[0]['passengers']).toString())
                     if(name==results[0]['driver']){
                         console.log('you\'re the driver')
                         res.status(500).send('You\'re the driver')
