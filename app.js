@@ -40,25 +40,29 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
     console.log('trip:'+req.params.trip)
     console.log('passenger:'+req.params.passenger)
     //check if passenger has a seat
-    //check if trip is full
+    
     var pquery={passengers:{$in:[req.params.passenger]}};
     //var trip={};//=db.collection('Trips').find(ObjectId(req.params.trip)).toArray()[0]
     
     /*db.collection('Trips').find().toArray(function(err,trips){
         console.log('trips:'+JSON.stringify(trips))    
     });*/
+    //check if trip is full
+    var t={}
     db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(err,result){
         var trip=result[0];
         console.log('trip:'+JSON.stringify(trip))
         console.log('passengers' in trip)
+        var passLen='passengers' in trip?trip['passengers'].length:0;
+        
+        t['$size']=parseInt(trip['numSeats'])
+        var fquery={'_id':ObjectId(req.params.trip),'passenger':t};
     })
     //console.log('trip:'+JSON.stringify(trip))
     //console.log('passengers' in trip)
-    var passLen='passengers' in trip?trip['passengers'].length:0;
-    console.log('passengers:'+passLen.toString());
-    var t={}
-    t['$size']=trip['numSeats']
-    var fquery={'_id':ObjectId(req.params.trip),'passenger':t};
+    
+    //console.log('passengers:'+passLen.toString());
+    
     //check if you are the driver
     //var fquery={'numSeats:{$eq:'+passLen.toString()+'}'};
     var cursor=db.collection('Trips').find({$or:[pquery,fquery]}).toArray(function(err, results) {
