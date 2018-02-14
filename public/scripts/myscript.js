@@ -207,37 +207,7 @@ $(function(){
     });
     driverForm=driverDialog.find('form').on('submit',function(event){
         event.preventDefault();
-        //TODO validate
-        var editValidator = $('#postRideForm').validate();
-        if(editValidator.valid()){
-            console.log('should update')
-            /*var data=$('#postRideForm').serializeArray();//form to array
-            data.push({name:"driverId", value:profile.getId()});//add driver id
-            console.log('sending:'+JSON.stringify(data))
-            $.ajax({
-                url:'/api/trips/add',
-                type:'post',
-                data:$.param(data),
-                statusCode: {
-                    200: function(response){
-                        $('#dDate').val('');
-                        $('#dTime').val('select');
-                        $('#rDate').val('');
-                        $('#rTime').val('select');
-                        $('#numSeats').val(1);
-                        //alert('successfully posted your trip')
-                        alert(response);
-                    },
-                    500: function(response){
-                        //response={'readyState','responseText','status','statusText'}
-                        alert(response['responseText']);
-                    }
-                }
-            });*/
-        }
-        //TODO put/update trip
-        //editDriverTrip();
-        //TODO update edit table
+        editDriverTrip();
     });
     
     $('#editingDrivingRides').on('click','.editTrip',function(){
@@ -474,8 +444,37 @@ function fillTempleSelect(selectId){
     });
 }
 function editDriverTrip(){
-    //TODO validate form
-    //if validated
+    //TODO validate
+    var editValidator = $('#postRideForm').validate();
+    if(editValidator.valid()){
+        console.log('should update')
+        /*var data=$('#postRideForm').serializeArray();//form to array
+        data.push({name:"driverId", value:profile.getId()});//add driver id
+        console.log('sending:'+JSON.stringify(data))
+        $.ajax({
+            url:'/api/trips/add',
+            type:'post',
+            data:$.param(data),
+            statusCode: {
+                200: function(response){
+                    $('#dDate').val('');
+                    $('#dTime').val('select');
+                    $('#rDate').val('');
+                    $('#rTime').val('select');
+                    $('#numSeats').val(1);
+                    //alert('successfully posted your trip')
+                    alert(response);
+                },
+                500: function(response){
+                    //response={'readyState','responseText','status','statusText'}
+                    alert(response['responseText']);
+                }
+            }
+        });*/
+    }
+    //TODO put/update trip
+    //editDriverTrip();
+    //TODO update edit table
     //post/put to server
     driverDialog.dialog( "close" );
 }

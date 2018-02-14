@@ -122,19 +122,19 @@
                                     <select name="driverTemple" id="driverTemple" class="text ui-widget-content ui-corner-all"></select>
                                     <br />
                                     <label for="driverDepart">Departure</label>
-                                    <input type="text" name="driverDepart" id="driverDepart" class="text ui-widget-content ui-corner-all">
+                                    <input type="text" name="driverDepart" id="driverDepart" required class="text ui-widget-content ui-corner-all">
                                     <select name="driverDTime" id="driverDTime" class="text ui-widget-content ui-corner-all">
                                     <option value='select'>--select--</option>
                                     </select>
                                     <br />
                                     <label for="driverReturn">Return</label>
-                                    <input type="text" name="driverReturn" id="driverReturn" class="text ui-widget-content ui-corner-all">
+                                    <input type="text" name="driverReturn" id="driverReturn" required class="text ui-widget-content ui-corner-all">
                                     <select name="driverRTime" id="driverRTime" class="text ui-widget-content ui-corner-all">
                                     <option value='select'>--select--</option>
                                     </select>
                                     <br />
                                     <label for="driverSeats">Max Seats</label>
-                                    <input type="number" name="driverSeats" id="driverSeats" class="text ui-widget-content ui-corner-all">
+                                    <input type="number" name="driverSeats" id="driverSeats" min=1 required class="text ui-widget-content ui-corner-all">
                                     <br />
                                     <label for="driverPassengers">Passengers</label>
                                     <table name="driverPassengers" id="driverPassengers">
