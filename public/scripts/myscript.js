@@ -3,6 +3,7 @@ var tripList;
 
 var driverList;
 var passengerList;
+var tripPassengerList;
 
 var driverDialog,passengerDialog,driverForm,passengerForm;
 
@@ -212,18 +213,28 @@ $(function(){
     
     $('#editingDrivingRides').on('click','.editTrip',function(){
         console.log('editing:'+JSON.stringify(driverList[$(this).attr('data-trip-id')]));
-        if('templeDest' in driverList[$(this).attr('data-trip-id')])
-            $('#driverTemple').val(driverList[$(this).attr('data-trip-id')]['templeDest']);
-        if('departStake' in driverList[$(this).attr('data-trip-id')])
-            $('#driverStake').val(driverList[$(this).attr('data-trip-id')]['departStake']);
-        $('#driverDTime').val(driverList[$(this).attr('data-trip-id')]['dTime']);
-        $('#driverRTime').val(driverList[$(this).attr('data-trip-id')]['rTime']);
-        $('#driverDepart').val(driverList[$(this).attr('data-trip-id')]['dDate']);
-        $('#driverReturn').val(driverList[$(this).attr('data-trip-id')]['rDate']);
-        $('#driverSeats').val(driverList[$(this).attr('data-trip-id')]['numSeats'])
-        //TODO get passenger info-fill in table #driverPassengers
+        fillDriverDialog($(this).attr('data-trip-id'));
         driverDialog.dialog( "open" );
     });
+    $('#driverPassengers').on('click','.kickFromTrip',function(){
+        var choice=confirm('Are you sure you want to kick this passenger from your trip? You will not have the ability to add them later.')
+        if(choice){
+            $.ajax({
+                url:'/api/trips/'+driverList[$(this).attr('data-trip-id')]['_id']+'/'+tripPassengerList[$(this).attr('data-trip-passenger-id')]['userId'],
+                type:'DELETE',
+                statusCode: {
+                    200: function(response){
+                        fillDriverDialog($(this).attr('data-trip-id'));
+                    },
+                    500: function(response){
+                        //response={'readyState','responseText','status','statusText'}
+                        console.log('response'+response['responseText']);
+                        alert(response['responseText']);
+                    }
+                }
+            });
+        }
+    })
     $('#editingPassengerRides').on('click','.editTrip',function(){
         var choice=confirm('Are you sure you want to leave this trip?')
         if(choice){
@@ -252,12 +263,6 @@ $(function(){
             //data:$.param(data),
             statusCode: {
                 200: function(response){
-                    /*$('#dDate').val('');
-                    $('#dTime').val('select');
-                    $('#rDate').val('');
-                    $('#rTime').val('select');
-                    $('#numSeats').val(1);*/
-                    //alert('successfully posted your trip')
                     alert(response);
                     getTrips();
                 },
@@ -414,7 +419,7 @@ function fillEditInfo(){
         //console.log(JSON.stringify(data));
     });
 }
-function fillStakeSelect(selectId,selectedStake){
+function fillStakeSelect(selectId){
     $(selectId).append('<optgroup label="Maryland Stakes">')
     $.each(mdStakes,function(index,stake){
         $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
@@ -479,5 +484,46 @@ function editDriverTrip(){
     driverDialog.dialog( "close" );
 }
 function deleteTrip(){
+    var choice=confirm('Are you sure you want to Delete this trip?')
+    if(choice){
+        $.ajax({
+            url:'/api/trips/'+driverList[$(this).attr('data-trip-id')]['_id'],
+            type:'DELETE',
+            statusCode: {
+                200: function(response){
+                    fillEditInfo();
+                },
+                500: function(response){
+                    //response={'readyState','responseText','status','statusText'}
+                    console.log('response'+response['responseText']);
+                    alert(response['responseText']);
+                }
+            }
+        });
+    }
     driverDialog.dialog( "close" );
+}
+function fillDriverDialog(index){
+    if('templeDest' in driverList[index])
+        $('#driverTemple').val(driverList[index]['templeDest']);
+    if('departStake' in driverList[index])
+        $('#driverStake').val(driverList[index]['departStake']);
+    $('#driverDTime').val(driverList[index]['dTime']);
+    $('#driverRTime').val(driverList[index]['rTime']);
+    $('#driverDepart').val(driverList[index]['dDate']);
+    $('#driverReturn').val(driverList[index]['rDate']);
+    $('#driverSeats').val(driverList[index]['numSeats'])
+    //TODO get passenger info-fill in table #driverPassengers
+    $.get('/api/passengers/'+driverList[index]['_id'],function(data,status){
+        $('#driverPassengers tr:not(.header)').remove();
+        tripPassengerList=data;
+        $.each(tripPassengerList,function(i,info){
+            //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
+            //Name,Email,Remove
+            var name=info['name'];
+            var email=info['email'];
+            $('#driverPassengers tr:last').after('<tr class="trip"><td>'+name+'</td><td>'+email+'</td><td><input type="button" value="Remove" class="kickFromTrip" data-trip-id="'+index+'" data-trip-passenger-id="'+i+'"></td></tr>');
+        });
+        //console.log(JSON.stringify(data));
+    });
 }
