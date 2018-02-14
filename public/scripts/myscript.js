@@ -231,10 +231,6 @@ $(function(){
                     //response={'readyState','responseText','status','statusText'}
                     console.log('response'+response['responseText']);
                     alert(response['responseText']);
-                },
-                501:function(response){
-                    console.log('reponse'+response['responseText']);
-                    alert(response['responseText']);
                 }
             }
         });

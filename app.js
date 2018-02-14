@@ -39,25 +39,20 @@ app.post('/tokensignin',function(req,res){
 app.post('/api/trips/:trip/:passenger',function(req,res){
     console.log('trip param:'+req.params.trip)
     console.log('passenger param:'+req.params.passenger)
-    //check if passenger has a seat
-    
+    //check if passenger has a seat 
     var pquery={'_id':ObjectId(req.params.trip),passengers:{$in:[req.params.passenger]}};
-    //var trip={};//=db.collection('Trips').find(ObjectId(req.params.trip)).toArray()[0]
-    
-    /*db.collection('Trips').find().toArray(function(err,trips){
-        console.log('trips:'+JSON.stringify(trips))    
-    });*/
     //check if trip is full
     var t={}
     db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(err,result){
         var trip=result[0];
-        console.log('trip:'+JSON.stringify(trip))
-        console.log('passengers' in trip)
+        //console.log('trip:'+JSON.stringify(trip))
+        //console.log('passengers' in trip)
         var passLen='passengers' in trip?trip['passengers'].length:0;
         
         t['$size']=parseInt(trip['numSeats'])
-        console.log('t:'+JSON.stringify(t))
+        //console.log('t:'+JSON.stringify(t))
         var fquery={'_id':ObjectId(req.params.trip),'passenger':t};
+        //check if you're the driver
         var name='';
         db.collection('Users').find({'userId':req.params.passenger}).toArray(function(err,result){
             var user=result[0];
@@ -70,55 +65,38 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
             var cursor=db.collection('Trips').find({$or:[pquery,fquery,dquery]}).toArray(function(err, results) {
                 if(err){
                     console.log('some error 501')
-                    res.status(501).send('Some error:'+err)
+                    res.status(500).send('Some error:'+err)
                     return;
                 } 
-                console.log('reserve query results:'+JSON.stringify(results))
-                console.log(results=='')
+                //console.log('reserve query results:'+JSON.stringify(results))
+                //console.log(results=='')
                 if(results!=''){
                     console.log('reserve error')
-                    console.log(name+' equal '+results[0]['driver']+' - '+(name==results[0]['driver']).toString())
-                    console.log(req.params.passenger+' in '+JSON.stringify(results[0]['passengers'])+' - '+('passengers' in results[0] && results[0]['passengers'].indexOf(req.params.passenger)>-1).toString())
+                    //console.log(name+' equal '+results[0]['driver']+' - '+(name==results[0]['driver']).toString())
+                    //console.log(req.params.passenger+' in '+JSON.stringify(results[0]['passengers'])+' - '+('passengers' in results[0] && results[0]['passengers'].indexOf(req.params.passenger)>-1).toString())
                     if(name==results[0]['driver']){
                         console.log('you\'re the driver')
-                        res.status(500).send('You\'re the driver')
+                        res.send('You\'re the driver')
                     }
                     else if('passengers' in results[0] && results[0]['passengers'].indexOf(req.params.passenger)>-1){
                         console.log('already have a seat')
-                        res.status(500).send('You already have a seat reserved')
+                        res.send('You already have a seat reserved')
                     }
                     else{
                         console.log('no more seats')
-                        res.status(500).send('There are no more available seats')
+                        res.send('There are no more available seats')
                     }
-                    //res.status(500).send('You already have a reserved seat OR there are no more seats')
                 }else{
                     db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $push: { "passengers": req.params.passenger }},function(err,res){
                         if(err) throw err
 
                         console.log('reserved seat on trip ')
-                    })/*,(err,result)=>{
-                        if(err) return console.log('An error: '+err)
-
-                        console.log('reserved seat on trip ')
-                    })*/
-                    //res.redirect('/')
-                    //console.log('reserved seat on trip ')
+                    })
                     res.send('Your seat has been reservd')
                 }
             })
         })
     })
-    //console.log('trip:'+JSON.stringify(trip))
-    //console.log('passengers' in trip)
-    
-    //console.log('passengers:'+passLen.toString());
-    
-    //check if you are the driver
-    
-    
-    //reserve the seat
-    //res.send('post seat received')
 })
 //create a trip
 app.post('/api/trips/add',function(req,res){
@@ -135,16 +113,17 @@ app.post('/api/trips/add',function(req,res){
     var rquery={rDate:req.body.rDate, driverId:req.body.driverId};
     var cursor=db.collection('Trips').find({$or:[dquery,rquery]}).toArray(function(err, results) {
         if(err){
-            res.status(501).send('Some error:'+err)
+            res.status(500).send('Some error:'+err)
+            return;
         } 
         console.log('depart query results:'+results)
         console.log(results=='')
         if(results!=''){
             console.log('add error')
             if(req.body.dDate==results['dDate']){
-                res.status(500).send('You already have scheduled depart trip on '+req.body.dDate)
+                res.send('You already have scheduled depart trip on '+req.body.dDate)
             }else{
-                res.status(500).send('You already have scheduled return trip on '+req.body.rDate)
+                res.send('You already have scheduled return trip on '+req.body.rDate)
             }
             //res.status(500).send('You already have scheduled trip on '+req.body.dDate+' or '+req.body.rDate)
         }else{
