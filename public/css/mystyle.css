@@ -23,12 +23,12 @@ label{
     font-size: 18px; /* Increase font-size */
 }
 
-#trips,#editingDrivingRides,#editingPassengerRides th,td {
+#trips  th,td,#editingDrivingRides  th,td,#editingPassengerRides th,td {
     text-align: left; /* Left-align text */
     padding: 12px; /* Add padding */
 }
 
-#trips,#editingDrivingRides,#editingPassengerRides tr {
+#trips tr,#editingDrivingRides tr,#editingPassengerRides tr {
     /* Add a bottom border to all table rows */
     border-bottom: 1px solid #ddd; 
 }

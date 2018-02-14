@@ -213,9 +213,19 @@ $(function(){
     $('#editingPassengerRides').on('click','.editTrip',function(){
         var choice=confirm('Are you sure you want to leave this trip?')
         if(choice){
-            $.delete('/api/trips/'+passengerList[$(this).attr('data-trip-id')]['_id']+'/'+profile.getId(),function(data,status){
-                fillEditInfo();
-                //console.log(JSON.stringify(data));
+            $.ajax({
+                url:'/api/trips/'+passengerList[$(this).attr('data-trip-id')]['_id']+'/'+profile.getId(),
+                type:'delete',
+                statusCode: {
+                    200: function(response){
+                        fillEditInfo();
+                    },
+                    500: function(response){
+                        //response={'readyState','responseText','status','statusText'}
+                        console.log('response'+response['responseText']);
+                        alert(response['responseText']);
+                    }
+                }
             });
         }
     });
