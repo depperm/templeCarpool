@@ -9,6 +9,8 @@ var schedule = require('node-schedule')
 
 const port = 80
 
+const app=express()
+
 var MongoClient=require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var url="mongodb://localhost:27017/templeCarpoolDB";
@@ -26,8 +28,6 @@ MongoClient.connect(url,function(err,client){
 var cleanUp = schedule.scheduleJob('0 0 23 * * *',function(){
     console.log((new Date()).toLocaleString()+': should remove any trip that has a return date == today-1')
 });
-
-const app=express()
 
 app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.json());
@@ -164,23 +164,38 @@ app.get('/api/trips',function(req,res){
 })
 //get trip with ID
 app.get('/api/trips/:trip',function(req,res){
-    console.log('trip:'+req.params.trip)
-    res.send('get ride received')
+    console.log('getting trip:'+req.params.trip)
+    db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(err,result){
+        if(err){
+            res.status(500).send('Some error:'+err)
+            return;
+        }
+        console.log('returning trip: '+JSON.stringify(result[0]))
+        res.send(result[0])
+    })
 })
 //remove a trip with ID
 app.delete('/api/trips/:trip',function(req,res){
-    console.log('trip:'+req.params.trip)
-    res.send('remove ride received')
+    console.log('deleting trip:'+req.params.trip)
+    //res.send('remove ride received')
+    db.collection('Trips').deleteOne({'_id':ObjectId(req.params.trip)},function(err,result){
+        if(err){
+            res.status(500).send('Some error:'+err)
+            return;
+        }
+        console.log('deleted trip')
+        res.send('The trip has been deleted')
+    })
 })
 //remove a passenger from a trip
 app.delete('/api/trips/:trip/:passenger',function(req,res){
     console.log('trip:'+req.params.trip)
     console.log('trip:'+req.params.passenger)
     //res.send('delete passenger received')
-    var cursor=db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $pull: { passenger: req.params.passenger} },function(err, results) {
+    var cursor=db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $pull: { passengers: req.params.passenger} },function(err, results) {
         if (err) throw err;
-        //console.log(results)
-        res.send('removed')
+        console.log('You have dropped the trip')
+        res.send('You have cancelled your seat')
     })
 })
 //get list of trip ids with driver id
@@ -196,7 +211,7 @@ app.get('/api/users/driver/:driver',function(req,res){
 app.get('/api/users/passenger/:passenger',function(req,res){
     console.log('trip:'+req.params.passenger)
     //res.send('get trips for passenger received')
-    var cursor=db.collection('Trips').find({'passenger':req.params.passenger}).toArray(function(err, results) {
+    var cursor=db.collection('Trips').find({'passengers':req.params.passenger}).toArray(function(err, results) {
         if (err) throw err;
         //console.log(results)
         res.send(results)
@@ -232,6 +247,5 @@ app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/views/index.html'));
 });
 app.use(function(req,res,next){
-    //res.status(404).send("Sorry can't find that!")
     res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
 })

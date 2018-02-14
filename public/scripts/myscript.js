@@ -1,6 +1,7 @@
 var profile;
 var tripList;
 var driverList;
+var passengerList;
 
 var driverDialog,passengerDialog,driverForm,passengerForm;
 
@@ -209,6 +210,12 @@ $(function(){
         driverDialog.dialog( "open" );
         //TODO fill with relevant info
     });
+    $('#editingPassengerRides').on('click','.editTrip',function(){
+        var choice=confirm('Are you sure you want to leave this trip?')
+        if(choice){
+            console.log('should delete')
+        }
+    });
     
     $('#trips').on('click','.reserveTrip',function(){
     //$('.reserveTrip').on('click',function(){
@@ -352,8 +359,22 @@ function fillEditInfo(){
             var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
             var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
             var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
-            var driver=trip['driver'];
             $('#editingDrivingRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td><input type="button" value="Edit" class="editTrip" data-trip-id="'+index+'"></td></tr>');
+        });
+        //console.log(JSON.stringify(data));
+    });
+    $.get('/api/users/passenger/'+profile.getId(),function(data,status){
+        $('#editingPassengerRides tr:not(.header)').remove();
+        passengerList=data;
+        $.each(data,function(index,trip){
+            //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
+            //Stake,Temple,Departure,Return,driver,Edit
+            var stk=trip['departStake'];
+            var tmpl=trip['templeDest'];
+            var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
+            var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
+            var driver=trip['driver'];
+            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+driver+'</td><td><input type="button" value="Drop" class="editTrip" data-trip-id="'+index+'"></td></tr>');
         });
         //console.log(JSON.stringify(data));
     });
