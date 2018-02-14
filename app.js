@@ -106,6 +106,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
 })
 //create a trip
 app.post('/api/trips/add',function(req,res){
+    console.log('adding trip:'+JSON.stringify(req.body));
     /*console.log('driver:'+req.body.driver)
     console.log('driverId:'+req.body.driverId)
     console.log('email:'+req.body.email)

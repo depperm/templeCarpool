@@ -191,7 +191,7 @@ $(function(){
     driverDialog=$('#editDriverForm').dialog({
         autoOpen:false,
         height:400,
-        width:450,
+        width:550,
         modal:true,
         buttons: {
             "Delete Trip": deleteTrip,
@@ -242,10 +242,17 @@ $(function(){
     
     $('#editingDrivingRides').on('click','.editTrip',function(){
         console.log('editing:'+JSON.stringify(driverList[$(this).attr('data-trip-id')]));
-        //TODO fill driverTemple
-        //TODO fill driverStake
+        if('templeDest' in driverList[$(this).attr('data-trip-id')])
+            $('#driverTemple').val(driverList[$(this).attr('data-trip-id')]['templeDest']);
+        if('departStake' in driverList[$(this).attr('data-trip-id')])
+            $('#driverStake').val(driverList[$(this).attr('data-trip-id')]['departStake']);
+        $('#driverDTime').val(driverList[$(this).attr('data-trip-id')]['dTime']);
+        $('#driverRTime').val(driverList[$(this).attr('data-trip-id')]['rTime']);
+        $('#driverDepart').val(driverList[$(this).attr('data-trip-id')]['dDate']);
+        $('#driverReturn').val(driverList[$(this).attr('data-trip-id')]['rDate']);
+        $('#driverSeats').val(driverList[$(this).attr('data-trip-id')]['numSeats'])
+        //TODO get passenger info-fill in table #driverPassengers
         driverDialog.dialog( "open" );
-        //TODO fill with relevant info
     });
     $('#editingPassengerRides').on('click','.editTrip',function(){
         var choice=confirm('Are you sure you want to leave this trip?')
