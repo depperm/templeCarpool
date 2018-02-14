@@ -5,6 +5,7 @@ const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const { OAuth2Client } = require('google-auth-library');
+var schedule = require('node-schedule')
 
 const port = 80
 
@@ -20,6 +21,10 @@ MongoClient.connect(url,function(err,client){
         console.log('listening on '+port.toString());
     });
 })
+
+var cleanUp = schedule.scheduleJob('0 23 * * *',function(){
+    console.log('should remove any trip that has a return date == today-1')
+});
 
 const app=express()
 
