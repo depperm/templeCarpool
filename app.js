@@ -200,7 +200,7 @@ app.delete('/api/trips/:trip/:passenger',function(req,res){
 })
 //get list of trip ids with driver id
 app.get('/api/users/driver/:driver',function(req,res){
-    console.log('trips driver:'+req.params.driver)
+    console.log('get trips as driver:'+req.params.driver)
     var cursor=db.collection('Trips').find({'driverId':req.params.driver}).toArray(function(err, results) {
         if (err) throw err;
         //console.log(results)
@@ -209,7 +209,7 @@ app.get('/api/users/driver/:driver',function(req,res){
 })
 //get list of trips with user as passenger
 app.get('/api/users/passenger/:passenger',function(req,res){
-    console.log('trip:'+req.params.passenger)
+    console.log('get trips as passenger:'+req.params.passenger)
     //res.send('get trips for passenger received')
     var cursor=db.collection('Trips').find({'passengers':req.params.passenger}).toArray(function(err, results) {
         if (err) throw err;
@@ -227,10 +227,10 @@ app.post('/api/users/add',function(req,res){
         if(err){
             res.status(501).send('Some error:'+err)
         } 
-        console.log('depart query results:'+results)
-        console.log(results=='')
+        //console.log('add query results:'+results)
+        //console.log(results=='')
         if(results!=''){
-            console.log('add user error')
+            //console.log('add user error')
             res.status(200).send('User already in DB')
         }else{
             db.collection('Users').save(req.body,(err,result)=>{
