@@ -1,3 +1,5 @@
+var googleClientId = config.MY_KEY;
+
 var profile;
 var tripList;
 var driverList;
@@ -99,6 +101,7 @@ function getTrips(){
 }
 
 $(function(){
+    $("meta[name=google-signin-client_id]").attr("content", googleClientId+'.apps.googleusercontent.com');
     console.log('ready');
 
     if(!$('#welcomeMsg').is(":visible")){
