@@ -9,6 +9,7 @@ const { OAuth2Client } = require('google-auth-library');
 const port = 80
 
 var MongoClient=require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
 var url="mongodb://localhost:27017/templeCarpoolDB";
 var db;
 
@@ -48,7 +49,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
     //check if passenger has a seat
     //check if trip is full
     var pquery={passengers:{$in:[req.params.passenger]}};
-    var trip=db.collection('Trips').findOne({'_id':req.params.trip})//['passengers'].length
+    var trip=db.collection('Trips').findOne({'_id':ObjectId(req.params.trip)})//['passengers'].length
     var passLen='passengers' in trip?trip['passengers'].length:0
     var t={}
     t['$eq']=passLen.toString()
@@ -70,7 +71,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
             }
             //res.status(500).send('You already have a reserved seat OR there are no more seats')
         }else{
-            db.collection('Trips').update({'_id':req.params.trip},{ $push: { "passengers": req.params.passenger }},function(err,res){
+            db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $push: { "passengers": req.params.passenger }},function(err,res){
                 if(err) throw err
 
                 console.log('reserved seat on trip ')
@@ -161,7 +162,7 @@ app.delete('/api/trips/:trip/:passenger',function(req,res){
     console.log('trip:'+req.params.trip)
     console.log('trip:'+req.params.passenger)
     //res.send('delete passenger received')
-    var cursor=db.collection('Trips').update({'_id':req.params.trip},{ $pull: { passenger: req.params.passenger} },function(err, results) {
+    var cursor=db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $pull: { passenger: req.params.passenger} },function(err, results) {
         if (err) throw err;
         //console.log(results)
         res.send('removed')

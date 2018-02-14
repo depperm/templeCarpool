@@ -76,7 +76,7 @@ function getTrips(){
             var tmpl='departStake' in trip?trip['departStake']:'';
             var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
             var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
-            var seats='passengers' in trip?trip['passengers'].length:'0'+'/'+trip['numSeats'];
+            var seats=('passengers' in trip?trip['passengers'].length:'0')+'/'+trip['numSeats'];
             var driver=trip['driver'];
             var disabled=('passengers' in trip?trip['passengers'].length:0)==trip['numSeats']?'disabled':'';
 
