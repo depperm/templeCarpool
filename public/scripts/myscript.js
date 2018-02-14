@@ -215,7 +215,7 @@ $(function(){
         if(choice){
             $.ajax({
                 url:'/api/trips/'+passengerList[$(this).attr('data-trip-id')]['_id']+'/'+profile.getId(),
-                type:'delete',
+                type:'DELETE',
                 statusCode: {
                     200: function(response){
                         fillEditInfo();
