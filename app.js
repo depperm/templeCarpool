@@ -191,12 +191,21 @@ app.delete('/api/trips/:trip',function(req,res){
 app.delete('/api/trips/:trip/:passenger',function(req,res){
     console.log('trip:'+req.params.trip)
     console.log('trip:'+req.params.passenger)
-    //res.send('delete passenger received')
-    var cursor=db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $pull: { passengers: req.params.passenger} },function(err, results) {
-        if (err) throw err;
-        console.log('You have dropped the trip')
-        res.send('You have cancelled your seat')
-    })
+    //check that passenger is a passenger for said trip
+    db.collection('Trips').find({'passengers':req.params.passenger,'_id':ObjectId(req.params.trip)}).toArray(function(err,results){
+        if(err){
+            throw err;
+        }
+        if(results!=''){
+            res.status(500).send('Passenger not on Trip')
+        }else{
+            db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $pull: { passengers: req.params.passenger} },function(err, results) {
+                if (err) throw err;
+                console.log('You have dropped the trip')
+                res.send('You have cancelled your seat')
+            })
+        }
+    });
 })
 //get list of trip ids with driver id
 app.get('/api/users/driver/:driver',function(req,res){
@@ -223,7 +232,7 @@ app.post('/api/users/add',function(req,res){
     console.log('depD:'+req.body.name)*/
     //check if driver has trip with same return or depart date-msg edit or remove trip
     var query={'userId':req.body.userId};
-    var cursor=db.collection('Users').find(query).toArray(function(err, results) {
+    db.collection('Users').find(query).toArray(function(err, results) {
         if(err){
             res.status(501).send('Some error:'+err)
         } 

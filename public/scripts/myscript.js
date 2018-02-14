@@ -1,5 +1,6 @@
 var profile;
 var tripList;
+
 var driverList;
 var passengerList;
 
@@ -39,7 +40,8 @@ var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm
                                          '<strong>Electronic Devices: </strong>If you choose to bring an electronic device (such as a camera, phone or tablet) into the temple, it must be turned off and stored inside a locker.',
                                          '<strong>Recommends: </strong>A Temple Recommend from your bishop and stake president is required to enter the temple. A Recommend for Living Ordinances is also needed by members being endowed or sealed to a spouse. Youth must be at least 12 years old to perform temple baptisms and must have a Limited-Use Recommend from their bishop. Males must hold the priesthood.',
                                          '<strong>Languages: </strong>English is available for all endowment sessions. Many languages, including American Sign Language, are availabe upon request:<br />Spanish Endowment Sessions<ul><li>1st and 3rd Saturday of the month: 7:00 am</li><li>2nd and 4th Saturday of the month: 2:30 pm</li></ul>'],
-                                'website':'https://www.lds.org/temples/details/philadelphia-pennsylvania-temple?lang=eng'
+                                'website':'https://www.lds.org/temples/details/philadelphia-pennsylvania-temple?lang=eng',
+                                'photo':'https://mobile-cdn.lds.org/59/16/5916071b741c877495e34b70b5c6443a1a732cc6/philadelphia_pennsylvania_temple_exterior.jpg'
                                 },
                 'Columbus':{2018:{'Endowment':{'Tuesday':['11:00 am','1:00 pm','6:00 pm','7:30 pm'],
                                                    'Wednesday':['9:00 am','11:00 am','1:00 pm','6:00 pm','7:30 pm'], 
@@ -62,7 +64,8 @@ var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm
                                          '<strong>Family Names: </strong>You are encouraged to use <a href="familysearch.org">FamilySearch.org</a> to share your family names with the temple, especially if you have a large number of names.',
                                          '<strong>Electronic Devices: </strong>If you choose to bring an electronic device (such as a camera, phone or tablet) into the temple, it must be turned off and stored inside a locker.',
                                          '<strong>Recommends: </strong>A Temple Recommend from your bishop and stake president is required to enter the temple. A Recommend for Living Ordinances is also needed by members being endowed or sealed to a spouse. Youth must be at least 12 years old to perform temple baptisms and must have a Limited-Use Recommend from their bishop. Males must hold the priesthood.'],
-                                'website':'https://www.lds.org/temples/details/columbus-ohio-temple?lang=eng'
+                                'website':'https://www.lds.org/temples/details/columbus-ohio-temple?lang=eng',
+                                'photo':'https://mobile-cdn.lds.org/bc/15/bc15b87bf1cf4aba1268814df4ef0cebc4177049/temple_exterior_columbus_ohio.jpg'
                                 }
                 };
 
@@ -108,8 +111,11 @@ $(function(){
 
     $('#temple').empty();
     $('#templeDest').empty();
-    fillTempleSelect('#temple','Philadelphia');
-    fillTempleSelect('#templeDest','Philadelphia');
+    fillTempleSelect('#temple');
+    fillTempleSelect('#templeDest');
+    fillTempleSelect('#driverTemple');
+    $('#temple').val('Philadelphia');
+    $('#templeDest').val('Philadelphia');
 
     $('#temple').on('change',function(){
         $('#templeDest').val($(this).val());
@@ -124,7 +130,9 @@ $(function(){
     });
     
     $('#departStake').empty();
-    fillStakeSelect('#departStake','Seneca');
+    fillStakeSelect('#departStake');
+    fillStakeSelect('#driverStake');
+    $('#departStake').val('Seneca')
     
     var validator = $('#postRideForm').validate();
     $('#postRideForm').submit(function(e){
@@ -183,9 +191,10 @@ $(function(){
     driverDialog=$('#editDriverForm').dialog({
         autoOpen:false,
         height:400,
-        width:350,
+        width:450,
         modal:true,
         buttons: {
+            "Delete Trip": deleteTrip,
             "Edit Trip": editDriverTrip,
             Cancel: function() {
                 driverDialog.dialog( "close" );
@@ -199,12 +208,40 @@ $(function(){
     driverForm=driverDialog.find('form').on('submit',function(event){
         event.preventDefault();
         //TODO validate
+        var editValidator = $('#postRideForm').validate();
+        if(editValidator.valid()){
+            console.log('should update')
+            /*var data=$('#postRideForm').serializeArray();//form to array
+            data.push({name:"driverId", value:profile.getId()});//add driver id
+            console.log('sending:'+JSON.stringify(data))
+            $.ajax({
+                url:'/api/trips/add',
+                type:'post',
+                data:$.param(data),
+                statusCode: {
+                    200: function(response){
+                        $('#dDate').val('');
+                        $('#dTime').val('select');
+                        $('#rDate').val('');
+                        $('#rTime').val('select');
+                        $('#numSeats').val(1);
+                        //alert('successfully posted your trip')
+                        alert(response);
+                    },
+                    500: function(response){
+                        //response={'readyState','responseText','status','statusText'}
+                        alert(response['responseText']);
+                    }
+                }
+            });*/
+        }
         //TODO put/update trip
         //editDriverTrip();
         //TODO update edit table
     });
     
     $('#editingDrivingRides').on('click','.editTrip',function(){
+        console.log('editing:'+JSON.stringify(driverList[$(this).attr('data-trip-id')]));
         //TODO fill driverTemple
         //TODO fill driverStake
         driverDialog.dialog( "open" );
@@ -255,7 +292,12 @@ $(function(){
             }
         });
     })
-
+    
+    $('#driverDepart').datepicker({minDate:0,onSelect:function(date){
+        var selDate=new Date(date);
+        $('#driverReturn').datepicker('option','minDate',selDate)
+    }}).datepicker('setDate',new Date());
+    $('#driverReturn').datepicker({minDate:0});
     
     $('#departDate').datepicker({minDate:0,onSelect:function(date){
         var selDate=new Date(date);
@@ -293,6 +335,8 @@ $(function(){
         $.each(hours,function(index,value){
             $('#rTime').append($('<option></option>').attr('value',value+t).text(value+t));//hours.length*i+index
             $('#dTime').append($('<option></option>').attr('value',value+t).text(value+t));
+            $('#driverDTime').append($('<option></option>').attr('value',value+t).text(value+t));//hours.length*i+index
+            $('#driverRTime').append($('<option></option>').attr('value',value+t).text(value+t));
         });
     }
 });
@@ -339,9 +383,10 @@ function openTab(evt,choice){
 }
 function fillTempleInfo(){
     var temple=$('#temple').val();
-    $('#templeName').html(temple);
+    $('#templeName').html('<a href="'+templeInfo[temple]['website']+'">'+temple+'</a>');
     var currentYear = (new Date).getFullYear();
     $('#templeAddress').html('<a href="'+templeInfo[temple]['address'][1]+'">'+templeInfo[temple]['address'][0]+'</a>');
+    $('#templeImage').attr('src',templeInfo[temple]['photo'])
     $('#templeMap').html(templeInfo[temple]['address'][2]);
     $('#templePhone').html(templeInfo[temple]['phone']);
     var days=['Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -395,45 +440,29 @@ function fillEditInfo(){
 function fillStakeSelect(selectId,selectedStake){
     $(selectId).append('<optgroup label="Maryland Stakes">')
     $.each(mdStakes,function(index,stake){
-        if(stake==selectedStake)
-            $(selectId).append('<option value="'+stake+'" selected>'+stake+'</option>')
-        else
-            $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
+        $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
     })
     $('#departStake').append('</optgroup>')
     $('#departStake').append('<optgroup label="Pennsylvania Stakes">')
     $.each(paStakes,function(index,stake){
-        if(stake==selectedStake)
-            $(selectId).append('<option value="'+stake+'" selected>'+stake+'</option>')
-        else
-            $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
+        $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
     })
     $('#departStake').append('</optgroup>')
     $('#departStake').append('<optgroup label="Virginia Stakes">')
     $.each(vaStakes,function(index,stake){
-        if(stake==selectedStake)
-            $(selectId).append('<option value="'+stake+'" selected>'+stake+'</option>')
-        else
-            $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
+        $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
     })
     $('#departStake').append('</optgroup>')
     $('#departStake').append('<optgroup label="West Virginia Stakes">')
     $.each(wvStakes,function(index,stake){
-        if(stake==selectedStake)
-            $(selectId).append('<option value="'+stake+'" selected>'+stake+'</option>')
-        else
-            $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
+        $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
     })
     $(selectId).append('</optgroup>')
 }
-function fillTempleSelect(selectId,selectedTemple){
+function fillTempleSelect(selectId){
     $.each(temples,function(index,temple){
         if(temple in templeInfo){
-            if(temple==selectedTemple){
-                $(selectId).append('<option value="'+temple+'" selected>'+temple+'</option>');
-            }else{
-                $(selectId).append('<option value="'+temple+'">'+temple+'</option>');
-            }
+            $(selectId).append('<option value="'+temple+'">'+temple+'</option>');
         }
     });
 }
@@ -441,5 +470,8 @@ function editDriverTrip(){
     //TODO validate form
     //if validated
     //post/put to server
+    driverDialog.dialog( "close" );
+}
+function deleteTrip(){
     driverDialog.dialog( "close" );
 }
