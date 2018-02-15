@@ -484,9 +484,10 @@ function editDriverTrip(){
     driverDialog.dialog( "close" );
 }
 function deleteTrip(){
+    console.log('deleting trip:'+$(this).attr('data-trip-id'))
     var choice=confirm('Are you sure you want to Delete this trip?')
     if(choice){
-        $.ajax({
+        /*$.ajax({
             url:'/api/trips/'+driverList[$(this).attr('data-trip-id')]['_id'],
             type:'DELETE',
             statusCode: {
@@ -499,7 +500,7 @@ function deleteTrip(){
                     alert(response['responseText']);
                 }
             }
-        });
+        });*/
     }
     driverDialog.dialog( "close" );
 }
@@ -518,7 +519,7 @@ function fillDriverDialog(index){
         $('#driverPassengers tr:not(.header)').remove();
         tripPassengerList=data;
         $.each(tripPassengerList,function(i,info){
-            //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
+            //console.log('trip '+i.toString()+':'+JSON.stringify(info))
             //Name,Email,Remove
             var name=info['name'];
             var email=info['email'];

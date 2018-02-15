@@ -222,7 +222,7 @@ app.get('/api/users/passenger/:passenger',function(req,res){
 app.get('/api/passengers/:trip',function(req,res){
     console.log('get passenger info for trip:'+req.params.trip)
     db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(error, trip) {
-        if (err) throw err;
+        if (error) throw error;
         //console.log(results)
         db.collection('Users').find({'userId':{$in:trip['passengers']}}).toArray(function(err,details){
             if(err) throw err;
