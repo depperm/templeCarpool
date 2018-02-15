@@ -331,6 +331,7 @@ function onSignIn(googleUser) {
     console.log("Email: "+profile.getEmail());
     $('#email').val(profile.getEmail());
     var id_token=googleUser.getAuthResponse().id_token;
+    console.log("ID Token: " + id_token);
     //TODO add user to user collection
     $('.g-signin2').hide();
     $('#welcomeMsg').hide();

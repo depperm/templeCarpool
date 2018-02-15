@@ -223,20 +223,16 @@ app.get('/api/passengers/:trip',function(req,res){
     console.log('get passenger info for trip:'+req.params.trip)
     db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(error, trip) {
         if (error) throw error;
-        console.log(JSON.stringify(trip))
-        console.log('passengers' in trip[0])
-        console.log(trip[0]['passengers'])
+        //console.log(JSON.stringify(trip))
         if('passengers' in trip[0]){
             db.collection('Users').find({'userId':{$in:trip[0]['passengers']}}).toArray(function(err,details){
                 if(err) throw err;
-                console.log('found details:'+JSON.stringify(details))
                 res.send(details)
             })
         }
         else{
             res.send([])
         }
-        //res.send(results)
     })
 })
 //add user for lookup
