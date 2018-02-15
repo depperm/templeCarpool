@@ -485,11 +485,11 @@ function editDriverTrip(){
     driverDialog.dialog( "close" );
 }
 function deleteTrip(){
-    console.log('deleting trip:'+$('#editDriverForm').attr('data-trip-id')+' which is '+driverList[$('#editDriverForm').attr('data-trip-id')])
+    console.log('deleting trip:'+$('#editDriverForm').attr('data-trip-id')+' which is '+JSON.stringify(driverList[$('#editDriverForm').attr('data-trip-id')]))
     var choice=confirm('Are you sure you want to Delete this trip?')
     if(choice){
-        /*$.ajax({
-            url:'/api/trips/'+driverList[$(this).attr('data-trip-id')]['_id'],
+        $.ajax({
+            url:'/api/trips/'+driverList[$('#editDriverForm').attr('data-trip-id')]['_id'],
             type:'DELETE',
             statusCode: {
                 200: function(response){
@@ -501,7 +501,7 @@ function deleteTrip(){
                     alert(response['responseText']);
                 }
             }
-        });*/
+        });
     }
     driverDialog.dialog( "close" );
 }
