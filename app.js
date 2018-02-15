@@ -4,21 +4,37 @@ const path = require('path')
 //const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
-const { OAuth2Client } = require('google-auth-library');
-var schedule = require('node-schedule')
+const GoogleAuth = require('google-auth-library');
 
 const port = 80
 
 const app=express()
 
+//var auth = new GoogleAuth;
+//app.authClient = new auth.OAuth2(config.passport.google.clientID, config.passport.google.clientSecret, '');
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+passport.use(new GoogleStrategy({
+    clientID: config.passport.google.clientID,
+    clientSecret: config.passport.google.clientSecret,
+    callbackURL: "http://www.example.com/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
+var schedule = require('node-schedule')
 var MongoClient=require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var url="mongodb://localhost:27017/templeCarpoolDB";
 var db;
 
-MongoClient.connect(url,function(err,client){
+MongoClient.connect(url,function(err,host){
     if(err) throw err;
-    db=client.db('templeCarpoolDB')
+    db=host.db('templeCarpoolDB')
     app.listen(port,()=>{
         console.log('listening on '+port.toString());
     });
@@ -33,12 +49,32 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] })
+);
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+});
+
 app.post('/tokensignin',function(req,res){
-    console.log('post: '+Object.keys(req))
+    console.log('post: '+Object.keys(req.body))
     /*console.log('statusMsg: '+req['statusMessage'])
     console.log(req['headers'])
     console.log(req['params'])
     console.log(req['query'])*/
+    req.app.authClient.verifyIdToken(
+        token,
+        config.passport.google.clientID,  // Specify the CLIENT_ID of the app that accesses the backend
+        function(e, login) {
+          var payload = login.getPayload();
+          var userid = payload['sub'];
+          // If request specified a G Suite domain:
+          //var domain = payload['hd'];
+    });
     res.send('POST request to the homepage')
 })
 //reserve a seat for a trip
