@@ -214,6 +214,7 @@ $(function(){
     $('#editingDrivingRides').on('click','.editTrip',function(){
         console.log('editing:'+JSON.stringify(driverList[$(this).attr('data-trip-id')]));
         fillDriverDialog($(this).attr('data-trip-id'));
+        $('#editDriverForm').attr('data-trip-id',$(this).attr('data-trip-id'))
         driverDialog.dialog( "open" );
     });
     $('#driverPassengers').on('click','.kickFromTrip',function(){
@@ -484,7 +485,7 @@ function editDriverTrip(){
     driverDialog.dialog( "close" );
 }
 function deleteTrip(){
-    console.log('deleting trip:'+$(this).attr('data-trip-id'))
+    console.log('deleting trip:'+$('#editDriverForm').attr('data-trip-id')+' which is '+driverList[$('#editDriverForm').attr('data-trip-id')])
     var choice=confirm('Are you sure you want to Delete this trip?')
     if(choice){
         /*$.ajax({
