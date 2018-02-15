@@ -223,7 +223,7 @@ app.get('/api/passengers/:trip',function(req,res){
     console.log('get passenger info for trip:'+req.params.trip)
     db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(error, trip) {
         if (error) throw error;
-        //console.log(results)
+        console.log(JSON.stringify(trip))
         if('passengers' in trip){
             db.collection('Users').find({'userId':{$in:trip['passengers']}}).toArray(function(err,details){
                 if(err) throw err;
