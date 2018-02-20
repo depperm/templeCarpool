@@ -62,6 +62,7 @@ app.get('/api/trips',function(req,res){
 //create a trip
 app.post('/api/trips/add',function(req,res){
     console.log('adding trip:'+JSON.stringify(req.body));
+    console.log('adding trip:'+JSON.stringify(Object.keys(req.body)));
     //verify body
     var keys=Object.keys(req.body);
     //check number of keys

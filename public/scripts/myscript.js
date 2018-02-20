@@ -213,7 +213,7 @@ $(function(){
         e.preventDefault();
         if(validator.valid()){
             var data=$('#postRideForm').serializeArray();//form to array
-            data.push({name:"driverId", value:profile.getId()});//add driver id
+            //data.push({name:"driverId", value:profile.getId()});//add driver id
             console.log('sending:'+JSON.stringify(data))
             $.ajax({
                 url:'/api/trips/add',
