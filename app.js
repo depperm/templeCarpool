@@ -106,7 +106,7 @@ app.post('/api/trips/add',function(req,res){
         console.log(results=='')
         if(results!=''){
             console.log('add error')
-            if(req.body.dDate==results['dDate']){
+            if(req.body.dDate==results[0]['dDate']){
                 res.send('You already have scheduled depart trip on '+req.body.dDate)
             }else{
                 res.send('You already have scheduled return trip on '+req.body.rDate)

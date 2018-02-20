@@ -71,6 +71,31 @@ var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm
                                 }
                 };
 
+function matchDepartDate(){
+    $('.trip td[data-depart-date]').removeClass('match');
+    var trips=$('.trip td[data-depart-date]')
+    $.each(trips,function(index,trip){
+        if($(this).attr('data-depart-date')==$('#departDate').val())
+            $(this).addClass('match')
+    });
+}
+function matchReturnDate(){
+    $('.trip td[data-return-date]').removeClass('match');
+    var trips=$('.trip td[data-return-date]')
+    $.each(trips,function(index,trip){
+        if($(this).attr('data-return-date')==$('#returnDate').val())
+            $(this).addClass('match')
+    });
+}
+function matchTemple(){
+    $('.trip td[data-temple-dest]').removeClass('match');
+    var tmpls=$('.trip td[data-temple-dest]')
+    $.each(tmpls,function(index,temple){
+        if($(this).attr('data-temple-dest')==$('#temple').val())
+            $(this).addClass('match')
+    });
+}
+
 function getTrips(){
     $.get('/api/trips',function(data,status){
         $('#trips tr:not(.header)').remove();
@@ -89,74 +114,67 @@ function getTrips(){
             $('#trips tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td title="'+trip['email']+'" class="driver"><a href="mailto:'+trip['email']+'?Temple%20Trip" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
             //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
         });
-        $('.trip td').removeClass('match');
-        var trips=$('.trip td[data-depart-date]')
-        $.each(trips,function(index,trip){
-            if($(this).attr('data-depart-date')==$('#departDate').val())
-                $(this).addClass('match')
-        });
-        var trips=$('.trip td[data-return-date]')
-        $.each(trips,function(index,trip){
-            if($(this).attr('data-return-date')==$('#returnDate').val())
-                $(this).addClass('match')
-        });
+        matchDepartDate();
+        matchReturnDate();
+        matchTemple();
         //console.log(JSON.stringify(data));
     });
 }
 
+//from https://www.w3schools.com/howto/howto_js_sort_table.asp
 function sortTable(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("trips");
-  switching = true;
-  //Set the sorting direction to ascending:
-  dir = "asc"; 
-  /*Make a loop that will continue until
-  no switching has been done:*/
-  while (switching) {
-    //start by saying: no switching is done:
-    switching = false;
-    rows = table.getElementsByTagName("TR");
-    /*Loop through all table rows (except the
-    first, which contains table headers):*/
-    for (i = 1; i < (rows.length - 1); i++) {
-      //start by saying there should be no switching:
-      shouldSwitch = false;
-      /*Get the two elements you want to compare,
-      one from current row and one from the next:*/
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
-      /*check if the two rows should switch place,
-      based on the direction, asc or desc:*/
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          //if so, mark as a switch and break the loop:
-          shouldSwitch= true;
-          break;
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("trips");
+    switching = true;
+    //Set the sorting direction to ascending:
+    dir = "asc"; 
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+        //start by saying: no switching is done:
+        switching = false;
+        rows = table.getElementsByTagName("TR");
+        /*Loop through all table rows (except the
+        first, which contains table headers):*/
+        for (i = 1; i < (rows.length - 1); i++) {
+            //start by saying there should be no switching:
+            shouldSwitch = false;
+            /*Get the two elements you want to compare,
+            one from current row and one from the next:*/
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /*check if the two rows should switch place,
+            based on the direction, asc or desc:*/
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch= true;
+                    break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                  //if so, mark as a switch and break the loop:
+                  shouldSwitch= true;
+                  break;
+                }
+            }
         }
-      } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          //if so, mark as a switch and break the loop:
-          shouldSwitch= true;
-          break;
+        if (shouldSwitch) {
+            /*If a switch has been marked, make the switch
+            and mark that a switch has been done:*/
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            //Each time a switch is done, increase this count by 1:
+            switchcount ++;      
+        } else {
+            /*If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again.*/
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
         }
-      }
     }
-    if (shouldSwitch) {
-      /*If a switch has been marked, make the switch
-      and mark that a switch has been done:*/
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      //Each time a switch is done, increase this count by 1:
-      switchcount ++;      
-    } else {
-      /*If no switching has been done AND the direction is "asc",
-      set the direction to "desc" and run the while loop again.*/
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
-    }
-  }
 }
 
 $(function(){
@@ -189,12 +207,7 @@ $(function(){
         $('#templeDest').val($(this).val());
         fillTempleInfo();
 
-        $('.trip td[data-temple-dest]').removeClass('match');
-        var tmpls=$('.trip td[data-temple-dest]')
-        $.each(tmpls,function(index,temple){
-            if($(this).attr('data-temple-dest')==$('#temple').val())
-                $(this).addClass('match')
-        });
+        matchTemple();
     });
     
     var validator = $('#postRideForm').validate({
@@ -340,7 +353,6 @@ $(function(){
     
     $('#trips').on('click','.reserveTrip',function(){
         console.log('should reserve');
-    //$('.reserveTrip').on('click',function(){
         $.ajax({
             url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]['_id']+'/'+profile.getId(),
             type:'post',
@@ -373,22 +385,13 @@ $(function(){
         $('#rDate').val('');
         $('#dDate').val(date);
         //update table if visible
-        $('.trip td[data-depart-date]').removeClass('match');
-        var trips=$('.trip td[data-depart-date]')
-        $.each(trips,function(index,trip){
-            if($(this).attr('data-depart-date')==$('#departDate').val())
-                $(this).addClass('match')
-        });
+        matchDepartDate();
+        matchReturnDate();
     }}).datepicker('setDate',new Date());
     $('#returnDate').datepicker({minDate:0,onSelect:function(date){
         $('#rDate').val(date);
         //update table if visible
-        $('.trip td[data-return-date]').removeClass('match');
-        var trips=$('.trip td[data-return-date]')
-        $.each(trips,function(index,trip){
-            if($(this).attr('data-return-date')==$('#returnDate').val())
-                $(this).addClass('match')
-        });
+        matchReturnDate();
     }}).datepicker('setDate',new Date());
     $('#dDate').datepicker({minDate:0,onSelect:function(date){
         var selDate=new Date(date);
