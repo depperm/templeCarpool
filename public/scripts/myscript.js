@@ -197,7 +197,19 @@ $(function(){
         });
     });
     
-    var validator = $('#postRideForm').validate();
+    var validator = $('#postRideForm').validate({
+        rules: {
+            dDate: {
+                required: true,
+                date: true
+            },
+            {
+            rDate: {
+                required: true,
+                date: true
+            }
+        }
+    });
     $('#postRideForm').submit(function(e){
         e.preventDefault();
         if(validator.valid()){
@@ -210,11 +222,14 @@ $(function(){
                 data:$.param(data),
                 statusCode: {
                     200: function(response){
-                        $('#dDate').val('');
-                        $('#dTime').val('select');
-                        $('#rDate').val('');
-                        $('#rTime').val('select');
-                        $('#numSeats').val(1);
+                        if(response=='Your ride has been posted'){
+                            //clear form
+                            $('#dDate').val('');
+                            $('#dTime').val('select');
+                            $('#rDate').val('');
+                            $('#rTime').val('select');
+                            $('#numSeats').val(1);
+                        }
                         //alert('successfully posted your trip')
                         alert(response);
                     },
@@ -227,7 +242,7 @@ $(function(){
         }
     });
 
-    //console.log('is user signed in: '+GoogleAuth.isSignedIn());
+    //Sign out user
     $('.g-signout2').on('click',function(e){
         $('#trips tr:not(.header)').remove();
         console.log('click sign out');
@@ -236,7 +251,11 @@ $(function(){
         auth2.signOut().then(function(){
             console.log('signed out');
             $('.g-signout2').hide();
-            $('#content').hide();//TODO: don't just hide this ALSO empty the table
+            //hide content
+            $('#content').hide();
+            //clear table
+            $('#trips tr:not(.header)').remove();
+            //show message and signin
             $('#welcomeMsg').show();
             $('.g-signin2').show();
             validator.resetForm();

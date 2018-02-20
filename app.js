@@ -69,16 +69,16 @@ app.post('/api/trips/add',function(req,res){
         res.send('You have sent the wrong amount of information '+keys.length);
     }
     //check key names
-    if(keys.indexOf('driver')>=0&&keys.indexOf('email')&&keys.indexOf('dDate')&&
-        keys.indexOf('dTime')&&keys.indexOf('rDate')&&keys.indexOf('rTime')&&
-        keys.indexOf('numSeats')&&keys.indexOf('departStake')&&keys.indexOf('templeDest')){
+    if(keys.indexOf('driver')<0||keys.indexOf('email')<0||keys.indexOf('dDate')||
+        keys.indexOf('dTime')<0||keys.indexOf('rDate')<0||keys.indexOf('rTime')||
+        keys.indexOf('numSeats')<0||keys.indexOf('departStake')<0||keys.indexOf('templeDest')){
         res.send('You have sent the wrong kind of information');
     }
     //check some values
-    if(req.body.email.indexOf('@')>=0){
+    if(req.body.email.indexOf('@')<0){
         res.send('You need a valid email');
     }
-    if(req.body.numSeats>=1){
+    if(req.body.numSeats<1){
         res.send('You need at least 1 seat');
     }
     /*console.log('driver:'+req.body.driver)
