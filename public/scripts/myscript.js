@@ -182,11 +182,7 @@ $(function(){
     $('#departStake').val('Seneca');
 
     $('#trips th').on('click',function(){
-        var col = $(this).parent().children().index($(this));//$(this).index();
-        //var row = $(this).parent().parent().children().index($(this).parent());
-        //sortTable(col);
-        console.log('Column: ' + col);
-        console.log('or:'+$(this).index());
+        sortTable($(this).index());
     });
 
     $('#temple').on('change',function(){
