@@ -62,7 +62,6 @@ app.get('/api/trips',function(req,res){
 //create a trip
 app.post('/api/trips/add',function(req,res){
     console.log('adding trip:'+JSON.stringify(req.body));
-    console.log('adding trip:'+JSON.stringify(Object.keys(req.body)));
     //verify body
     var keys=Object.keys(req.body);
     //check number of keys
@@ -71,9 +70,18 @@ app.post('/api/trips/add',function(req,res){
         return;
     }
     //check key names
-    if(keys.indexOf('driver')<0||keys.indexOf('email')<0||keys.indexOf('dDate')||
-        keys.indexOf('dTime')<0||keys.indexOf('rDate')<0||keys.indexOf('rTime')||
-        keys.indexOf('numSeats')<0||keys.indexOf('departStake')<0||keys.indexOf('templeDest')){
+    if(keys.indexOf('driver')<0||keys.indexOf('email')<0||keys.indexOf('dDate')<0||
+        keys.indexOf('dTime')<0||keys.indexOf('rDate')<0||keys.indexOf('rTime')<0||
+        keys.indexOf('numSeats')<0||keys.indexOf('departStake')<0||keys.indexOf('templeDest')<0){
+        console.log('driver:'+keys.indexOf('driver'))
+        console.log('email:'+keys.indexOf('email'))
+        console.log('depD:'+keys.indexOf('dDate'))
+        console.log('depT:'+keys.indexOf('dTime'))
+        console.log('retD:'+keys.indexOf('rDate'))
+        console.log('retT:'+keys.indexOf('rTime'))
+        console.log('seat:'+keys.indexOf('numSeats'))
+        console.log('stake:'+keys.indexOf('departStake'))
+        console.log('temple:'+keys.indexOf('templeDest'))
         res.send('You have sent the wrong kind of information');
         return;
     }
