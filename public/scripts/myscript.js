@@ -181,11 +181,12 @@ $(function(){
     fillStakeSelect('#driverStake');
     $('#departStake').val('Seneca');
 
-    $('#trips td').click(function(){
-        var col = $(this).parent().children().index($(this));
+    $('#trips td').on('click',function(){
+        var col = $(this).parent().children().index($(this));//$(this).index();
         //var row = $(this).parent().parent().children().index($(this).parent());
         //sortTable(col);
         console.log('Column: ' + col);
+        console.log('or:'+$(this).index());
     });
 
     $('#temple').on('change',function(){
@@ -323,6 +324,7 @@ $(function(){
     });
     
     $('#trips').on('click','.reserveTrip',function(){
+        console.log('should reserve');
     //$('.reserveTrip').on('click',function(){
         $.ajax({
             url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]['_id']+'/'+profile.getId(),
