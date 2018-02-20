@@ -181,7 +181,7 @@ $(function(){
     fillStakeSelect('#driverStake');
     $('#departStake').val('Seneca');
 
-    $('#trips td').on('click',function(){
+    $('#trips th').on('click',function(){
         var col = $(this).parent().children().index($(this));//$(this).index();
         //var row = $(this).parent().parent().children().index($(this).parent());
         //sortTable(col);
