@@ -26,6 +26,9 @@ passport.use(new GoogleStrategy({
   }
 ));*/
 
+var stakes=["Annapolis","Baltimore","Columbia","Frederick","Seneca","Silver Spring","Suitland","Washington, DC","Altoona","Chambersburg","Pitsburgh","Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Washington DC(YSA)","Winchester","Waynesboro","Woodbridge","Clarksburg","Martinsburg"];
+var temples=['Philadelphia','Columbus']
+
 var schedule = require('node-schedule')
 var MongoClient=require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
@@ -49,6 +52,73 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
+//get all trips
+app.get('/api/trips',function(req,res){
+    var cursor=db.collection('Trips').find().toArray(function(err, results) {
+        //console.log(results)
+        res.send(results)
+    })
+})
+//create a trip
+app.post('/api/trips/add',function(req,res){
+    console.log('adding trip:'+JSON.stringify(req.body));
+    //verify body
+    var keys=Object.keys(req.body);
+    //check number of keys
+    if(keys.length!=9){
+        res.send('You have sent the wrong amount of information '+keys.length);
+    }
+    //check key names
+    if(keys.indexOf('driver')>=0&&keys.indexOf('email')&&keys.indexOf('dDate')&&
+        keys.indexOf('dTime')&&keys.indexOf('rDate')&&keys.indexOf('rTime')&&
+        keys.indexOf('numSeats')&&keys.indexOf('departStake')&&keys.indexOf('templeDest')){
+        res.send('You have sent the wrong kind of information');
+    }
+    //check some values
+    if(req.body.email.indexOf('@')>=0){
+        res.send('You need a valid email');
+    }
+    if(req.body.numSeats>=1){
+        res.send('You need at least 1 seat');
+    }
+    /*console.log('driver:'+req.body.driver)
+    console.log('email:'+req.body.email)
+    console.log('depD:'+req.body.dDate)
+    console.log('depT:'+req.body.dTime)
+    console.log('retD:'+req.body.rDate)
+    console.log('retT:'+req.body.rTime)
+    console.log('seat:'+req.body.numSeats)
+    console.log('stake:'+departStake)
+    console.log('temple:'+templeDest)*/
+    //check if driver has trip with same return or depart date
+    var dquery={dDate:req.body.dDate, email:req.body.email};
+    var rquery={rDate:req.body.rDate, email:req.body.email};
+    var cursor=db.collection('Trips').find({$or:[dquery,rquery]}).toArray(function(err, results) {
+        if(err){
+            res.status(500).send('Some error:'+err)
+            return;
+        } 
+        console.log('depart query results:'+results)
+        console.log(results=='')
+        if(results!=''){
+            console.log('add error')
+            if(req.body.dDate==results['dDate']){
+                res.send('You already have scheduled depart trip on '+req.body.dDate)
+            }else{
+                res.send('You already have scheduled return trip on '+req.body.rDate)
+            }
+            //res.status(500).send('You already have scheduled trip on '+req.body.dDate+' or '+req.body.rDate)
+        }else{
+            db.collection('Trips').save(req.body,(err,result)=>{
+                if(err) return console.log('An error: '+err)
+
+                console.log('saved trip to db')
+            })
+            //res.redirect('/')
+            res.send('Your ride has been posted')
+        }
+    })
+})
 /*app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile'] })
 );
@@ -140,46 +210,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
         })
     })*/
 })
-//create a trip
-app.post('/api/trips/add',function(req,res){
-    console.log('adding trip:'+JSON.stringify(req.body));
-    /*console.log('driver:'+req.body.driver)
-    console.log('driverId:'+req.body.driverId)
-    console.log('email:'+req.body.email)
-    console.log('depD:'+req.body.dDate)
-    console.log('depT:'+req.body.dTime)
-    console.log('retD:'+req.body.rDate)
-    console.log('retT:'+req.body.rTime)
-    console.log('seat:'+req.body.numSeats)*/
-    //check if driver has trip with same return or depart date-msg edit or remove trip
-    var dquery={dDate:req.body.dDate, driverId:req.body.driverId};
-    var rquery={rDate:req.body.rDate, driverId:req.body.driverId};
-    var cursor=db.collection('Trips').find({$or:[dquery,rquery]}).toArray(function(err, results) {
-        if(err){
-            res.status(500).send('Some error:'+err)
-            return;
-        } 
-        console.log('depart query results:'+results)
-        console.log(results=='')
-        if(results!=''){
-            console.log('add error')
-            if(req.body.dDate==results['dDate']){
-                res.send('You already have scheduled depart trip on '+req.body.dDate)
-            }else{
-                res.send('You already have scheduled return trip on '+req.body.rDate)
-            }
-            //res.status(500).send('You already have scheduled trip on '+req.body.dDate+' or '+req.body.rDate)
-        }else{
-            db.collection('Trips').save(req.body,(err,result)=>{
-                if(err) return console.log('An error: '+err)
 
-                console.log('saved trip to db')
-            })
-            //res.redirect('/')
-            res.send('Your ride has been posted')
-        }
-    })
-})
 //update a trip as driver
 app.put('/api/trips/:trip',function(req,res){
     console.log('trip:'+req.params.trip)
@@ -192,13 +223,7 @@ app.put('/api/trips/:trip',function(req,res){
     console.log('seat:'+req.body.numSeats)
     res.send('update ride received')
 })
-//get all trips
-app.get('/api/trips',function(req,res){
-    var cursor=db.collection('Trips').find().toArray(function(err, results) {
-        //console.log(results)
-        res.send(results)
-    })
-})
+
 //get trip with ID-obsolete?
 app.get('/api/trips/:trip',function(req,res){
     console.log('getting trip:'+req.params.trip)
