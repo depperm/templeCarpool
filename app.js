@@ -4,7 +4,7 @@ const path = require('path')
 //const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
-const GoogleAuth = require('google-auth-library');
+//const GoogleAuth = require('google-auth-library');
 
 const port = 80
 
@@ -12,7 +12,7 @@ const app=express()
 
 //var auth = new GoogleAuth;
 //app.authClient = new auth.OAuth2(config.passport.google.clientID, config.passport.google.clientSecret, '');
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
+/*var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 passport.use(new GoogleStrategy({
     clientID: config.passport.google.clientID,
@@ -24,7 +24,7 @@ passport.use(new GoogleStrategy({
       return cb(err, user);
     });
   }
-));
+));*/
 
 var schedule = require('node-schedule')
 var MongoClient=require('mongodb').MongoClient;
@@ -49,7 +49,7 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-app.get('/auth/google',
+/*app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile'] })
 );
 
@@ -66,7 +66,7 @@ app.post('/tokensignin',function(req,res){
     console.log(req['headers'])
     console.log(req['params'])
     console.log(req['query'])*/
-    req.app.authClient.verifyIdToken(
+    /*req.app.authClient.verifyIdToken(
         token,
         config.passport.google.clientID,  // Specify the CLIENT_ID of the app that accesses the backend
         function(e, login) {
@@ -76,7 +76,7 @@ app.post('/tokensignin',function(req,res){
           //var domain = payload['hd'];
     });
     res.send('POST request to the homepage')
-})
+})*/
 //reserve a seat for a trip
 app.post('/api/trips/:trip/:passenger',function(req,res){
     console.log('trip param:'+req.params.trip)
@@ -85,7 +85,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
     var pquery={'_id':ObjectId(req.params.trip),passengers:{$in:[req.params.passenger]}};
     //check if trip is full
     var t={}
-    db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(err,result){
+    /*db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(err,result){
         var trip=result[0];
         //console.log('trip:'+JSON.stringify(trip))
         //console.log('passengers' in trip)
@@ -138,7 +138,7 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
                 }
             })
         })
-    })
+    })*/
 })
 //create a trip
 app.post('/api/trips/add',function(req,res){
@@ -272,12 +272,12 @@ app.get('/api/passengers/:trip',function(req,res){
     })
 })
 //add user for lookup
-app.post('/api/users/add',function(req,res){
+/*app.post('/api/users/add',function(req,res){
     /*console.log('driver:'+req.body.user-id)
     console.log('email:'+req.body.email)
     console.log('depD:'+req.body.name)*/
     //check if driver has trip with same return or depart date-msg edit or remove trip
-    var query={'userId':req.body.userId};
+    /*var query={'userId':req.body.userId};
     db.collection('Users').find(query).toArray(function(err, results) {
         if(err){
             res.status(501).send('Some error:'+err)
@@ -297,7 +297,7 @@ app.post('/api/users/add',function(req,res){
             res.send('Your user has been saved')
         }
     })
-})
+})*/
 app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/views/index.html'));
 });

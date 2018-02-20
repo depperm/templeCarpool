@@ -1,4 +1,5 @@
 var profile;
+var userDetails={};
 var tripList;
 
 var driverList;
@@ -103,6 +104,61 @@ function getTrips(){
     });
 }
 
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("trips");
+  switching = true;
+  //Set the sorting direction to ascending:
+  dir = "asc"; 
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /*check if the two rows should switch place,
+      based on the direction, asc or desc:*/
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      //Each time a switch is done, increase this count by 1:
+      switchcount ++;      
+    } else {
+      /*If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again.*/
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+
 $(function(){
     console.log('ready');
 
@@ -110,6 +166,7 @@ $(function(){
         getTrips();
     }
 
+    //Fill temple selects
     $('#temple').empty();
     $('#templeDest').empty();
     fillTempleSelect('#temple');
@@ -117,6 +174,19 @@ $(function(){
     fillTempleSelect('#driverTemple');
     $('#temple').val('Philadelphia');
     $('#templeDest').val('Philadelphia');
+
+    //Fill stake selects
+    $('#departStake').empty();
+    fillStakeSelect('#departStake');
+    fillStakeSelect('#driverStake');
+    $('#departStake').val('Seneca');
+
+    $('#trips td').click(function(){
+        var col = $(this).parent().children().index($(this));
+        //var row = $(this).parent().parent().children().index($(this).parent());
+        //sortTable(col);
+        console.log('Column: ' + col);
+    });
 
     $('#temple').on('change',function(){
         $('#templeDest').val($(this).val());
@@ -129,11 +199,6 @@ $(function(){
                 $(this).addClass('match')
         });
     });
-    
-    $('#departStake').empty();
-    fillStakeSelect('#departStake');
-    fillStakeSelect('#driverStake');
-    $('#departStake').val('Seneca')
     
     var validator = $('#postRideForm').validate();
     $('#postRideForm').submit(function(e){
@@ -169,6 +234,7 @@ $(function(){
     $('.g-signout2').on('click',function(e){
         $('#trips tr:not(.header)').remove();
         console.log('click sign out');
+        userDetails={};
         var auth2=gapi.auth2.getAuthInstance();
         auth2.signOut().then(function(){
             console.log('signed out');
@@ -325,24 +391,25 @@ $(function(){
 });
 function onSignIn(googleUser) {
     profile=googleUser.getBasicProfile();
-    console.log("ID: "+profile.getId());
-    console.log("Full Name: "+profile.getName());
+    userDetails={'name':profile.getName(),'email':profile.getEmail()}
+    //console.log("ID: "+profile.getId());
+    //console.log("Full Name: "+profile.getName());
     $('#driver').val(profile.getName());
-    console.log("Email: "+profile.getEmail());
+    //console.log("Email: "+profile.getEmail());
     $('#email').val(profile.getEmail());
-    var id_token=googleUser.getAuthResponse().id_token;
-    console.log("ID Token: " + id_token);
+    //var id_token=googleUser.getAuthResponse().id_token;
+    //console.log("ID Token: " + id_token);
     //TODO add user to user collection
     $('.g-signin2').hide();
     $('#welcomeMsg').hide();
     $('#content').show();
     $('.g-signout2').show();
-    var data=[];
-    data.push({name:"userId", value:profile.getId()});
-    data.push({name:"name", value:profile.getName()});
-    data.push({name:"email", value:profile.getEmail()});
-    console.log('sending:'+JSON.stringify(data))
-    $.ajax({
+    //var data=[];
+    //data.push({name:"userId", value:profile.getId()});
+    //data.push({name:"name", value:profile.getName()});
+    //data.push({name:"email", value:profile.getEmail()});
+    //console.log('sending:'+JSON.stringify(data))
+    /*$.ajax({
         url:'/api/users/add',
         type:'post',
         data:$.param(data),
@@ -355,7 +422,7 @@ function onSignIn(googleUser) {
                 alert(response['responseText']);
             }
         }
-    });
+    });*/
     getTrips();
     $('#fa').click();
 }
