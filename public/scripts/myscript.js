@@ -103,8 +103,8 @@ function getTrips(){
         $.each(data,function(index,trip){
             //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
             //Stake,Temple,Departure, Return, Seats, Driver, Reserve
-            var stk='templeDest' in trip?trip['templeDest']:'';
-            var tmpl='departStake' in trip?trip['departStake']:'';
+            var stk='templeDest' in trip?trip['departStake']:'';
+            var tmpl='departStake' in trip?trip['templeDest']:'';
             var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
             var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
             var seats=('passengers' in trip?trip['passengers'].length:'0')+'/'+trip['numSeats'];
