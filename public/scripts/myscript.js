@@ -213,7 +213,8 @@ $(function(){
         e.preventDefault();
         if(validator.valid()){
             var data=$('#postRideForm').serializeArray();//form to array
-            //data.push({name:"driverId", value:profile.getId()});//add driver id
+            //disabled inputs are not serialized so add now
+            data.push({name:'email',value:userDetails['email']});
             console.log('sending:'+JSON.stringify(data))
             $.ajax({
                 url:'/api/trips/add',
