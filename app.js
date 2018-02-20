@@ -59,6 +59,7 @@ app.get('/api/trips',function(req,res){
         res.send(results)
     })
 })
+
 //create a trip
 app.post('/api/trips/add',function(req,res){
     console.log('adding trip:'+JSON.stringify(req.body));
@@ -123,43 +124,17 @@ app.post('/api/trips/add',function(req,res){
         }
     })
 })
-/*app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] })
-);
 
-app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-});
-
-app.post('/tokensignin',function(req,res){
-    console.log('post: '+Object.keys(req.body))
-    /*console.log('statusMsg: '+req['statusMessage'])
-    console.log(req['headers'])
-    console.log(req['params'])
-    console.log(req['query'])*/
-    /*req.app.authClient.verifyIdToken(
-        token,
-        config.passport.google.clientID,  // Specify the CLIENT_ID of the app that accesses the backend
-        function(e, login) {
-          var payload = login.getPayload();
-          var userid = payload['sub'];
-          // If request specified a G Suite domain:
-          //var domain = payload['hd'];
-    });
-    res.send('POST request to the homepage')
-})*/
 //reserve a seat for a trip
-app.post('/api/trips/:trip/:passenger',function(req,res){
+app.post('/api/trips/:trip',function(req,res){
     console.log('trip param:'+req.params.trip)
-    console.log('passenger param:'+req.params.passenger)
+    console.log('passenger:'+JSON.stringify(req.body))
+    //TODO check that body only has email and name
     //check if passenger has a seat 
-    var pquery={'_id':ObjectId(req.params.trip),passengers:{$in:[req.params.passenger]}};
+    var pquery={'_id':ObjectId(req.params.trip),passengers:{$elemMatch:{'name':req.body.name,'email':req.body.email}}};
     //check if trip is full
     var t={}
-    /*db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(err,result){
+    db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(err,result){
         var trip=result[0];
         //console.log('trip:'+JSON.stringify(trip))
         //console.log('passengers' in trip)
@@ -170,49 +145,43 @@ app.post('/api/trips/:trip/:passenger',function(req,res){
         var fquery={'_id':ObjectId(req.params.trip),'passenger':t};
         //check if you're the driver
         var name='';
-        db.collection('Users').find({'userId':req.params.passenger}).toArray(function(err,result){
-            var user=result[0];
-            console.log('user:'+JSON.stringify(user))
-
-            name=user['name']
-            console.log('name:'+name)
-            var dquery={'_id':ObjectId(req.params.trip),'driver':name};
-            console.log('queries: '+JSON.stringify(pquery)+','+JSON.stringify(fquery)+','+JSON.stringify(dquery))
-            var cursor=db.collection('Trips').find({$or:[pquery,fquery,dquery]}).toArray(function(err, results) {
-                if(err){
-                    console.log('some error 501')
-                    res.status(500).send('Some error:'+err)
-                    return;
-                } 
-                //console.log('reserve query results:'+JSON.stringify(results))
-                //console.log(results=='')
-                if(results!=''){
-                    console.log('reserve error')
-                    //console.log(name+' equal '+results[0]['driver']+' - '+(name==results[0]['driver']).toString())
-                    //console.log(req.params.passenger+' in '+JSON.stringify(results[0]['passengers'])+' - '+('passengers' in results[0] && results[0]['passengers'].indexOf(req.params.passenger)>-1).toString())
-                    if(name==results[0]['driver']){
-                        console.log('you\'re the driver')
-                        res.send('You\'re the driver')
-                    }
-                    else if('passengers' in results[0] && results[0]['passengers'].indexOf(req.params.passenger)>-1){
-                        console.log('already have a seat')
-                        res.send('You already have a seat reserved')
-                    }
-                    else{
-                        console.log('no more seats')
-                        res.send('There are no more available seats')
-                    }
-                }else{
-                    db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $push: { "passengers": req.params.passenger }},function(err,res){
-                        if(err) throw err
-
-                        console.log('reserved seat on trip ')
-                    })
-                    res.send('Your seat has been reservd')
+        
+        var dquery={'email':req.body.email};
+        console.log('queries: '+JSON.stringify(pquery)+','+JSON.stringify(fquery)+','+JSON.stringify(dquery))
+        var cursor=db.collection('Trips').find({$or:[pquery,fquery,dquery]}).toArray(function(err, results) {
+            if(err){
+                console.log('some error 501')
+                res.status(500).send('Some error:'+err)
+                return;
+            } 
+            //console.log('reserve query results:'+JSON.stringify(results))
+            //console.log(results=='')
+            if(results!=''){
+                console.log('reserve error')
+                //console.log(name+' equal '+results[0]['driver']+' - '+(name==results[0]['driver']).toString())
+                //console.log(req.params.passenger+' in '+JSON.stringify(results[0]['passengers'])+' - '+('passengers' in results[0] && results[0]['passengers'].indexOf(req.params.passenger)>-1).toString())
+                if(req.body.email==results[0]['email']){
+                    console.log('you\'re the driver')
+                    res.send('You\'re the driver')
                 }
-            })
+                else if(passLen==results[0]['passengers'].length){
+                    console.log('no more seats')
+                    res.send('There are no more available seats')
+                }
+                else{
+                    console.log('already have a seat')
+                    res.send('You already have a seat reserved')
+                }
+            }else{
+                db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $push: { "passengers": req.body }},function(err,res){
+                    if(err) throw err
+
+                    console.log('reserved seat on trip ')
+                })
+                res.send('Your seat has been reservd')
+            }
         })
-    })*/
+    })
 })
 
 //update a trip as driver

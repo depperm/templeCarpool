@@ -199,10 +199,12 @@ $(function(){
     fillStakeSelect('#driverStake');
     $('#departStake').val('Seneca');
 
+    //sort trips table
     $('#trips th').on('click',function(){
         sortTable($(this).index());
     });
-
+    
+    //temple select change
     $('#temple').on('change',function(){
         $('#templeDest').val($(this).val());
         fillTempleInfo();
@@ -210,6 +212,7 @@ $(function(){
         matchTemple();
     });
     
+    //extra post trip form rules
     var validator = $('#postRideForm').validate({
         rules: {
             dDate: {
@@ -222,6 +225,7 @@ $(function(){
             }
         }
     });
+    //post a ride
     $('#postRideForm').submit(function(e){
         e.preventDefault();
         if(validator.valid()){
@@ -242,9 +246,9 @@ $(function(){
                             $('#rDate').val('');
                             $('#rTime').val('select');
                             $('#numSeats').val(1);
+                            alert(response);
                         }
-                        //alert('successfully posted your trip')
-                        alert(response);
+                        console.log(response);
                     },
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
@@ -274,16 +278,23 @@ $(function(){
             validator.resetForm();
         });
     });
+    
+    //find trips tab
     $('#fa').on('click',function(){
         getTrips();
     });
+    
+    //temple info tab
     $('#ti').on('click',function(){
         fillTempleInfo();
     });
+    
+    //edit ride tab
     $('#er').on('click',function(){
         fillEditInfo();
     })
     
+    //edit driver dialog
     driverDialog=$('#editDriverForm').dialog({
         autoOpen:false,
         height:400,
@@ -301,17 +312,20 @@ $(function(){
             //allFields.removeClass('ui-state-error');
         }
     });
+    //submit trip change
     driverForm=driverDialog.find('form').on('submit',function(event){
         event.preventDefault();
         editDriverTrip();
     });
     
+    //
     $('#editingDrivingRides').on('click','.editTrip',function(){
         console.log('editing:'+JSON.stringify(driverList[$(this).attr('data-trip-id')]));
         fillDriverDialog($(this).attr('data-trip-id'));
         $('#editDriverForm').attr('data-trip-id',$(this).attr('data-trip-id'))
         driverDialog.dialog( "open" );
     });
+    //
     $('#driverPassengers').on('click','.kickFromTrip',function(){
         var choice=confirm('Are you sure you want to kick this passenger from your trip? You will not have the ability to add them later.')
         if(choice){
@@ -331,6 +345,7 @@ $(function(){
             });
         }
     })
+    //
     $('#editingPassengerRides').on('click','.editTrip',function(){
         var choice=confirm('Are you sure you want to leave this trip?')
         if(choice){
@@ -350,13 +365,16 @@ $(function(){
             });
         }
     });
-    
+    //reserve a seat
     $('#trips').on('click','.reserveTrip',function(){
         console.log('should reserve');
+        var data=[];
+        data.push({name:'email',value:userDetails['email']});
+        data.push({name:'name',value:userDetails['name']});
         $.ajax({
             url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]['_id']+'/'+profile.getId(),
             type:'post',
-            //data:$.param(data),
+            data:$.param(data),
             statusCode: {
                 200: function(response){
                     alert(response);
@@ -370,35 +388,34 @@ $(function(){
             }
         });
     })
-    
+    //initialize datepickers
+    //edit trip datepickers
     $('#driverDepart').datepicker({minDate:0,onSelect:function(date){
         var selDate=new Date(date);
         $('#driverReturn').datepicker('option','minDate',selDate)
     }}).datepicker('setDate',new Date());
     $('#driverReturn').datepicker({minDate:0});
-    
+    //main datepickers
     $('#departDate').datepicker({minDate:0,onSelect:function(date){
         var selDate=new Date(date);
-        //var stDate=new Date(selDate.getTime()-86400000);
         $('#returnDate').datepicker('option','minDate',selDate)
         $('#rDate').datepicker('option','minDate',selDate)
         $('#rDate').val('');
         $('#dDate').val(date);
-        //update table if visible
         matchDepartDate();
         matchReturnDate();
     }}).datepicker('setDate',new Date());
     $('#returnDate').datepicker({minDate:0,onSelect:function(date){
         $('#rDate').val(date);
-        //update table if visible
         matchReturnDate();
     }}).datepicker('setDate',new Date());
+    //post ride datepickers
     $('#dDate').datepicker({minDate:0,onSelect:function(date){
         var selDate=new Date(date);
-        //var stDate=new Date(selDate.getTime()-86400000);
         $('#rDate').datepicker('option','minDate',selDate)
     }}).datepicker('setDate',new Date());
     $('#rDate').datepicker({minDate:0}).datepicker('setDate',new Date());
+    //fill time selects
     for(var i=0;i<2;i++){
         var t=i==0?' am':' pm';
         $.each(hours,function(index,value){
@@ -419,30 +436,10 @@ function onSignIn(googleUser) {
     $('#email').val(profile.getEmail());
     //var id_token=googleUser.getAuthResponse().id_token;
     //console.log("ID Token: " + id_token);
-    //TODO add user to user collection
     $('.g-signin2').hide();
     $('#welcomeMsg').hide();
     $('#content').show();
     $('.g-signout2').show();
-    //var data=[];
-    //data.push({name:"userId", value:profile.getId()});
-    //data.push({name:"name", value:profile.getName()});
-    //data.push({name:"email", value:profile.getEmail()});
-    //console.log('sending:'+JSON.stringify(data))
-    /*$.ajax({
-        url:'/api/users/add',
-        type:'post',
-        data:$.param(data),
-        statusCode: {
-            200: function(response){
-                console.log(response);
-            },
-            500: function(response){
-                //response={'readyState','responseText','status','statusText'}
-                alert(response['responseText']);
-            }
-        }
-    });*/
     getTrips();
     $('#fa').click();
 }

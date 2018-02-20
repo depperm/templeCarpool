@@ -33,8 +33,12 @@ label{
     border-bottom: 1px solid #ddd; 
 }
 
-#trips tr.header,#editingDrivingRides tr.header,#editingPassengerRides tr.header, #driverPassengers tr.header, #driverPassengers tr:hover, #trips tr:hover,#editingDrivingRides tr:hover,#editingPassengerRides tr:hover {
-    /* Add a grey background color to the table header and on hover */
+#trips tr.header,#editingDrivingRides tr.header,#editingPassengerRides tr.header, #driverPassengers tr.header {
+    /* Add a grey background color to the table header */
+    background-color: #f1f1f1;
+}
+#driverPassengers tr:hover, #trips tr:hover,#editingDrivingRides tr:hover,#editingPassengerRides tr:hover {
+    /* Add a grey background color to the table on hover */
     background-color: #f1f1f1;
 }
 .tab{
