@@ -203,7 +203,6 @@ $(function(){
                 required: true,
                 date: true
             },
-            {
             rDate: {
                 required: true,
                 date: true
