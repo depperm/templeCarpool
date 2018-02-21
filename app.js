@@ -129,7 +129,23 @@ app.post('/api/trips/add',function(req,res){
 app.post('/api/trips/:trip',function(req,res){
     console.log('trip param:'+req.params.trip)
     console.log('passenger:'+JSON.stringify(req.body))
-    //TODO check that body only has email and name
+    //verify body
+    var keys=Object.keys(req.body);
+    //check number of keys
+    if(keys.length!=2){
+        res.send('You have sent the wrong amount of information '+keys.length);
+        return;
+    }
+    //check key names
+    if(keys.indexOf('name')<0||keys.indexOf('email')<0){
+        res.send('You have sent the wrong kind of information');
+        return;
+    }
+    //check some values
+    if(req.body.email.indexOf('@')<0){
+        res.send('You need a valid email');
+        return;
+    }
     //check if passenger has a seat 
     var pquery={'_id':ObjectId(req.params.trip),passengers:{$elemMatch:{'name':req.body.name,'email':req.body.email}}};
     //check if trip is full
@@ -223,9 +239,9 @@ app.delete('/api/trips/:trip',function(req,res){
     })
 })
 //remove a passenger from a trip
-app.delete('/api/trips/:trip/:passenger',function(req,res){
+app.delete('/api/trips/:trip/:email',function(req,res){
     console.log('trip:'+req.params.trip)
-    console.log('trip:'+req.params.passenger)
+    console.log('trip:'+req.params.email)
     //TODO check that passenger is a passenger for said trip?
     db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $pull: { passengers: req.params.passenger} },function(err, results) {
         if (err) throw err;
@@ -235,7 +251,7 @@ app.delete('/api/trips/:trip/:passenger',function(req,res){
 })
 //get list of trip ids with driver id
 app.get('/api/users/driver/:driver',function(req,res){
-    console.log('get trips as driver:'+req.params.driver)
+    console.log('get trips as driver:'+req.params.email)
     var cursor=db.collection('Trips').find({'driverId':req.params.driver}).toArray(function(err, results) {
         if (err) throw err;
         //console.log(results)
@@ -244,7 +260,7 @@ app.get('/api/users/driver/:driver',function(req,res){
 })
 //get list of trips with user as passenger
 app.get('/api/users/passenger/:passenger',function(req,res){
-    console.log('get trips as passenger:'+req.params.passenger)
+    console.log('get trips as passenger:'+req.params.email)
     //res.send('get trips for passenger received')
     var cursor=db.collection('Trips').find({'passengers':req.params.passenger}).toArray(function(err, results) {
         if (err) throw err;
@@ -269,33 +285,7 @@ app.get('/api/passengers/:trip',function(req,res){
         }
     })
 })
-//add user for lookup
-/*app.post('/api/users/add',function(req,res){
-    /*console.log('driver:'+req.body.user-id)
-    console.log('email:'+req.body.email)
-    console.log('depD:'+req.body.name)*/
-    //check if driver has trip with same return or depart date-msg edit or remove trip
-    /*var query={'userId':req.body.userId};
-    db.collection('Users').find(query).toArray(function(err, results) {
-        if(err){
-            res.status(501).send('Some error:'+err)
-        } 
-        //console.log('add query results:'+results)
-        //console.log(results=='')
-        if(results!=''){
-            //console.log('add user error')
-            res.status(200).send('User already in DB')
-        }else{
-            db.collection('Users').save(req.body,(err,result)=>{
-                if(err) return console.log('An error: '+err)
 
-                console.log('saved user to db')
-            })
-            //res.redirect('/')
-            res.send('Your user has been saved')
-        }
-    })
-})*/
 app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/views/index.html'));
 });

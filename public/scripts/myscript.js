@@ -372,7 +372,7 @@ $(function(){
         data.push({name:'email',value:userDetails['email']});
         data.push({name:'name',value:userDetails['name']});
         $.ajax({
-            url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]['_id']+'/'+profile.getId(),
+            url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]['_id'],
             type:'post',
             data:$.param(data),
             statusCode: {
