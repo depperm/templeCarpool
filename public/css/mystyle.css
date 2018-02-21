@@ -1,3 +1,7 @@
+/* based on www.mds.sh/readable */
+html,input,button,select{
+    font-family:'Georgia';
+}
 #datepicker {
     padding:10px;
 }
