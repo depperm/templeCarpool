@@ -158,7 +158,7 @@ app.post('/api/trips/:trip',function(req,res){
         
         t['$size']=parseInt(trip['numSeats'])
         //console.log('t:'+JSON.stringify(t))
-        var fquery={'_id':ObjectId(req.params.trip),'passenger':t};
+        var fquery={'_id':ObjectId(req.params.trip),'passengers':t};
         //check if you're the driver
         var name='';
         
@@ -180,8 +180,8 @@ app.post('/api/trips/:trip',function(req,res){
                     console.log('you\'re the driver')
                     res.send('You\'re the driver')
                 }
-                else if(passLen==results[0]['passengers'].length){
-                    console.log('no more seats')
+                else if(passLen==results[0]['numSeats']){
+                    console.log('no more seats'+passLen+' '+results[0]['numSeats'])
                     res.send('There are no more available seats')
                 }
                 else{
