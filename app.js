@@ -292,3 +292,8 @@ app.get('/',function(req,res) {
 app.use(function(req,res,next){
     res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
 })
+process.on('uncaughtException', function (err) {
+  console.error((new Date).toUTCString() + ' uncaughtException:', err.message)
+  console.error(err.stack)
+  process.exit(1)
+})

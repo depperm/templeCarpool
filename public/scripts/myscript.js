@@ -110,6 +110,9 @@ function getTrips(){
             var seats=('passengers' in trip?trip['passengers'].length:'0')+'/'+trip['numSeats'];
             var driver=trip['driver'];
             var disabled=('passengers' in trip?trip['passengers'].length:0)==trip['numSeats']?'disabled':'';
+            if(userDetails['email']==trip['email']){
+                disabled='disabled';
+            }
 
             $('#trips tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td title="'+trip['email']+'" class="driver"><a href="mailto:'+trip['email']+'?Temple%20Trip" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
             //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
