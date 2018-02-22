@@ -333,7 +333,7 @@ $(function(){
         var choice=confirm('Are you sure you want to kick this passenger from your trip? You will not have the ability to add them later.')
         if(choice){
             $.ajax({
-                url:'/api/trips/'+driverList[$(this).attr('data-trip-id')]['_id']+'/'+tripPassengerList[$(this).attr('data-trip-passenger-id')]['userId'],
+                url:'/api/trips/'+driverList[$(this).attr('data-trip-id')]['_id']+'/'+tripPassengerList[$(this).attr('data-trip-passenger-id')]['email'],
                 type:'DELETE',
                 statusCode: {
                     200: function(response){
@@ -613,16 +613,4 @@ function fillDriverDialog(index){
         var email=info['email'];
         $('#driverPassengers tr:last').after('<tr class="trip"><td>'+name+'</td><td>'+email+'</td><td><input type="button" value="Remove" class="kickFromTrip" data-trip-id="'+index+'" data-trip-passenger-id="'+i+'"></td></tr>');
     });
-    /*$.get('/api/passengers/'+driverList[index]['_id'],function(data,status){
-        $('#driverPassengers tr:not(.header)').remove();
-        tripPassengerList=data;
-        $.each(tripPassengerList,function(i,info){
-            //console.log('trip '+i.toString()+':'+JSON.stringify(info))
-            //Name,Email,Remove
-            var name=info['name'];
-            var email=info['email'];
-            $('#driverPassengers tr:last').after('<tr class="trip"><td>'+name+'</td><td>'+email+'</td><td><input type="button" value="Remove" class="kickFromTrip" data-trip-id="'+index+'" data-trip-passenger-id="'+i+'"></td></tr>');
-        });
-        //console.log(JSON.stringify(data));
-    });*/
 }
