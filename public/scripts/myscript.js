@@ -594,10 +594,8 @@ function deleteTrip(){
     driverDialog.dialog( "close" );
 }
 function fillDriverDialog(index){
-    if('templeDest' in driverList[index])
-        $('#driverTemple').val(driverList[index]['templeDest']);
-    if('departStake' in driverList[index])
-        $('#driverStake').val(driverList[index]['departStake']);
+    $('#driverTemple').val(driverList[index]['templeDest']);
+    $('#driverStake').val(driverList[index]['departStake']);
     $('#driverDTime').val(driverList[index]['dTime']);
     $('#driverRTime').val(driverList[index]['rTime']);
     $('#driverDepart').val(driverList[index]['dDate']);
