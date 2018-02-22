@@ -162,7 +162,7 @@ app.post('/api/trips/:trip',function(req,res){
         //check if you're the driver
         var name='';
         
-        var dquery={'email':req.body.email};
+        var dquery={'_id':ObjectId(req.params.trip),'email':req.body.email};
         console.log('queries: '+JSON.stringify(pquery)+','+JSON.stringify(fquery)+','+JSON.stringify(dquery))
         var cursor=db.collection('Trips').find({$or:[pquery,fquery,dquery]}).toArray(function(err, results) {
             if(err){
@@ -181,7 +181,7 @@ app.post('/api/trips/:trip',function(req,res){
                     res.send('You\'re the driver')
                 }
                 else if(passLen==results[0]['numSeats']){
-                    console.log('no more seats'+passLen+' '+results[0]['numSeats'])
+                    console.log('no more seats')
                     res.send('There are no more available seats')
                 }
                 else{
