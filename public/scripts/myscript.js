@@ -604,7 +604,17 @@ function fillDriverDialog(index){
     $('#driverReturn').val(driverList[index]['rDate']);
     $('#driverSeats').val(driverList[index]['numSeats'])
     //TODO get passenger info-fill in table #driverPassengers
-    $.get('/api/passengers/'+driverList[index]['_id'],function(data,status){
+    tripPassengerList=driverList[index]['passengers'];
+    console.log('passengers: '+JSON.stringify(tripPassengerList));
+    $('#driverPassengers tr:not(.header)').remove();
+    $.each(tripPassengerList,function(i,info){
+        //console.log('trip '+i.toString()+':'+JSON.stringify(info))
+        //Name,Email,Remove
+        var name=info['name'];
+        var email=info['email'];
+        $('#driverPassengers tr:last').after('<tr class="trip"><td>'+name+'</td><td>'+email+'</td><td><input type="button" value="Remove" class="kickFromTrip" data-trip-id="'+index+'" data-trip-passenger-id="'+i+'"></td></tr>');
+    });
+    /*$.get('/api/passengers/'+driverList[index]['_id'],function(data,status){
         $('#driverPassengers tr:not(.header)').remove();
         tripPassengerList=data;
         $.each(tripPassengerList,function(i,info){
@@ -615,5 +625,5 @@ function fillDriverDialog(index){
             $('#driverPassengers tr:last').after('<tr class="trip"><td>'+name+'</td><td>'+email+'</td><td><input type="button" value="Remove" class="kickFromTrip" data-trip-id="'+index+'" data-trip-passenger-id="'+i+'"></td></tr>');
         });
         //console.log(JSON.stringify(data));
-    });
+    });*/
 }
