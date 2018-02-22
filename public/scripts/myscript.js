@@ -320,15 +320,15 @@ $(function(){
         event.preventDefault();
         editDriverTrip();
     });
-    
-    //
+
+    //edit trip details
     $('#editingDrivingRides').on('click','.editTrip',function(){
         console.log('editing:'+JSON.stringify(driverList[$(this).attr('data-trip-id')]));
         fillDriverDialog($(this).attr('data-trip-id'));
         $('#editDriverForm').attr('data-trip-id',$(this).attr('data-trip-id'))
         driverDialog.dialog( "open" );
     });
-    //
+    //kick a passenger on your trip
     $('#driverPassengers').on('click','.kickFromTrip',function(){
         var choice=confirm('Are you sure you want to kick this passenger from your trip? You will not have the ability to add them later.')
         if(choice){
@@ -348,12 +348,12 @@ $(function(){
             });
         }
     })
-    //
-    $('#editingPassengerRides').on('click','.editTrip',function(){
+    //drop a seat
+    $('#editingPassengerRides').on('click','.dropTrip',function(){
         var choice=confirm('Are you sure you want to leave this trip?')
         if(choice){
             $.ajax({
-                url:'/api/trips/'+passengerList[$(this).attr('data-trip-id')]['_id']+'/'+profile.getId(),
+                url:'/api/trips/'+passengerList[$(this).attr('data-trip-id')]['_id']+'/'+userDetails['email'],
                 type:'DELETE',
                 statusCode: {
                     200: function(response){
@@ -503,7 +503,7 @@ function fillEditInfo(){
             var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
             var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
             var driver=trip['driver'];
-            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+driver+'</td><td><input type="button" value="Drop" class="editTrip" data-trip-id="'+index+'"></td></tr>');
+            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+driver+'</td><td><input type="button" value="Drop" class="dropTrip" data-trip-id="'+index+'"></td></tr>');
         });
         //console.log(JSON.stringify(data));
     });

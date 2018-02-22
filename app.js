@@ -241,9 +241,9 @@ app.delete('/api/trips/:trip',function(req,res){
 //remove a passenger from a trip
 app.delete('/api/trips/:trip/:email',function(req,res){
     console.log('trip:'+req.params.trip)
-    console.log('trip:'+req.params.email)
+    console.log('email:'+req.params.email)
     //TODO check that passenger is a passenger for said trip?
-    db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $pull: { passengers: req.params.passenger} },function(err, results) {
+    db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $pull: { passengers: {$elemMatch:{email:req.params.email}}} },function(err, results) {
         if (err) throw err;
         console.log('You have dropped the trip')
         res.send('You have cancelled your seat')
