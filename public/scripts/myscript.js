@@ -594,6 +594,7 @@ function deleteTrip(){
     driverDialog.dialog( "close" );
 }
 function fillDriverDialog(index){
+    console.log('should fill with:'+JSON.stringify(driverList[index]))
     $('#driverTemple').val(driverList[index]['templeDest']);
     $('#driverStake').val(driverList[index]['departStake']);
     $('#driverDTime').val(driverList[index]['dTime']);
