@@ -252,7 +252,7 @@ app.delete('/api/trips/:trip/:email',function(req,res){
 //get list of trip ids with driver id
 app.get('/api/users/driver/:driver',function(req,res){
     console.log('get trips as driver:'+req.params.email)
-    var cursor=db.collection('Trips').find({'driverId':req.params.driver}).toArray(function(err, results) {
+    var cursor=db.collection('Trips').find({'email':req.params.driver}).toArray(function(err, results) {
         if (err) throw err;
         //console.log(results)
         res.send(results)
@@ -262,7 +262,7 @@ app.get('/api/users/driver/:driver',function(req,res){
 app.get('/api/users/passenger/:passenger',function(req,res){
     console.log('get trips as passenger:'+req.params.email)
     //res.send('get trips for passenger received')
-    var cursor=db.collection('Trips').find({'passengers':req.params.passenger}).toArray(function(err, results) {
+    var cursor=db.collection('Trips').find({'passengers':{$elemMatch:{email:req.params.passenger}}}).toArray(function(err, results) {
         if (err) throw err;
         //console.log(results)
         res.send(results)

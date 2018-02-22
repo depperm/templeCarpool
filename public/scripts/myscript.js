@@ -477,7 +477,7 @@ function fillTempleInfo(){
     });
 }
 function fillEditInfo(){
-    $.get('/api/users/driver/'+profile.getId(),function(data,status){
+    $.get('/api/users/driver/'+userDetails['email'],function(data,status){
         $('#editingDrivingRides tr:not(.header)').remove();
         driverList=data;
         $.each(data,function(index,trip){
@@ -492,7 +492,7 @@ function fillEditInfo(){
         });
         //console.log(JSON.stringify(data));
     });
-    $.get('/api/users/passenger/'+profile.getId(),function(data,status){
+    $.get('/api/users/passenger/'+userDetails['email'],function(data,status){
         $('#editingPassengerRides tr:not(.header)').remove();
         passengerList=data;
         $.each(data,function(index,trip){
