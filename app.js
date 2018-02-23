@@ -245,8 +245,8 @@ app.delete('/api/trips/:trip/:email',function(req,res){
     //TODO check that passenger is a passenger for said trip?
     db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $pull: { 'passengers': {'email':req.params.email}} },function(err, results) {
         if (err) throw err;
-        console.log('You have dropped the trip')
-        res.send('You have cancelled your seat')
+        console.log('You have kicked a passenger/cancelled your seat')
+        res.send('You have cancelled a seat')
     })
 })
 //get list of trip ids with driver id

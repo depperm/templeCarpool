@@ -339,6 +339,7 @@ $(function(){
                 statusCode: {
                     200: function(response){
                         //console.log('deleted...id:'+tripIndex)
+                        tripPassengerList.splice([$(this).attr('data-trip-passenger-id')],1)
                         fillDriverDialog(tripIndex);
                     },
                     500: function(response){
