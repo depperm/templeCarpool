@@ -337,7 +337,8 @@ $(function(){
                 type:'DELETE',
                 statusCode: {
                     200: function(response){
-                        fillDriverDialog($(this).attr('data-trip-id'));
+                        console.log('deleted...id:'+$(this).attr('data-trip-id'))
+                        //fillDriverDialog($(this).attr('data-trip-id'));
                     },
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
