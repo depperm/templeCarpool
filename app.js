@@ -203,8 +203,8 @@ app.post('/api/trips/:trip',function(req,res){
 //update a trip as driver
 app.post('/api/trips/edit/:trip',function(req,res){
     console.log('trip:'+req.params.trip)
-    console.log('driver:'+req.body.driver)
-    console.log('email:'+req.body.email)
+    console.log('driver:'+req.body.departStake)
+    console.log('driver:'+req.body.templeDest)
     console.log('depD:'+req.body.dDate)
     console.log('depT:'+req.body.dTime)
     console.log('retD:'+req.body.rDate)

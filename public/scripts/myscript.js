@@ -556,6 +556,24 @@ function editDriverTrip(){
     if(editValidator.valid()){
         console.log('should update')
         var data=$('#editRideForm').serializeArray();//form to array
+        //update data to match names as post form
+        $.each(data,function(i,param){
+            if(param['name']=='driverStake'){
+                data[i]['name']='departStake';
+            }else if(param['name']=='driverTemple'){
+                data[i]['name']='templeDest';
+            }else if(param['name']=='driverDepart'){
+                data[i]['name']='dDate';
+            }else if(param['name']=='driverDTime'){
+                data[i]['name']='dTime';
+            }else if(param['name']=='driverReturn'){
+                data[i]['name']='rDate';
+            }else if(param['name']=='driverRTime'){
+                data[i]['name']='rTime';
+            }else if(param['name']=='driverSeats'){
+                data[i]['name']='numSeats';
+            }
+        });
         //data.push({name:"email", value:userDetails['email']});//add driver email
         console.log('updating for:'+JSON.stringify(driverList[editTripIndex]['_id']))
         console.log('sending:'+JSON.stringify(data))
