@@ -210,7 +210,14 @@ app.put('/api/trips/:trip',function(req,res){
     console.log('retD:'+req.body.rDate)
     console.log('retT:'+req.body.rTime)
     console.log('seat:'+req.body.numSeats)
-    res.send('Updated your trip')
+    db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{$set:(req.body)},function(err,result){
+        if(err){
+            res.status(500).send('Some error:'+err)
+            return
+        }
+        console.log('updated trip')
+        res.send('Updated your trip')
+    })
 })
 
 //remove a trip with ID
