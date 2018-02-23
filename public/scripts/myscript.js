@@ -560,8 +560,8 @@ function editDriverTrip(){
         console.log('updating for:'+JSON.stringify(driverList[editTripIndex]['_id']))
         console.log('sending:'+JSON.stringify(data))
         $.ajax({
-            url:'/api/trips/'+driverList[editTripIndex]['_id'],
-            type:'put',
+            url:'/api/trips/edit/'+driverList[editTripIndex]['_id'],
+            type:'post',
             data:$.param(data),
             statusCode: {
                 200: function(response){

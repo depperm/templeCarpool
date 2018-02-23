@@ -201,7 +201,7 @@ app.post('/api/trips/:trip',function(req,res){
 })
 
 //update a trip as driver
-app.put('/api/trips/:trip',function(req,res){
+app.post('/api/trips/edit/:trip',function(req,res){
     console.log('trip:'+req.params.trip)
     console.log('driver:'+req.body.driver)
     console.log('email:'+req.body.email)
