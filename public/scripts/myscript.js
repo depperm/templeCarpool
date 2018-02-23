@@ -330,14 +330,15 @@ $(function(){
     });
     //kick a passenger on your trip
     $('#driverPassengers').on('click','.kickFromTrip',function(){
+        var tripIndex=$(this).attr('data-trip-id');
         var choice=confirm('Are you sure you want to kick this passenger from your trip? You will not have the ability to add them later.')
         if(choice){
             $.ajax({
-                url:'/api/trips/'+driverList[$(this).attr('data-trip-id')]['_id']+'/'+tripPassengerList[$(this).attr('data-trip-passenger-id')]['email'],
+                url:'/api/trips/'+driverList[tripIndex]['_id']+'/'+tripPassengerList[$(this).attr('data-trip-passenger-id')]['email'],
                 type:'DELETE',
                 statusCode: {
                     200: function(response){
-                        console.log('deleted...id:'+$(this).attr('data-trip-id'))
+                        console.log('deleted...id:'+tripIndex)
                         //fillDriverDialog($(this).attr('data-trip-id'));
                     },
                     500: function(response){
