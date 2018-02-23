@@ -559,17 +559,17 @@ function editDriverTrip(){
         //data.push({name:"email", value:userDetails['email']});//add driver email
         console.log('updating for:'+JSON.stringify(driverList[editTripIndex]['_id']))
         console.log('sending:'+JSON.stringify(data))
-        /*$.ajax({
+        $.ajax({
             url:'/api/trips/'+,
             type:'put',
             data:$.param(data),
             statusCode: {
                 200: function(response){
-                    $('#dDate').val('');
+                    /*$('#dDate').val('');
                     $('#dTime').val('select');
                     $('#rDate').val('');
                     $('#rTime').val('select');
-                    $('#numSeats').val(1);
+                    $('#numSeats').val(1);*/
                     //alert('successfully update your trip')
                     alert(response);
                 },
@@ -578,7 +578,7 @@ function editDriverTrip(){
                     alert(response['responseText']);
                 }
             }
-        });*/
+        });
     }
     //TODO put/update trip
     //editDriverTrip();
