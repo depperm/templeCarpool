@@ -210,21 +210,9 @@ app.put('/api/trips/:trip',function(req,res){
     console.log('retD:'+req.body.rDate)
     console.log('retT:'+req.body.rTime)
     console.log('seat:'+req.body.numSeats)
-    res.send('update ride received')
+    res.send('Updated your trip')
 })
 
-//get trip with ID-obsolete?
-app.get('/api/trips/:trip',function(req,res){
-    console.log('getting trip:'+req.params.trip)
-    db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(err,result){
-        if(err){
-            res.status(500).send('Some error:'+err)
-            return;
-        }
-        console.log('returning trip: '+JSON.stringify(result[0]))
-        res.send(result[0])
-    })
-})
 //remove a trip with ID
 app.delete('/api/trips/:trip',function(req,res){
     console.log('deleting trip:'+req.params.trip)

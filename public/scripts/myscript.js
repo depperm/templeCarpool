@@ -2,6 +2,7 @@ var profile;
 var userDetails={};
 var tripList;
 
+var editTripIndex;
 var driverList;
 var passengerList;
 var tripPassengerList;
@@ -324,13 +325,14 @@ $(function(){
     //edit trip details
     $('#editingDrivingRides').on('click','.editTrip',function(){
         console.log('editing:'+JSON.stringify(driverList[$(this).attr('data-trip-id')]));
-        fillDriverDialog($(this).attr('data-trip-id'));
+        editTripIndex=$(this).attr('data-trip-id');
+        fillDriverDialog();
         $('#editDriverForm').attr('data-trip-id',$(this).attr('data-trip-id'))
         driverDialog.dialog( "open" );
     });
     //kick a passenger on your trip
     $('#driverPassengers').on('click','.kickFromTrip',function(){
-        var tripIndex=$(this).attr('data-trip-id');
+        editTripIndex=$(this).attr('data-trip-id');
         var choice=confirm('Are you sure you want to kick this passenger from your trip? You will not have the ability to add them later.')
         if(choice){
             $.ajax({
@@ -338,9 +340,11 @@ $(function(){
                 type:'DELETE',
                 statusCode: {
                     200: function(response){
-                        //console.log('deleted...id:'+tripIndex)
+                        //remove passenger from local list
                         tripPassengerList.splice([$(this).attr('data-trip-passenger-id')],1)
-                        fillDriverDialog(tripIndex);
+                        fillDriverDialog();
+                        //update table in background
+                        updateTripsDrivingTable();
                     },
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
@@ -360,7 +364,7 @@ $(function(){
                 type:'DELETE',
                 statusCode: {
                     200: function(response){
-                        fillEditInfo();
+                        updateTripsPassengerTable();
                     },
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
@@ -480,6 +484,10 @@ function fillTempleInfo(){
     });
 }
 function fillEditInfo(){
+    updateTripsDrivingTable();
+    updateTripsPassengerTable();
+}
+function updateTripsDrivingTable(){
     $.get('/api/users/driver/'+userDetails['email'],function(data,status){
         $('#editingDrivingRides tr:not(.header)').remove();
         driverList=data;
@@ -495,6 +503,8 @@ function fillEditInfo(){
         });
         //console.log(JSON.stringify(data));
     });
+}
+function updateTripsPassengerTable(){
     $.get('/api/users/passenger/'+userDetails['email'],function(data,status){
         $('#editingPassengerRides tr:not(.header)').remove();
         passengerList=data;
@@ -545,12 +555,13 @@ function editDriverTrip(){
     var editValidator = $('#postRideForm').validate();
     if(editValidator.valid()){
         console.log('should update')
-        /*var data=$('#postRideForm').serializeArray();//form to array
-        data.push({name:"driverId", value:profile.getId()});//add driver id
+        var data=$('#editRideForm').serializeArray();//form to array
+        //data.push({name:"email", value:userDetails['email']});//add driver email
+        console.log('updating for:'+JSON.stringify(driverList[editTripIndex]['_id']))
         console.log('sending:'+JSON.stringify(data))
-        $.ajax({
-            url:'/api/trips/add',
-            type:'post',
+        /*$.ajax({
+            url:'/api/trips/'+,
+            type:'put',
             data:$.param(data),
             statusCode: {
                 200: function(response){
@@ -559,7 +570,7 @@ function editDriverTrip(){
                     $('#rDate').val('');
                     $('#rTime').val('select');
                     $('#numSeats').val(1);
-                    //alert('successfully posted your trip')
+                    //alert('successfully update your trip')
                     alert(response);
                 },
                 500: function(response){
@@ -573,6 +584,7 @@ function editDriverTrip(){
     //editDriverTrip();
     //TODO update edit table
     //post/put to server
+    updateTripsDrivingTable();
     driverDialog.dialog( "close" );
 }
 function deleteTrip(){
@@ -596,17 +608,17 @@ function deleteTrip(){
     }
     driverDialog.dialog( "close" );
 }
-function fillDriverDialog(index){
-    console.log('should fill with:'+JSON.stringify(driverList[index]))
-    $('#driverTemple').val(driverList[index]['templeDest']);
-    $('#driverStake').val(driverList[index]['departStake']);
-    $('#driverDTime').val(driverList[index]['dTime']);
-    $('#driverRTime').val(driverList[index]['rTime']);
-    $('#driverDepart').val(driverList[index]['dDate']);
-    $('#driverReturn').val(driverList[index]['rDate']);
-    $('#driverSeats').val(driverList[index]['numSeats'])
+function fillDriverDialog(){
+    console.log('should fill with:'+JSON.stringify(driverList[editTripIndex]))
+    $('#driverTemple').val(driverList[editTripIndex]['templeDest']);
+    $('#driverStake').val(driverList[editTripIndex]['departStake']);
+    $('#driverDTime').val(driverList[editTripIndex]['dTime']);
+    $('#driverRTime').val(driverList[editTripIndex]['rTime']);
+    $('#driverDepart').val(driverList[editTripIndex]['dDate']);
+    $('#driverReturn').val(driverList[editTripIndex]['rDate']);
+    $('#driverSeats').val(driverList[editTripIndex]['numSeats'])
     //TODO get passenger info-fill in table #driverPassengers
-    tripPassengerList=driverList[index]['passengers'];
+    tripPassengerList=driverList[editTripIndex]['passengers'];
     console.log('passengers: '+JSON.stringify(tripPassengerList));
     $('#driverPassengers tr:not(.header)').remove();
     $.each(tripPassengerList,function(i,info){
@@ -614,6 +626,6 @@ function fillDriverDialog(index){
         //Name,Email,Remove
         var name=info['name'];
         var email=info['email'];
-        $('#driverPassengers tr:last').after('<tr class="trip"><td>'+name+'</td><td>'+email+'</td><td><input type="button" value="Remove" class="kickFromTrip" data-trip-id="'+index+'" data-trip-passenger-id="'+i+'"></td></tr>');
+        $('#driverPassengers tr:last').after('<tr class="trip"><td>'+name+'</td><td>'+email+'</td><td><input type="button" value="Remove" class="kickFromTrip" data-trip-id="'+editTripIndex+'" data-trip-passenger-id="'+i+'"></td></tr>');
     });
 }
