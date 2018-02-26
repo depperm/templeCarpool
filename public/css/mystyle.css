@@ -2,7 +2,7 @@
 html,input,button,select{
     font-family:'Georgia';
 }
-#datepicker {
+#filter {
     padding:10px;
 }
 .match{

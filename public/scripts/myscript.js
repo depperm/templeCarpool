@@ -97,6 +97,15 @@ function matchTemple(){
     });
 }
 
+function matchStake(){
+    $('.trip td[data-stake]').removeClass('match');
+    var stakes=$('.trip td[data-stake]')
+    $.each(stakes,function(index,temple){
+        if($(this).attr('data-stake')==$('#stake').val())
+            $(this).addClass('match')
+    });
+}
+
 function getTrips(){
     $.get('/api/trips',function(data,status){
         $('#trips tr:not(.header)').remove();
@@ -114,11 +123,9 @@ function getTrips(){
             if(userDetails['email']==trip['email']){
                 disabled='disabled';
             }
-            //reverse email
             var ob='mailto:'+trip['email']
-            $('#trips tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td class="driver"><a href="'+ob+'" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
+            $('#trips tr:last').after('<tr class="trip"><td data-stake="'+stk+'">'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td class="driver"><a href="'+ob+'" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
             //$('#trips tr:last .driver a').attr('href',ob)
-            //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
         });
         matchDepartDate();
         matchReturnDate();
@@ -200,9 +207,12 @@ $(function(){
     $('#templeDest').val('Philadelphia');
 
     //Fill stake selects
+    $('#stake').empty();
     $('#departStake').empty();
+    fillStakeSelect('#stake');
     fillStakeSelect('#departStake');
     fillStakeSelect('#driverStake');
+    $('#stake').val('Seneca');
     $('#departStake').val('Seneca');
 
     //sort trips table
@@ -216,6 +226,13 @@ $(function(){
         fillTempleInfo();
 
         matchTemple();
+    });
+    
+    //stake on change
+    $('#stake').on('change',function(){
+        $('#departStake').val($(this).val());
+
+        matchStake();
     });
     
     //extra post trip form rules
@@ -572,8 +589,6 @@ function editDriverTrip(){
                 data[i]['name']='rDate';
             }else if(param['name']=='driverRTime'){
                 data[i]['name']='rTime';
-            }else if(param['name']=='driverSeats'){
-                data[i]['name']='numSeats';
             }else if(param['name']=='driverSeats'){
                 data[i]['name']='numSeats';
             }else if(param['name']=='driverSplitCost'){

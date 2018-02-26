@@ -112,7 +112,9 @@ app.post('/api/trips/add',function(req,res){
     console.log('retT:'+req.body.rTime)
     console.log('seat:'+req.body.numSeats)
     console.log('stake:'+departStake)
-    console.log('temple:'+templeDest)*/
+    console.log('temple:'+templeDest)
+    console.log('split:'+req.body.splitCost)
+    console.log('comment:'+req.body.comment)*/
     //check if driver has trip with same return or depart date
     var dquery={dDate:req.body.dDate, email:req.body.email};
     var rquery={rDate:req.body.rDate, email:req.body.email};
@@ -229,6 +231,8 @@ app.post('/api/trips/edit/:trip',function(req,res){
     console.log('retD:'+req.body.rDate)
     console.log('retT:'+req.body.rTime)
     console.log('seat:'+req.body.numSeats)
+    console.log('split:'+req.body.splitCost)
+    console.log('comment:'+req.body.comment)
     //verify body
     var keys=Object.keys(req.body);
     //check number of keys

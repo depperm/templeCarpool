@@ -45,10 +45,11 @@
                 </ul>
                 
                 <div id="content" hidden>
-                    <div id="datepicker">
+                    <div id="filter">
+                        Stake: <select id="stake"></select>
+                        Temple: <select id="temple"></select>
                         Departure Date: <input type="text" id="departDate">
                         Return Date: <input type="text" id="returnDate">
-                        Temple: <select id="temple"></select>
                     </div>
                     <div class="tab">
                         <button class="tablinks" id="fa" onclick="openTab(event,'findRide')">Find A Ride</button>
@@ -63,7 +64,7 @@
                                 <th>Temple</th>
                                 <th>Departure</th>
                                 <th>Return</th>
-                                <th>Seats</th>
+                                <th>Passengers</th>
                                 <th>Driver</th>
                                 <th>Reserve</th>
                             </tr>
@@ -109,7 +110,7 @@
                                 <input type="checkbox" id="splitCost" name="splitCost" class="checkmark">
                                 <br />
                                 <label for="comments">Optional Comments:</label>
-                                <textarea id="comments" name="textarea" placeholder="Any comments for passengers such as phone number, pick up location, car rules, etc"></textarea>
+                                <textarea id="comments" name="comments" placeholder="Any comments for passengers such as phone number, pick up location, car rules, etc"></textarea>
                                 <br />
                                 <input type="submit" value="Post a Ride" />
                             </fieldset>
@@ -117,29 +118,29 @@
                     </div>
                     <div id="editRide" class="tabContent">
                         <div id="editDriverForm" title="Edit a Trip" data-trip-id="">
-                            <p class="validateTips">All form fields are required.</p>
+                            <p class="validateTips">All form fields with * are required.</p>
                              
                             <form id="editRideForm">
                                 <fieldset>
-                                    <label for="driverStake">Stake</label>
+                                    <label for="driverStake">Stake*</label>
                                     <select name="driverStake" id="driverStake" class="text ui-widget-content ui-corner-all"></select>
                                     <br />
-                                    <label for="driverTemple">Temple</label>
+                                    <label for="driverTemple">Temple*</label>
                                     <select name="driverTemple" id="driverTemple" class="text ui-widget-content ui-corner-all"></select>
                                     <br />
-                                    <label for="driverDepart">Departure</label>
+                                    <label for="driverDepart">Departure*</label>
                                     <input type="text" name="driverDepart" id="driverDepart" required class="text ui-widget-content ui-corner-all">
                                     <select name="driverDTime" id="driverDTime" class="text ui-widget-content ui-corner-all">
                                     <option value='select'>--select--</option>
                                     </select>
                                     <br />
-                                    <label for="driverReturn">Return</label>
+                                    <label for="driverReturn">Return*</label>
                                     <input type="text" name="driverReturn" id="driverReturn" required class="text ui-widget-content ui-corner-all">
                                     <select name="driverRTime" id="driverRTime" class="text ui-widget-content ui-corner-all">
                                     <option value='select'>--select--</option>
                                     </select>
                                     <br />
-                                    <label for="driverSeats">Max Seats</label>
+                                    <label for="driverSeats">Max Seats*</label>
                                     <input type="number" name="driverSeats" id="driverSeats" min=1 required class="text ui-widget-content ui-corner-all">
                                     <br />
                                     <label for="driverSplitCost">Split Cost:</label>
