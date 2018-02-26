@@ -130,6 +130,7 @@ function getTrips(){
         matchDepartDate();
         matchReturnDate();
         matchTemple();
+        matchStake();
         //console.log(JSON.stringify(data));
     });
 }
@@ -658,21 +659,24 @@ function fillDriverDialog(){
     $('#driverDepart').val(driverList[editTripIndex]['dDate']);
     $('#driverReturn').val(driverList[editTripIndex]['rDate']);
     $('#driverSeats').val(driverList[editTripIndex]['numSeats']);
-    $('#driverSplitCost').val(driverList[editTripIndex]['splitCost']);
+    if(driverList[editTripIndex]['splitCost']=='on')
+        $('#driverSplitCost').prop('checked',true);
     $('#driverComments').val(driverList[editTripIndex]['comments']);
-    tripPassengerList=driverList[editTripIndex]['passengers'];
-    console.log('passengers: '+JSON.stringify(tripPassengerList));
-    if(tripPassengerList.length>0){
-        $('#driverPassengers').show();
-        $('#driverPassengers tr:not(.header)').remove();
-        $.each(tripPassengerList,function(i,info){
-            //console.log('trip '+i.toString()+':'+JSON.stringify(info))
-            //Name,Email,Remove
-            var name=info['name'];
-            var email=info['email'];
-            $('#driverPassengers tr:last').after('<tr class="trip"><td>'+name+'</td><td>'+email+'</td><td><input type="button" value="Remove" class="kickFromTrip" data-trip-id="'+editTripIndex+'" data-trip-passenger-id="'+i+'"></td></tr>');
-        });
-    }else{
-        $('#driverPassengers').hide();
+    if('passengers' in driverList[editTripIndex]){
+        tripPassengerList=driverList[editTripIndex]['passengers'];
+        console.log('passengers: '+JSON.stringify(tripPassengerList));
+        if(tripPassengerList.length>0){
+            $('#driverPassengers').show();
+            $('#driverPassengers tr:not(.header)').remove();
+            $.each(tripPassengerList,function(i,info){
+                //console.log('trip '+i.toString()+':'+JSON.stringify(info))
+                //Name,Email,Remove
+                var name=info['name'];
+                var email=info['email'];
+                $('#driverPassengers tr:last').after('<tr class="trip"><td>'+name+'</td><td>'+email+'</td><td><input type="button" value="Remove" class="kickFromTrip" data-trip-id="'+editTripIndex+'" data-trip-passenger-id="'+i+'"></td></tr>');
+            });
+        }else{
+            $('#driverPassengers').hide();
+        }
     }
 }
