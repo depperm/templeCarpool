@@ -104,6 +104,12 @@
                                 <label for="templeDest">Temple:</label>
                                 <select id="templeDest" name="templeDest">
                                 </select>
+                                <br>
+                                <label for="splitCost">Split Cost:</label>
+                                <input type="checkbox" id="splitCost" name="splitCost" class="checkmark">
+                                <br />
+                                <label for="comments">Optional Comments:</label>
+                                <textarea id="comments" name="textarea" placeholder="Any comments for passengers such as phone number, pick up location, car rules, etc"></textarea>
                                 <br />
                                 <input type="submit" value="Post a Ride" />
                             </fieldset>
@@ -136,6 +142,12 @@
                                     <label for="driverSeats">Max Seats</label>
                                     <input type="number" name="driverSeats" id="driverSeats" min=1 required class="text ui-widget-content ui-corner-all">
                                     <br />
+                                    <label for="driverSplitCost">Split Cost:</label>
+                                    <input type="checkbox" id="driverSplitCost" name="driverSplitCost" class="checkmark">
+                                    <br />
+                                    <label for="driverComments">Optional Comments:</label>
+                                    <textarea id="driverComments" name="driverComments" placeholder="Any comments for passengers such as phone number, pick up location, car rules, etc"></textarea>
+                                    <br />
                                     <label for="driverPassengers">Passengers</label>
                                     <table name="driverPassengers" id="driverPassengers">
                                         <tr class="header">
@@ -156,7 +168,7 @@
                                 <th>Temple</th>
                                 <th>Departure</th>
                                 <th>Return</th>
-                                <th>Seats</th>
+                                <th>Passengers</th>
                                 <th>Edit</th>
                             </tr>
                         </table>
@@ -269,7 +281,7 @@
                 </div>
             </div>
             <div class="footer">
-                Copyright &copy; 2018 Temple Carpool
+                Site design/logo &copy; 2018 Temple Carpool, Epper Marshall
                 <div>
                     <a href="mailto:epper.marshall+templecarpool@gmail.com?Subject=Temple Carpool%20Feedback" target="_top">Contact</a>
                      - 

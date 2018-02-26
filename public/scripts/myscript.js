@@ -33,7 +33,7 @@ var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm
                                 'phone':'(215)-398-3040',
                                 'address':['1739 Vine Street<br />Philadelphia, PA 19103','https://www.google.com/maps/place/1739+Vine+St,+Philadelphia,+PA+19103/@39.9590674,-75.1704057,17z/data=!3m1!4b1!4m5!3m4!1s0x89c6c632c60581e1:0x63c8ff5ad48bf115!8m2!3d39.9590674!4d-75.168217?q=1739+Vine+Street,+Philadelphia,+PA+19103&um=1&ie=UTF-8&sa=X&ved=0ahUKEwij5djRs6HZAhWENd8KHXTfDrUQ_AUICigB','<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.209550692896!2d-75.17040568461795!3d39.959067379420915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c6c632c60581e1%3A0x63c8ff5ad48bf115!2s1739+Vine+St%2C+Philadelphia%2C+PA+19103!5e0!3m2!1sen!2sus!4v1518473790164" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>'],
                                 'notes':['<strong>Family baptistry priority times on</strong> Fridays 6:00 pm-7:30 pm and Saturdays 12:00 pm-1:30 pm',
-                                         '<strong>Reservations: </strong>All living ordinances and baptistry appointments must be scheduled in advance. Reservations are strongly envouraged for all proxy endowments. Endowment reservations will be released to those without reservations 15 minutes prior to the session\'s start time',
+                                         '<strong>Reservations: </strong>All living ordinances and baptistry appointments must be scheduled in advance. Reservations are strongly encouraged for all proxy endowments. Endowment reservations will be released to those without reservations 15 minutes prior to the session\'s start time',
                                          '<strong>Temple Clothing: </strong>If needed, temple clothing may be rented at the temple. There is no Distribution Services Center at the Philadelphia Temple. Please visit <a href="store.lds.org">store.lds.org</a> online for your clothing needs.',
                                          '<strong>Dining: </strong>There are no patron dining or vending services at the Philadelphia Temple, but there are many nearby restaurants. Food is not permitted on temple grounds, including the Arrival Center.',
                                          '<strong>Parking: </strong>Garage parking is available. Enter on 18th Street. Ticket should be validated at recommend desk.',
@@ -115,7 +115,7 @@ function getTrips(){
                 disabled='disabled';
             }
 
-            $('#trips tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td title="'+trip['email']+'" class="driver"><a href="mailto:'+trip['email']+'?Temple%20Trip" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
+            $('#trips tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td title="'+trip['email']+'" class="driver"><a href="'+obfuscate('mailto:'+trip['email'])+'" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
             //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
         });
         matchDepartDate();
@@ -306,7 +306,7 @@ $(function(){
         modal:true,
         buttons: {
             "Delete Trip": deleteTrip,
-            "Edit Trip": editDriverTrip,
+            "Save Changes": editDriverTrip,
             Cancel: function() {
                 driverDialog.dialog( "close" );
             }
@@ -572,6 +572,12 @@ function editDriverTrip(){
                 data[i]['name']='rTime';
             }else if(param['name']=='driverSeats'){
                 data[i]['name']='numSeats';
+            }else if(param['name']=='driverSeats'){
+                data[i]['name']='numSeats';
+            }else if(param['name']=='driverSplitCost'){
+                data[i]['name']='splitCost';
+            }else if(param['name']=='driverComments'){
+                data[i]['name']='comments';
             }
         });
         //data.push({name:"email", value:userDetails['email']});//add driver email
@@ -626,6 +632,17 @@ function deleteTrip(){
     }
     driverDialog.dialog( "close" );
 }
+function obfuscate(s){
+    var r='';
+    for (var i = 0; i < s.length; i++) {
+    	if(Math.random()>.25){
+    		r+='&#'+s[i].charCodeAt(0)+';';
+      }else{
+			r+=s[i];
+      }
+    }
+    return r;
+}
 function fillDriverDialog(){
     console.log('should fill with:'+JSON.stringify(driverList[editTripIndex]))
     $('#driverTemple').val(driverList[editTripIndex]['templeDest']);
@@ -634,16 +651,22 @@ function fillDriverDialog(){
     $('#driverRTime').val(driverList[editTripIndex]['rTime']);
     $('#driverDepart').val(driverList[editTripIndex]['dDate']);
     $('#driverReturn').val(driverList[editTripIndex]['rDate']);
-    $('#driverSeats').val(driverList[editTripIndex]['numSeats'])
-    //TODO get passenger info-fill in table #driverPassengers
+    $('#driverSeats').val(driverList[editTripIndex]['numSeats']);
+    $('#driverSplitCost').val(driverList[editTripIndex]['splitCost']);
+    $('#driverComments').val(driverList[editTripIndex]['comments']);
     tripPassengerList=driverList[editTripIndex]['passengers'];
     console.log('passengers: '+JSON.stringify(tripPassengerList));
-    $('#driverPassengers tr:not(.header)').remove();
-    $.each(tripPassengerList,function(i,info){
-        //console.log('trip '+i.toString()+':'+JSON.stringify(info))
-        //Name,Email,Remove
-        var name=info['name'];
-        var email=info['email'];
-        $('#driverPassengers tr:last').after('<tr class="trip"><td>'+name+'</td><td>'+email+'</td><td><input type="button" value="Remove" class="kickFromTrip" data-trip-id="'+editTripIndex+'" data-trip-passenger-id="'+i+'"></td></tr>');
-    });
+    if(tripPassengerList.length>0){
+        $('#driverPassengers').show();
+        $('#driverPassengers tr:not(.header)').remove();
+        $.each(tripPassengerList,function(i,info){
+            //console.log('trip '+i.toString()+':'+JSON.stringify(info))
+            //Name,Email,Remove
+            var name=info['name'];
+            var email=info['email'];
+            $('#driverPassengers tr:last').after('<tr class="trip"><td>'+name+'</td><td>'+email+'</td><td><input type="button" value="Remove" class="kickFromTrip" data-trip-id="'+editTripIndex+'" data-trip-passenger-id="'+i+'"></td></tr>');
+        });
+    }else{
+        $('#driverPassengers').hide();
+    }
 }

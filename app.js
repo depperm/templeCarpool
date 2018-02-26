@@ -45,7 +45,24 @@ MongoClient.connect(url,function(err,host){
 
 //see https://www.npmjs.com/package/node-schedule
 var cleanUp = schedule.scheduleJob('0 0 23 * * *',function(){
-    console.log((new Date()).toLocaleString()+': should remove any trip that has a return date == today-1')
+    var yesterday=new Date();
+    yesterday.setDate(yesterday.getDate()-1);
+    console.log((new Date()).toLocaleString()+': should remove any trip that has a return date <= yesterday')
+    var cursor=db.collection('Trips').find({}).toArray(function(err, results) {
+        if(err){
+            res.status(500).send('Some error:'+err)
+            return;
+        }
+        var removeTrips=[]
+        results.forEach(function(index,obj){
+            var date=obj['rDate']
+            if(date<=yesterday){
+                removeTrips.append(obj['_id'])
+            }
+        })
+        console.log('removing trips: '+JSON.stringify(results))
+        db.collection('Trips').deleteMany({_id: { $in: removeTrips }})
+    })
 });
 
 app.use(express.static(path.join(__dirname,'public')));
@@ -66,14 +83,15 @@ app.post('/api/trips/add',function(req,res){
     //verify body
     var keys=Object.keys(req.body);
     //check number of keys
-    if(keys.length!=9){
+    if(keys.length!=11){
         res.send('You have sent the wrong amount of information '+keys.length);
         return;
     }
     //check key names
     if(keys.indexOf('driver')<0||keys.indexOf('email')<0||keys.indexOf('dDate')<0||
         keys.indexOf('dTime')<0||keys.indexOf('rDate')<0||keys.indexOf('rTime')<0||
-        keys.indexOf('numSeats')<0||keys.indexOf('departStake')<0||keys.indexOf('templeDest')<0){
+        keys.indexOf('numSeats')<0||keys.indexOf('departStake')<0||keys.indexOf('templeDest')<0||
+        keys.indexOf('comments')<0||keys.indexOf('splitCost')<0){
         res.send('You have sent the wrong kind of information');
         return;
     }
@@ -203,6 +221,7 @@ app.post('/api/trips/:trip',function(req,res){
 //update a trip as driver
 app.post('/api/trips/edit/:trip',function(req,res){
     console.log('trip:'+req.params.trip)
+    
     console.log('driver:'+req.body.departStake)
     console.log('driver:'+req.body.templeDest)
     console.log('depD:'+req.body.dDate)
@@ -210,6 +229,25 @@ app.post('/api/trips/edit/:trip',function(req,res){
     console.log('retD:'+req.body.rDate)
     console.log('retT:'+req.body.rTime)
     console.log('seat:'+req.body.numSeats)
+    //verify body
+    var keys=Object.keys(req.body);
+    //check number of keys
+    if(keys.length!=9){
+        res.send('You have sent the wrong amount of information '+keys.length);
+        return;
+    }
+    //check key names
+    if(keys.indexOf('dDate')<0||keys.indexOf('dTime')<0||keys.indexOf('rDate')<0||keys.indexOf('rTime')<0||
+        keys.indexOf('numSeats')<0||keys.indexOf('departStake')<0||keys.indexOf('templeDest')<0||
+        keys.indexOf('comments')<0||keys.indexOf('splitCost')<0){
+        res.send('You have sent the wrong kind of information');
+        return;
+    }
+    //check some values
+    if(req.body.numSeats<1){
+        res.send('You need at least 1 seat');
+        return;
+    }
     db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{$set:(req.body)},function(err,result){
         if(err){
             res.status(500).send('Some error:'+err)
