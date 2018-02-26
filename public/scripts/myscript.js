@@ -256,6 +256,9 @@ $(function(){
             var data=$('#postRideForm').serializeArray();//form to array
             //disabled inputs are not serialized so add now
             data.push({name:'email',value:userDetails['email']});
+            if(data.length==10){
+                data.push({name:'splitCost',value:'off'});
+            }
             console.log('sending:'+JSON.stringify(data))
             $.ajax({
                 url:'/api/trips/add',
@@ -600,6 +603,9 @@ function editDriverTrip(){
         });
         //data.push({name:"email", value:userDetails['email']});//add driver email
         console.log('updating for:'+JSON.stringify(driverList[editTripIndex]['_id']))
+        if(data.length==8){
+            data.push({name:'splitCost',value:'off'});
+        }
         console.log('sending:'+JSON.stringify(data))
         $.ajax({
             url:'/api/trips/edit/'+driverList[editTripIndex]['_id'],
@@ -678,5 +684,7 @@ function fillDriverDialog(){
         }else{
             $('#driverPassengers').hide();
         }
+    }else{
+        $('#driverPassengers').hide();
     }
 }
