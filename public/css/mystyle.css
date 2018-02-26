@@ -11,6 +11,9 @@ html,input,button,select{
 .error{
     border-color:red;
 }
+.email{
+    direction: rtl;
+}
 .checkmark{
     margin-top:10px;
 }

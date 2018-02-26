@@ -114,10 +114,11 @@ function getTrips(){
             if(userDetails['email']==trip['email']){
                 disabled='disabled';
             }
-            var ob=obfuscate('mailto:'+trip['email']);
+            //reverse email
+            var ob='mailto:'+trip['email'].split("").reverse().join("");
             console.log('inserting email: '+ob)
-            $('#trips tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td class="driver"><a href="'+ob+'" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
-            $('#trips tr:last .driver a').attr('href',ob)
+            $('#trips tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td class="driver"><a href="'+ob+'" class="email" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
+            //$('#trips tr:last .driver a').attr('href',ob)
             //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
         });
         matchDepartDate();
@@ -633,30 +634,6 @@ function deleteTrip(){
         });
     }
     driverDialog.dialog( "close" );
-}
-function obfuscate(s){
-    var r=''
-    var start=Math.floor(Math.random() * s.indexOf('@')-1)+1;
-    for(var i=0;i<s.length;i++){
-        if(i==start){
-            r+='<span style="display:none">';
-        }
-        if(s[i]=='@'){
-            r+='</span>';
-        }
-        r+=s[i];
-    }
-    //html code entities
-    /*var r='';
-    for (var i = 0; i < s.length; i++) {
-    	if(Math.random()>.25){
-    		r+='&#'+s[i].charCodeAt(0)+';';
-      }else{
-			r+=s[i];
-      }
-    }
-    console.log('obfuscated:'+r)
-    return r;*/
 }
 function fillDriverDialog(){
     console.log('should fill with:'+JSON.stringify(driverList[editTripIndex]))
