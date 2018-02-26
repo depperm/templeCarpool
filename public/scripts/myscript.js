@@ -635,7 +635,19 @@ function deleteTrip(){
     driverDialog.dialog( "close" );
 }
 function obfuscate(s){
-    var r='';
+    var r=''
+    var start=Math.floor(Math.random() * s.indexOf('@')-1)+1;
+    for(var i=0;i<s.length;i++){
+        if(i==start){
+            r+='<span style="display:none">';
+        }
+        if(s[i]=='@'){
+            r+='</span>';
+        }
+        r+=s[i];
+    }
+    //html code entities
+    /*var r='';
     for (var i = 0; i < s.length; i++) {
     	if(Math.random()>.25){
     		r+='&#'+s[i].charCodeAt(0)+';';
@@ -644,7 +656,7 @@ function obfuscate(s){
       }
     }
     console.log('obfuscated:'+r)
-    return r;
+    return r;*/
 }
 function fillDriverDialog(){
     console.log('should fill with:'+JSON.stringify(driverList[editTripIndex]))
