@@ -641,6 +641,7 @@ function obfuscate(s){
 			r+=s[i];
       }
     }
+    console.log('obfuscated:'+r)
     return r;
 }
 function fillDriverDialog(){
