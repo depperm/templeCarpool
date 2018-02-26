@@ -601,8 +601,8 @@ function editDriverTrip(){
                 data[i]['name']='comments';
             }
         });
-        //data.push({name:"email", value:userDetails['email']});//add driver email
         console.log('updating for:'+JSON.stringify(driverList[editTripIndex]['_id']))
+        console.log(data.length)
         if(data.length==8){
             data.push({name:'splitCost',value:'off'});
         }
