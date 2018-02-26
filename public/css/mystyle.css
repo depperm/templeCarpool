@@ -12,6 +12,7 @@ html,input,button,select{
     border-color:red;
 }
 .email{
+    unicode-bidi:bidi-override;
     direction: rtl;
 }
 .checkmark{
