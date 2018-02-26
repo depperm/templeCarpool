@@ -274,6 +274,8 @@ $(function(){
                             $('#rTime').val('select');
                             $('#numSeats').val(1);
                             alert(response);
+                        }else if(response.indexOf('You already have scheduled')>=0){
+                            alert(response);
                         }
                         console.log(response);
                     },
