@@ -551,18 +551,18 @@ function fillStakeSelect(selectId){
     $.each(mdStakes,function(index,stake){
         $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
     })
-    $('#departStake').append('</optgroup>')
-    $('#departStake').append('<optgroup label="Pennsylvania Stakes">')
+    $(selectId).append('</optgroup>')
+    $(selectId).append('<optgroup label="Pennsylvania Stakes">')
     $.each(paStakes,function(index,stake){
         $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
     })
-    $('#departStake').append('</optgroup>')
-    $('#departStake').append('<optgroup label="Virginia Stakes">')
+    $(selectId).append('</optgroup>')
+    $(selectId).append('<optgroup label="Virginia Stakes">')
     $.each(vaStakes,function(index,stake){
         $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
     })
-    $('#departStake').append('</optgroup>')
-    $('#departStake').append('<optgroup label="West Virginia Stakes">')
+    $(selectId).append('</optgroup>')
+    $(selectId).append('<optgroup label="West Virginia Stakes">')
     $.each(wvStakes,function(index,stake){
         $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
     })
