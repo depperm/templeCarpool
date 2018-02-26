@@ -117,6 +117,7 @@ function getTrips(){
             var ob=obfuscate('mailto:'+trip['email']);
             console.log('inserting email: '+ob)
             $('#trips tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td class="driver"><a href="'+ob+'" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
+            $('#trips tr:last .driver a').attr('href',ob)
             //$('#trips').append('<tr>...</tr><tr>...</tr><tr>'+seats+'</tr><tr>'+driver+'</tr><tr>...</tr>');
         });
         matchDepartDate();
