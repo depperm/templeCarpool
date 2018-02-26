@@ -11,10 +11,6 @@ html,input,button,select{
 .error{
     border-color:red;
 }
-.email{
-    unicode-bidi:bidi-override;
-    direction: rtl;
-}
 .checkmark{
     margin-top:10px;
 }
