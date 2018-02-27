@@ -31,7 +31,7 @@ label{
 #trips .header{
     cursor: pointer;
 }
-#trips .header:hover{
+#trips .header th:hover{
     background-color: #ddcab8;
 }
 #trips,#editingDrivingRides,#editingPassengerRides,#driverPassengers {
