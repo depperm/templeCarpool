@@ -28,6 +28,12 @@ label{
     vertical-align:top;
     padding-top:6px;
 }
+#trips .header{
+    cursor: pointer;
+}
+#trips .header:hover{
+    background-color: #ddcab8;
+}
 #trips,#editingDrivingRides,#editingPassengerRides,#driverPassengers {
     border-collapse: collapse; /* Collapse borders */
     width: 100%; /* Full-width */
