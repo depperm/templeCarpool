@@ -9,12 +9,13 @@ const helmet = require('helmet')
 const options={
     requestCert: true, //This will request the client certificate
     rejectUnauthorized: false, //This will reject client certificates that are not signed by the CA
-    key:fs.readFileSync(path.join(__dirname,'keys','key.pem')),
-    cert:fs.readFileSync(path.join(__dirname,'keys','cert.pem')),
-    dhparam:fs.readFileSync(path.join(__dirname,'keys','dh-strong.pem')),
+    key:fs.readFileSync(path.join(__dirname+'/keys/key.pem')),
+    cert:fs.readFileSync(path.join(__dirname+'/keys/cert.pem')),
+    dhparam:fs.readFileSync(path.join(__dirname+'/keys/dh-strong.pem')),
+    //ca: fs.readFileSync(path.join(__dirname+'/keys/AddTrustExternalCARoot.crt'))
     ca: [
-          fs.readFileSync(path.join(__dirname,'keys','COMODORSADomainValidationSecureServerCA.crt')),
-          fs.readFileSync(path.join(__dirname,'keys','COMODORSAAddTrustCA.crt'))
+          fs.readFileSync(path.join(__dirname+'/keys/COMODORSADomainValidationSecureServerCA.crt')),
+          fs.readFileSync(path.join(__dirname+'/keys/COMODORSAAddTrustCA.crt'))
        ]
 }
 
@@ -22,22 +23,15 @@ const port = 80
 const sslport=443
 
 const app=express()
-app.use(helmet.contentSecurityPolicy({
-    directives:{
-        defaultSrc:["'self'",'https://templecarpool.com/public/'],
-        styleSrc: ["'self'", 'https://code.jquery.com/ui/1.12.1/themes/base/'],
-        fontSrc:['https://fonts.gstatic.com'],
-        scriptSrc:['https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/','https://code.jquery.com/','https://templecarpool.com/public/'],
-        imgSrc:['https://templecarpool.com/public/']
-    }
-}))
+app.use(helmet())
+//http.createServer(app).listen(port)
 app.listen(port)
 https.createServer(options,app).listen(sslport)
 
 var stakes=["Annapolis","Baltimore","Columbia","Frederick","Seneca","Silver Spring","Suitland","Washington, DC","Altoona","Chambersburg","Pitsburgh","Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Washington DC(YSA)","Winchester","Waynesboro","Woodbridge","Clarksburg","Martinsburg"];
 var temples=['Philadelphia','Columbus']
 
-var schedule = require('node-schedule')
+//var schedule = require('node-schedule')
 var MongoClient=require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var url="mongodb://localhost:27017/templeCarpoolDB";
@@ -52,7 +46,7 @@ MongoClient.connect(url,function(err,host){
 })
 
 //see https://www.npmjs.com/package/cron
-var CronJob = require('cron').CronJob;
+var CronJob=require('cron').CronJob;
 new CronJob('0 0 0 * * *',function(){
     var yesterday=new Date();
     yesterday.setDate(yesterday.getDate()-1);
@@ -333,7 +327,7 @@ app.get('/api/passengers/:trip',function(req,res){
 })
 
 app.get('/',function(req,res) {
-    res.sendFile(path.join(__dirname,'views','index.html'));
+    res.sendFile(path.join(__dirname+'/views/index.html'));
 });
 /*app.get('/public/images/:filename',function(req,res){
     res.sendFile(path.join(__dirname+'/public/images/'+req.params.filename));
@@ -343,7 +337,7 @@ app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/.well-known/pki-validation/'+req.params.filename));
 })*/
 app.use(function(req,res,next){
-    res.status(404).sendFile(path.join(__dirname,'views','404.html'));
+    res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
 })
 process.on('uncaughtException', function (err) {
   console.error((new Date).toUTCString() + ' uncaughtException:', err.message)

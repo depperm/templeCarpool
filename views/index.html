@@ -6,28 +6,28 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
 //]]>
 </script>
     <head>
-        <meta http-equiv="Content-Security-Policy" content="default-src https://templecarpool.com/public/ https://code.jquery.com/ui 'unsafe-inline'; font-src 'unsafe-inline' https://fonts.gstatic.com; script-src https://templecarpool.com/public; img-src https://templecarpool.com/public/;">
         <title>Temple Carpool</title>
-        <link rel="icon" href="https://templecarpool.com/public/images/templecarpoolLogo.png" sizes="400x400">
+        <link rel="icon" href="images/templecarpoolLogo.png" sizes="400x400">
         <meta charset="utf-8">
-        <script type='text/javascript' src='https://templecarpool.com/public/scripts/config.js'></script>
+        <script type='text/javascript' src='scripts/config.js'></script>
         <meta name="google-signin-scope" content="profile email">
         <meta name="google-signin-client_id" content="312484233782-6q2cd48kt6ptu0tlcs5mv59vk1n9q9hp.apps.googleusercontent.com">
+        <script src="scripts/sortTable.js"></script>
         <script src="https://apis.google.com/js/platform.js?onload-init" async defer></script>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <!--see https://jqueryvalidation.org for info-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-        <script src="https://templecarpool.com/public/scripts/myscript.js"></script>
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="https://templecarpool.com/public/css/mystyle.css">
+        <script src="scripts/myscript.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="css/mystyle.css">
     </head>
     
     <body>
         <div id="holder">
             <div id="body">
                 <ul id="navbar">
-                    <li><img src="https://templecarpool.com/public/images/templecarpoolLogo.png" width="36" style="padding:5px"></li>
+                    <li><img src="images/templecarpoolLogo.png" width="36" style="padding:5px"></li>
                     <li><a href="/">Home-In Development</a></li>
                     <li style="float:right">
                         <div class="g-signin2 oauth" data-onsuccess="onSignIn" data-theme="light"></div>
@@ -294,7 +294,10 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                      - 
                     <a href="https://github.com/depperm/templeCarpool/issues" title="Please provide details">Report Issue</a>
                 </div>
-                <a  href="https://www.positivessl.com/" id="comodoTL">Positive SSL</a>
+                <script language="JavaScript" type="text/javascript">
+TrustLogo("https://templecarpool.com/public/images/comodo_secure_seal_76x26_transp.png", "CL1", "none");
+</script>
+<a  href="https://www.positivessl.com/" id="comodoTL">Positive SSL</a>
             </div>
         </div>
     </body>
