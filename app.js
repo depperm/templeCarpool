@@ -14,7 +14,8 @@ const port = 80
 const sslport=443
 
 const app=express()
-http.createServer(app).listen(port)
+//http.createServer(app).listen(port)
+app.listen(port)
 https.createServer(options,app).listen(sslport)
 
 //var auth = new GoogleAuth;
