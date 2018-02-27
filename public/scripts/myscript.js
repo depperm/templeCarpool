@@ -408,9 +408,9 @@ $(function(){
     $('#trips').on('click','.reserveTrip',function(){
         console.log('should reserve');
         var choice=true;
-        if(tripList[$(this).attr('data-trip-id')]['comments'])
-            console.log(tripList[$(this).attr('data-trip-id')]['comments'])
-        //var choice=confirm('Are you sure you want to kick this passenger from your trip? You will not have the ability to add them later.')
+        if(tripList[$(this).attr('data-trip-id')]['comments']){
+            choice=confirm(tripList[$(this).attr('data-trip-id')]['comments'])
+        }
         if(choice){
             var data=[];
             data.push({name:'email',value:userDetails['email']});
@@ -562,7 +562,13 @@ function updateTripsPassengerTable(){
             var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
             var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
             var driver=trip['driver'];
-            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+driver+'</td><td><input type="button" value="Drop" class="dropTrip" data-trip-id="'+index+'"></td></tr>');
+            var split='No';
+            if(trip['splitCost']=='on')
+                split='Yes';
+            var com='';
+            if(trip['commments'])
+                com=trip['comments'];
+            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+driver+'</td><td><td>'+split+'</td><td><td>'+com+'</td><td><input type="button" value="Drop" class="dropTrip" data-trip-id="'+index+'"></td></tr>');
         });
         //console.log(JSON.stringify(data));
     });
