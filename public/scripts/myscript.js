@@ -75,8 +75,10 @@ var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm
 function matchDepartDate(){
     $('.trip td[data-depart-date]').removeClass('match');
     var trips=$('.trip td[data-depart-date]')
+    a=new Date($('#departDate').val())
     $.each(trips,function(index,trip){
-        if($(this).attr('data-depart-date')==$('#departDate').val())
+        b=new Date($(this).attr('data-depart-date'))
+        if(a.getTime()==b.getTime())
             $(this).addClass('match')
     });
 }
