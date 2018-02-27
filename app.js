@@ -13,6 +13,7 @@ const options={
 const port = 80
 
 const app=express()
+http.createServer(app).listen(port)
 
 //var auth = new GoogleAuth;
 //app.authClient = new auth.OAuth2(config.passport.google.clientID, config.passport.google.clientSecret, '');
@@ -42,9 +43,9 @@ var db;
 MongoClient.connect(url,function(err,host){
     if(err) throw err;
     db=host.db('templeCarpoolDB')
-    app.listen(port,()=>{
+    /*app.listen(port,()=>{
         console.log('listening on '+port.toString());
-    });
+    });*/
 })
 
 //see https://www.npmjs.com/package/node-schedule
