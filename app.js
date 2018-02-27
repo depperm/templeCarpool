@@ -8,7 +8,8 @@ const helmet = require('helmet')
 //const GoogleAuth = require('google-auth-library');
 const options={
     key:fs.readFileSync(path.join(__dirname+'/keys/key.pem')),
-    cert:fs.readFileSync(path.join(__dirname+'/keys/cert.pem'))
+    cert:fs.readFileSync(path.join(__dirname+'/keys/cert.pem')),
+    dhparam:fs.readFileSync(path.join(__dirname+'/keys/dh-strong.pem'))
 }
 
 const port = 80
