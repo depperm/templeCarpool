@@ -85,8 +85,10 @@ function matchDepartDate(){
 function matchReturnDate(){
     $('.trip td[data-return-date]').removeClass('match');
     var trips=$('.trip td[data-return-date]')
+    a=new Date($('#returnDate').val())
     $.each(trips,function(index,trip){
-        if($(this).attr('data-return-date')==$('#returnDate').val())
+        b=new Date($(this).attr('data-depart-date'))
+        if(a.getTime()==b.getTime())
             $(this).addClass('match')
     });
 }
@@ -453,13 +455,13 @@ $(function(){
     }}).datepicker('setDate',new Date());
     $('#rDate').datepicker({minDate:0}).datepicker('setDate',new Date());
     //manual change datepickers
-    $('#departDate').on('change',function(){
+    $('#departDate').on('keyup',function(){
         var regex=/^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/20(1[8-9]|[2-9]\d)$/gm;
         if(regex.test($(this).val())){
             matchDepartDate();
         }
     })
-    $('#returnDate').on('change',function(){
+    $('#returnDate').on('keyup',function(){
         var regex=/^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/20(1[8-9]|[2-9]\d)$/gm;
         if(regex.test($(this).val())){
             matchReturnDate();
