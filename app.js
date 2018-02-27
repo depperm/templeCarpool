@@ -22,7 +22,12 @@ const port = 80
 const sslport=443
 
 const app=express()
-app.use(helmet())
+app.use(helmet.contentSecurityPolicy({
+    directives:{
+        defaultSrc:["'self'"],
+        styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com']
+    }
+}))
 app.listen(port)
 https.createServer(options,app).listen(sslport)
 
