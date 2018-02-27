@@ -9,13 +9,12 @@ const helmet = require('helmet')
 const options={
     requestCert: true, //This will request the client certificate
     rejectUnauthorized: false, //This will reject client certificates that are not signed by the CA
-    key:fs.readFileSync(path.join(__dirname+'/keys/key.pem')),
-    cert:fs.readFileSync(path.join(__dirname+'/keys/cert.pem')),
-    dhparam:fs.readFileSync(path.join(__dirname+'/keys/dh-strong.pem')),
-    //ca: fs.readFileSync(path.join(__dirname+'/keys/AddTrustExternalCARoot.crt'))
+    key:fs.readFileSync(path.join(__dirname,'keys','key.pem')),
+    cert:fs.readFileSync(path.join(__dirname,'keys','cert.pem')),
+    dhparam:fs.readFileSync(path.join(__dirname,'keys','dh-strong.pem')),
     ca: [
-          fs.readFileSync(path.join(__dirname+'/keys/COMODORSADomainValidationSecureServerCA.crt')),
-          fs.readFileSync(path.join(__dirname+'/keys/COMODORSAAddTrustCA.crt'))
+          fs.readFileSync(path.join(__dirname,'keys','COMODORSADomainValidationSecureServerCA.crt')),
+          fs.readFileSync(path.join(__dirname,'keys','COMODORSAAddTrustCA.crt'))
        ]
 }
 
@@ -61,8 +60,9 @@ MongoClient.connect(url,function(err,host){
     });*/
 })
 
-//see https://www.npmjs.com/package/node-schedule
-var cleanUp = schedule.scheduleJob('0 0 23 * * *',function(){
+//see https://www.npmjs.com/package/cron
+var CronJob = require('cron').CronJob;
+new CronJob('0 0 0 * * *',function(){
     var yesterday=new Date();
     yesterday.setDate(yesterday.getDate()-1);
     console.log((new Date()).toLocaleString()+': should remove any trip that has a return date <= yesterday')
@@ -342,7 +342,7 @@ app.get('/api/passengers/:trip',function(req,res){
 })
 
 app.get('/',function(req,res) {
-    res.sendFile(path.join(__dirname+'/views/index.html'));
+    res.sendFile(path.join(__dirname,'public','index.html'));
 });
 /*app.get('/public/images/:filename',function(req,res){
     res.sendFile(path.join(__dirname+'/public/images/'+req.params.filename));
@@ -352,7 +352,7 @@ app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/.well-known/pki-validation/'+req.params.filename));
 })*/
 app.use(function(req,res,next){
-    res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
+    res.status(404).sendFile(path.join(__dirname,'views','404.html'));
 })
 process.on('uncaughtException', function (err) {
   console.error((new Date).toUTCString() + ' uncaughtException:', err.message)
