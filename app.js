@@ -24,8 +24,11 @@ const sslport=443
 const app=express()
 app.use(helmet.contentSecurityPolicy({
     directives:{
-        defaultSrc:["'self'"],
-        styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com']
+        defaultSrc:["'self'",'https://templecarpool.com/public/'],
+        styleSrc: ["'self'", 'https://code.jquery.com/ui/1.12.1/themes/base/'],
+        fontSrc:['https://fonts.gstatic.com'],
+        scriptSrc:['https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/','https://code.jquery.com/','https://templecarpool.com/public/'],
+        imgSrc:['https://templecarpool.com/public/']
     }
 }))
 app.listen(port)
