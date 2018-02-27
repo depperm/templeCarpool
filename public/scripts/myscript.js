@@ -222,7 +222,7 @@ function sortTable(n) {
 }
 
 $(function(){
-    console.log('ready');
+    //console.log('ready');
 
     if(!$('#welcomeMsg').is(":visible")){
         getTrips();
@@ -283,38 +283,41 @@ $(function(){
     $('#postRideForm').submit(function(e){
         e.preventDefault();
         if(validator.valid()){
-            var data=$('#postRideForm').serializeArray();//form to array
-            //disabled inputs are not serialized so add now
-            data.push({name:'email',value:userDetails['email']});
-            if(data.length==10){
-                data.push({name:'splitCost',value:'off'});
-            }
-            console.log('sending:'+JSON.stringify(data))
-            $.ajax({
-                url:'/api/trips/add',
-                type:'post',
-                data:$.param(data),
-                statusCode: {
-                    200: function(response){
-                        if(response=='Your ride has been posted'){
-                            //clear form
-                            $('#dDate').val('');
-                            $('#dTime').val('select');
-                            $('#rDate').val('');
-                            $('#rTime').val('select');
-                            $('#numSeats').val(1);
-                            alert(response);
-                        }else if(response.indexOf('You already have scheduled')>=0){
-                            alert(response);
-                        }
-                        console.log(response);
-                    },
-                    500: function(response){
-                        //response={'readyState','responseText','status','statusText'}
-                        alert(response['responseText']);
-                    }
+            var choice=confirm("Are you sure the temple is open on the dates you've selected?\nAlso please remember to call to make a reservation.");
+            if(choice){
+                var data=$('#postRideForm').serializeArray();//form to array
+                //disabled inputs are not serialized so add now
+                data.push({name:'email',value:userDetails['email']});
+                if(data.length==10){
+                    data.push({name:'splitCost',value:'off'});
                 }
-            });
+                console.log('sending:'+JSON.stringify(data))
+                $.ajax({
+                    url:'/api/trips/add',
+                    type:'post',
+                    data:$.param(data),
+                    statusCode: {
+                        200: function(response){
+                            if(response=='Your ride has been posted'){
+                                //clear form
+                                $('#dDate').val('');
+                                $('#dTime').val('select');
+                                $('#rDate').val('');
+                                $('#rTime').val('select');
+                                $('#numSeats').val(1);
+                                alert(response);
+                            }else if(response.indexOf('You already have scheduled')>=0){
+                                alert(response);
+                            }
+                            console.log(response);
+                        },
+                        500: function(response){
+                            //response={'readyState','responseText','status','statusText'}
+                            alert(response['responseText']);
+                        }
+                    }
+                });
+            }
         }
     });
 
@@ -401,7 +404,7 @@ $(function(){
                     },
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
-                        console.log('response'+response['responseText']);
+                        //console.log('response'+response['responseText']);
                         alert(response['responseText']);
                     }
                 }
@@ -421,7 +424,7 @@ $(function(){
                     },
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
-                        console.log('response'+response['responseText']);
+                        //console.log('response'+response['responseText']);
                         alert(response['responseText']);
                     }
                 }
@@ -430,11 +433,8 @@ $(function(){
     });
     //reserve a seat
     $('#trips').on('click','.reserveTrip',function(){
-        console.log('should reserve');
-        var choice=true;
-        if(tripList[$(this).attr('data-trip-id')]['comments']){
-            choice=confirm(tripList[$(this).attr('data-trip-id')]['comments'])
-        }
+        //console.log('should reserve');
+        var choice=confirm('You are responsible to make your own temple reservation.\nPlease visit the \'Edit A Ride\' tab to see any comments the driver may make.')
         if(choice){
             var data=[];
             data.push({name:'email',value:userDetails['email']});
@@ -450,7 +450,7 @@ $(function(){
                     },
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
-                        console.log('response'+response['responseText']);
+                        //console.log('response'+response['responseText']);
                         alert(response['responseText']);
                     }
                 }
@@ -586,13 +586,14 @@ function updateTripsPassengerTable(){
             var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
             var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
             var driver=trip['driver'];
+            var email=trip['email'];
             var split='No';
             if(trip['splitCost']=='on')
                 split='Yes';
             var com='';
             if(trip['commments'])
                 com=trip['comments'];
-            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+driver+'</td><td>'+split+'</td><td>'+com+'</td><td><input type="button" value="Drop" class="dropTrip" data-trip-id="'+index+'"></td></tr>');
+            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td><a href="mailto:'+email+'">'+driver+'</a></td><td>'+split+'</td><td>'+com+'</td><td><input type="button" value="Drop" class="dropTrip" data-trip-id="'+index+'"></td></tr>');
         });
         //console.log(JSON.stringify(data));
     });
@@ -630,7 +631,7 @@ function editDriverTrip(){
     //TODO validate
     var editValidator = $('#postRideForm').validate();
     if(editValidator.valid()){
-        console.log('should update')
+        //console.log('should update')
         var data=$('#editRideForm').serializeArray();//form to array
         //update data to match names as post form
         $.each(data,function(i,param){
@@ -689,7 +690,7 @@ function editDriverTrip(){
     driverDialog.dialog( "close" );
 }
 function deleteTrip(){
-    console.log('deleting trip:'+$('#editDriverForm').attr('data-trip-id')+' which is '+JSON.stringify(driverList[$('#editDriverForm').attr('data-trip-id')]))
+    //console.log('deleting trip:'+$('#editDriverForm').attr('data-trip-id')+' which is '+JSON.stringify(driverList[$('#editDriverForm').attr('data-trip-id')]))
     var choice=confirm('Are you sure you want to Delete this trip?')
     if(choice){
         $.ajax({
@@ -701,7 +702,7 @@ function deleteTrip(){
                 },
                 500: function(response){
                     //response={'readyState','responseText','status','statusText'}
-                    console.log('response'+response['responseText']);
+                    //console.log('response'+response['responseText']);
                     alert(response['responseText']);
                 }
             }
