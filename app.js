@@ -344,13 +344,13 @@ app.get('/api/passengers/:trip',function(req,res){
 app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/views/index.html'));
 });
-app.get('/public/images/:filename',function(req,res){
+/*app.get('/public/images/:filename',function(req,res){
     res.sendFile(path.join(__dirname+'/public/images/'+req.params.filename));
-})
+})*/
 //app.use(express.static('public'))
-app.get('/.well-known/pki-validation/:filename',function(req,res){
+/*app.get('/.well-known/pki-validation/:filename',function(req,res){
     res.sendFile(path.join(__dirname+'/.well-known/pki-validation/'+req.params.filename));
-})
+})*/
 app.use(function(req,res,next){
     res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
 })
