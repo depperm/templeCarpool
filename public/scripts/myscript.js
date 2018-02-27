@@ -568,7 +568,7 @@ function updateTripsPassengerTable(){
             var com='';
             if(trip['commments'])
                 com=trip['comments'];
-            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+driver+'</td><td><td>'+split+'</td><td><td>'+com+'</td><td><input type="button" value="Drop" class="dropTrip" data-trip-id="'+index+'"></td></tr>');
+            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+driver+'</td><td>'+split+'</td><td>'+com+'</td><td><input type="button" value="Drop" class="dropTrip" data-trip-id="'+index+'"></td></tr>');
         });
         //console.log(JSON.stringify(data));
     });
