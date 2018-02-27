@@ -32,7 +32,7 @@ label{
     cursor: pointer;
 }
 #trips .header th:hover{
-    background-color: #ddcab8;
+    background-color: #dddddd;
 }
 #trips,#editingDrivingRides,#editingPassengerRides,#driverPassengers {
     border-collapse: collapse; /* Collapse borders */

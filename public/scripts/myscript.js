@@ -450,6 +450,19 @@ $(function(){
         $('#rDate').datepicker('option','minDate',selDate)
     }}).datepicker('setDate',new Date());
     $('#rDate').datepicker({minDate:0}).datepicker('setDate',new Date());
+    //manual change datepickers
+    $('#departDate').on('change',function(){
+        var regex=/^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/20(1[8-9]|[2-9]\d)$/gm;
+        if(regex.test($(this).val())){
+            matchDepartDate();
+        }
+    })
+    $('#returnDate').on('change',function(){
+        var regex=/^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/20(1[8-9]|[2-9]\d)$/gm;
+        if(regex.test($(this).val())){
+            matchReturnDate();
+        }
+    })
     //fill time selects
     for(var i=0;i<2;i++){
         var t=i==0?' am':' pm';
