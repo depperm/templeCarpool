@@ -5,6 +5,10 @@ const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 //const GoogleAuth = require('google-auth-library');
+const options={
+    key:fs.readFileSync(path.join(__dirname+'/keys/key.pem')),
+    cert:fs.readFileSync(path.join(__dirname+'/keys/cert.pem'))
+}
 
 const port = 80
 
