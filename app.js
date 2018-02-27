@@ -23,25 +23,8 @@ const sslport=443
 
 const app=express()
 app.use(helmet())
-//http.createServer(app).listen(port)
 app.listen(port)
 https.createServer(options,app).listen(sslport)
-
-//var auth = new GoogleAuth;
-//app.authClient = new auth.OAuth2(config.passport.google.clientID, config.passport.google.clientSecret, '');
-/*var GoogleStrategy = require('passport-google-oauth20').Strategy;
-
-passport.use(new GoogleStrategy({
-    clientID: config.passport.google.clientID,
-    clientSecret: config.passport.google.clientSecret,
-    callbackURL: "http://www.example.com/auth/google/callback"
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));*/
 
 var stakes=["Annapolis","Baltimore","Columbia","Frederick","Seneca","Silver Spring","Suitland","Washington, DC","Altoona","Chambersburg","Pitsburgh","Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Washington DC(YSA)","Winchester","Waynesboro","Woodbridge","Clarksburg","Martinsburg"];
 var temples=['Philadelphia','Columbus']
