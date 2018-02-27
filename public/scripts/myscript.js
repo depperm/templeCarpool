@@ -16,7 +16,7 @@ var paStakes=["Altoona","Chambersburg","Pitsburgh"];
 var vaStakes=["Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Washington DC(YSA)","Winchester","Waynesboro","Woodbridge"];
 var wvStakes=["Clarksburg","Martinsburg"];
 
-var temples=['Philadelphia','Columbus']
+var temples=['Philadelphia','Columbus','Manhattan']
 
 var hours=["12:00","12:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30"];
 
@@ -24,7 +24,7 @@ var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm
                                                    'Wednesday':['10:00 am','11:30 am','6:30 pm','8:00 pm'], 
                                                    'Thursday':['6:30 pm','8:00 pm'],
                                                    'Friday':['10:00 am','11:30 am','6:30 pm','8:00 pm'],
-                                                   'Saturday':['7:00 am','8:30 am','10:00 am', '11:30 am', '1:00 pm','2:30 pm']},
+                                                   'Saturday':['7:00 am(Spanish 1st and 3rd Sat)','8:30 am','10:00 am', '11:30 am', '1:00 pm','2:30 pm(Spanish 2nd Sat)']},
                                       'Baptistry':{'Tuesday':['6:00 - 9:30 pm'],
                                                    'Wednesday':['10:30 am - 1:30 pm','6:00 - 9:30 pm'], 
                                                    'Thursday':['6:00 - 9:30 pm'],
@@ -71,6 +71,30 @@ var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm
                                          '<strong>Recommends: </strong>A Temple Recommend from your bishop and stake president is required to enter the temple. A Recommend for Living Ordinances is also needed by members being endowed or sealed to a spouse. Youth must be at least 12 years old to perform temple baptisms and must have a Limited-Use Recommend from their bishop. Males must hold the priesthood.'],
                                 'website':'https://www.lds.org/temples/details/columbus-ohio-temple?lang=eng',
                                 'photo':'https://mobile-cdn.lds.org/bc/15/bc15b87bf1cf4aba1268814df4ef0cebc4177049/temple_exterior_columbus_ohio.jpg'
+                                },
+                'Manhattan':{2018:{'Endowment':{'Tuesday':['11:00 am','12:30 pm','2:00 pm','6:15 pm','7:45 pm'],
+                                                   'Wednesday':['11:00 am','12:30 pm','2:00 pm','6:15 pm','7:45 pm'], 
+                                                   'Thursday':['6:30 am','8:00 am','11:00 am','12:30 pm','2:00 pm','6:15 pm','7:45 pm(Spanish 2nd and 4th Thur)'],
+                                                   'Friday':['11:00 am','12:30 pm','2:00 pm','4:00 pm','5:30 pm','7:00 pm','8:30 pm'],
+                                                   'Saturday':['6:30 am(Spanish)','8:00 am','9:30 am(Spanish)','11:00 am','12:30 pm(Spanish)','2:00 pm', '3:30 pm', '5:00 pm']},
+                                      'Baptistry':{'Tuesday':['11:00 am - 12:00 pm','2:30 -3:30 pm','6:00 - 7:45 pm'],
+                                                   'Wednesday':['11:00 am - 12:00 pm','2:30 -3:30 pm','6:00 - 7:45 pm'], 
+                                                   'Thursday':['7:00 - 7:45 am','11:00 am - 12:00 pm','2:30 -3:30 pm','6:00 - 7:45 pm'],
+                                                   'Friday':['11:00 am - 12:00 pm','2:30 -3:30 pm','4:00 - 5:00 pm','6:30 - 8:30 pm'],
+                                                   'Saturday':['6:30 am - 12:30 pm','1:30 - 5:00 pm']},
+                                      'Closings':['March 31','July 4(Independence Day)','July 23-August 6(Maintenance Closure)','October 6','November 21-22(Thanksgiving)']
+                                     },
+                                'phone':'(917)-441-8220',
+                                'address':['125 Columbus Ave, Fourth Floor<br />New York, NY 10023-6514','https://www.google.com/maps/place/Manhattan+New+York+Temple/@40.7729896,-73.9902794,15z/data=!4m8!1m2!2m1!1smanhattan+temple!3m4!1s0x0:0x98e2f07a82e523fb!8m2!3d40.7729958!4d-73.9817351','<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12086.00565123261!2d-73.99027944277788!3d40.77298959794535!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x98e2f07a82e523fb!2sManhattan+New+York+Temple!5e0!3m2!1sen!2sus!4v1519761863570" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>'],
+                                'notes':['<strong>Family baptistry priority times on</strong> Monday through Friday at 10:00 - 11:00 am, Friday 6:30 - 7:30 pm, and Saturdays 11:30 am - 12:30 pm',
+                                         '<strong>Living Ordinances: </strong>To schedule an appointment for living ordinances (such as your own endowment, marriage, or sealing), please call the temple.',
+                                         '<strong>Temple Clothing: </strong>Clothing rental available',
+                                         '<strong>Dining: </strong>There are no patron dining or vending services at the Columbus Temple. Food is not permitted on temple grounds.',
+                                         '<strong>Family Names: </strong>You are encouraged to use <a href="familysearch.org">FamilySearch.org</a> to share your family names with the temple, especially if you have a large number of names.',
+                                         '<strong>Electronic Devices: </strong>If you choose to bring an electronic device (such as a camera, phone or tablet) into the temple, it must be turned off and stored inside a locker.',
+                                         '<strong>Recommends: </strong>A Temple Recommend from your bishop and stake president is required to enter the temple. A Recommend for Living Ordinances is also needed by members being endowed or sealed to a spouse. Youth must be at least 12 years old to perform temple baptisms and must have a Limited-Use Recommend from their bishop. Males must hold the priesthood.'],
+                                'website':'https://www.lds.org/temples/details/manhattan-new-york-temple?lang=eng',
+                                'photo':'https://mobile-cdn.lds.org/17/a7/17a7a46cb0e9f59b3c5d9409ae7fdd8e7f3fedc1/manhattan_temple_lds.jpg'
                                 }
                 };
 

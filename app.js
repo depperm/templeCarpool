@@ -29,7 +29,7 @@ app.listen(port)
 https.createServer(options,app).listen(sslport)
 
 var stakes=["Annapolis","Baltimore","Columbia","Frederick","Seneca","Silver Spring","Suitland","Washington, DC","Altoona","Chambersburg","Pitsburgh","Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Washington DC(YSA)","Winchester","Waynesboro","Woodbridge","Clarksburg","Martinsburg"];
-var temples=['Philadelphia','Columbus']
+var temples=['Philadelphia','Columbus','Manhattan']
 
 //var schedule = require('node-schedule')
 var MongoClient=require('mongodb').MongoClient;
