@@ -9,6 +9,8 @@ var tripPassengerList;
 
 var driverDialog,passengerDialog,driverForm,passengerForm;
 
+var dateRegex=/^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/20(1[8-9]|[2-9]\d)$/gm;
+
 var mdStakes=["Annapolis","Baltimore","Columbia","Frederick","Seneca","Silver Spring","Suitland","Washington, DC"];
 var paStakes=["Altoona","Chambersburg","Pitsburgh"];
 var vaStakes=["Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Washington DC(YSA)","Winchester","Waynesboro","Woodbridge"];
@@ -295,11 +297,9 @@ $(function(){
     //Sign out user
     $('.g-signout2').on('click',function(e){
         $('#trips tr:not(.header)').remove();
-        console.log('click sign out');
         userDetails={};
         var auth2=gapi.auth2.getAuthInstance();
         auth2.signOut().then(function(){
-            console.log('signed out');
             $('.g-signout2').hide();
             //hide content
             $('#content').hide();
@@ -407,25 +407,31 @@ $(function(){
     //reserve a seat
     $('#trips').on('click','.reserveTrip',function(){
         console.log('should reserve');
-        var data=[];
-        data.push({name:'email',value:userDetails['email']});
-        data.push({name:'name',value:userDetails['name']});
-        $.ajax({
-            url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]['_id'],
-            type:'post',
-            data:$.param(data),
-            statusCode: {
-                200: function(response){
-                    alert(response);
-                    getTrips();
-                },
-                500: function(response){
-                    //response={'readyState','responseText','status','statusText'}
-                    console.log('response'+response['responseText']);
-                    alert(response['responseText']);
+        var choice=true;
+        if(tripList[$(this).attr('data-trip-id')]['comments'])
+            console.log(tripList[$(this).attr('data-trip-id')]['comments'])
+        //var choice=confirm('Are you sure you want to kick this passenger from your trip? You will not have the ability to add them later.')
+        if(choice){
+            var data=[];
+            data.push({name:'email',value:userDetails['email']});
+            data.push({name:'name',value:userDetails['name']});
+            $.ajax({
+                url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]['_id'],
+                type:'post',
+                data:$.param(data),
+                statusCode: {
+                    200: function(response){
+                        alert(response);
+                        getTrips();
+                    },
+                    500: function(response){
+                        //response={'readyState','responseText','status','statusText'}
+                        console.log('response'+response['responseText']);
+                        alert(response['responseText']);
+                    }
                 }
-            }
-        });
+            });
+        }
     })
     //initialize datepickers
     //edit trip datepickers
@@ -456,14 +462,12 @@ $(function(){
     $('#rDate').datepicker({minDate:0}).datepicker('setDate',new Date());
     //manual change datepickers
     $('#departDate').on('keyup',function(){
-        var regex=/^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/20(1[8-9]|[2-9]\d)$/gm;
-        if(regex.test($(this).val())){
+        if(dateRegex.test($(this).val())){
             matchDepartDate();
         }
     })
     $('#returnDate').on('keyup',function(){
-        var regex=/^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/20(1[8-9]|[2-9]\d)$/gm;
-        if(regex.test($(this).val())){
+        if(dateRegex.test($(this).val())){
             matchReturnDate();
         }
     })
