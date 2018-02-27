@@ -342,8 +342,7 @@ app.get('/api/passengers/:trip',function(req,res){
 })
 
 app.get('/',function(req,res) {
-    var page=fs.readFileSync(path.join(__dirname,'public','index.html'),'utf8')
-    res.sendFile(page);
+    res.sendFile(path.join(__dirname,'public','index.html'));
 });
 /*app.get('/public/images/:filename',function(req,res){
     res.sendFile(path.join(__dirname+'/public/images/'+req.params.filename));
