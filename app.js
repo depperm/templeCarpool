@@ -9,7 +9,8 @@ const helmet = require('helmet')
 const options={
     key:fs.readFileSync(path.join(__dirname+'/keys/key.pem')),
     cert:fs.readFileSync(path.join(__dirname+'/keys/cert.pem')),
-    dhparam:fs.readFileSync(path.join(__dirname+'/keys/dh-strong.pem'))
+    dhparam:fs.readFileSync(path.join(__dirname+'/keys/dh-strong.pem')),
+    ca: fs.readFileSync(path.join(__dirname+'/keys/AddTrustExternalCARoot.crt'))
 }
 
 const port = 80
