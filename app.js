@@ -11,9 +11,11 @@ const options={
 }
 
 const port = 80
+const sslport=8443
 
 const app=express()
 http.createServer(app).listen(port)
+https.createServer(options,app).listen(sslport)
 
 //var auth = new GoogleAuth;
 //app.authClient = new auth.OAuth2(config.passport.google.clientID, config.passport.google.clientSecret, '');
