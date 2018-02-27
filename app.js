@@ -7,6 +7,8 @@ const bodyParser = require('body-parser')
 const helmet = require('helmet')
 //const GoogleAuth = require('google-auth-library');
 const options={
+    requestCert: true, //This will request the client certificate
+    rejectUnauthorized: true, //This will reject client certificates that are not signed by the CA
     key:fs.readFileSync(path.join(__dirname+'/keys/key.pem')),
     cert:fs.readFileSync(path.join(__dirname+'/keys/cert.pem')),
     dhparam:fs.readFileSync(path.join(__dirname+'/keys/dh-strong.pem')),
