@@ -13,7 +13,10 @@ const options={
     cert:fs.readFileSync(path.join(__dirname+'/keys/cert.pem')),
     dhparam:fs.readFileSync(path.join(__dirname+'/keys/dh-strong.pem')),
     //ca: fs.readFileSync(path.join(__dirname+'/keys/AddTrustExternalCARoot.crt'))
-    ca: fs.readFileSync(path.join(__dirname+'/keys/cert.pem'))
+    ca: [
+          fs.readFileSync(path.join(__dirname+'/keys/COMODORSADomainValidationSecureServerCA.crt')),
+          fs.readFileSync(path.join(__dirname+'/keys/COMODORSAAddTrustCA.crt'))
+       ]
 }
 
 const port = 80
