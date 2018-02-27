@@ -325,7 +325,7 @@ app.get('/api/passengers/:trip',function(req,res){
 })
 
 app.get('/',function(req,res) {
-    res.sendFile(path.join(__dirname,'public','index.html'));
+    res.sendFile(path.join(__dirname,'views','index.html'));
 });
 /*app.get('/public/images/:filename',function(req,res){
     res.sendFile(path.join(__dirname+'/public/images/'+req.params.filename));
