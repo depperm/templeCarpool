@@ -48,7 +48,7 @@ MongoClient.connect(url,function(err,host){
 //see https://www.npmjs.com/package/cron
 var CronJob=require('cron').CronJob;
 //var cleanUp=new CronJob('0 20 10 * * *',function(){
-var cleanUp=new CronJob('0 15 19 * * *',function(){
+var cleanUp=new CronJob('0 30 19 * * *',function(){
     var yesterday=new Date();
     console.log(yesterday.getHours())
     yesterday.setDate(yesterday.getDate()-1);
@@ -60,7 +60,7 @@ var cleanUp=new CronJob('0 15 19 * * *',function(){
             return;
         }
         var removeTrips=[]
-        results.forEach(function(index,obj){
+        results.forEach(function(obj,index){
             var date=obj['rDate']
             console.log(JSON.stringify(obj))
             //console.log('checking:'+date+' and '+yesterday+'...'+(date<=yesterday).toString())
