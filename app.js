@@ -5,14 +5,13 @@ const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
-//const GoogleAuth = require('google-auth-library');
+
 const options={
     requestCert: true, //This will request the client certificate
     rejectUnauthorized: false, //This will reject client certificates that are not signed by the CA
     key:fs.readFileSync(path.join(__dirname+'/keys/key.pem')),
     cert:fs.readFileSync(path.join(__dirname+'/keys/cert.pem')),
     dhparam:fs.readFileSync(path.join(__dirname+'/keys/dh-strong.pem')),
-    //ca: fs.readFileSync(path.join(__dirname+'/keys/AddTrustExternalCARoot.crt'))
     ca: [
           fs.readFileSync(path.join(__dirname+'/keys/COMODORSADomainValidationSecureServerCA.crt')),
           fs.readFileSync(path.join(__dirname+'/keys/COMODORSAAddTrustCA.crt'))
@@ -24,7 +23,6 @@ const sslport=443
 
 const app=express()
 app.use(helmet())
-//http.createServer(app).listen(port)
 app.listen(port)
 https.createServer(options,app).listen(sslport)
 
@@ -40,16 +38,13 @@ var db;
 MongoClient.connect(url,function(err,host){
     if(err) throw err;
     db=host.db('templeCarpoolDB')
-    /*app.listen(port,()=>{
-        console.log('listening on '+port.toString());
-    });*/
 })
 
 //see https://www.npmjs.com/package/cron
 var CronJob=require('cron').CronJob;
-var cleanUp=new CronJob('0 32 19 * * *',function(){
+var cleanUp=new CronJob('0 0 5 * * *',function(){
     var yesterday=new Date();
-    console.log(yesterday.getHours())
+    //console.log(yesterday.getHours())
     yesterday.setDate(yesterday.getDate()-1);
     console.log((new Date()).toLocaleString()+': should remove any trip that has a return date <= yesterday')
     var cursor=db.collection('Trips').find({}).toArray(function(err, results) {
@@ -60,13 +55,12 @@ var cleanUp=new CronJob('0 32 19 * * *',function(){
         var removeTrips=[]
         results.forEach(function(obj,index){
             var date=new Date(obj['rDate'])
-            //console.log('checking:'+date+' and '+yesterday+'...'+(date<=yesterday).toString())
             if(date<=yesterday){
                 removeTrips.push(obj['_id'])
             }
         })
-        console.log('removing trips: '+JSON.stringify(removeTrips))
-        //db.collection('Trips').deleteMany({_id: { $in: removeTrips }})
+        //console.log('removing trips: '+JSON.stringify(removeTrips))
+        db.collection('Trips').deleteMany({_id: { $in: removeTrips }})
     })
 });
 cleanUp.start()
@@ -331,6 +325,9 @@ app.get('/api/passengers/:trip',function(req,res){
 
 app.get('/',function(req,res) {
     res.sendFile(path.join(__dirname+'/views/index.html'));
+});
+app.get('/sp',function(req,res) {
+    res.sendFile(path.join(__dirname+'/views/spindex.html'));
 });
 /*app.get('/public/images/:filename',function(req,res){
     res.sendFile(path.join(__dirname+'/public/images/'+req.params.filename));
