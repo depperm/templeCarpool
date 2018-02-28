@@ -48,10 +48,10 @@ MongoClient.connect(url,function(err,host){
 //see https://www.npmjs.com/package/cron
 var CronJob=require('cron').CronJob;
 //var cleanUp=new CronJob('0 20 10 * * *',function(){
-var cleanUp=new CronJob('0 * * * * *',function(){
+var cleanUp=new CronJob('0 0 19 * * *',function(){
     var yesterday=new Date();
     console.log(yesterday.getHours())
-    /*yesterday.setDate(yesterday.getDate()-1);
+    yesterday.setDate(yesterday.getDate()-1);
     console.log((new Date()).toLocaleString()+': should remove any trip that has a return date <= yesterday')
     var cursor=db.collection('Trips').find({}).toArray(function(err, results) {
         if(err){
@@ -67,8 +67,9 @@ var cleanUp=new CronJob('0 * * * * *',function(){
         })
         console.log('removing trips: '+JSON.stringify(results))
         db.collection('Trips').deleteMany({_id: { $in: removeTrips }})
-    })*/
+    })
 });
+cleanUp.start()
 
 app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.json());
