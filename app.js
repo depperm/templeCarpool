@@ -48,11 +48,11 @@ MongoClient.connect(url,function(err,host){
 //see https://www.npmjs.com/package/cron
 var CronJob=require('cron').CronJob;
 //var cleanUp=new CronJob('0 20 10 * * *',function(){
-var cleanUp=new CronJob('0 55 18 * * *',function(){
+var cleanUp=new CronJob('0 15 19 * * *',function(){
     var yesterday=new Date();
     console.log(yesterday.getHours())
     yesterday.setDate(yesterday.getDate()-1);
-    yesterday=yesterday.getDate()
+    //yesterday=yesterday.toLocaleDateString()
     console.log((new Date()).toLocaleString()+': should remove any trip that has a return date <= yesterday')
     var cursor=db.collection('Trips').find({}).toArray(function(err, results) {
         if(err){
@@ -62,12 +62,13 @@ var cleanUp=new CronJob('0 55 18 * * *',function(){
         var removeTrips=[]
         results.forEach(function(index,obj){
             var date=obj['rDate']
-            console.log('checking:'+date+' and '+yesterday+'...'+date<=yesterday)
-            if(date<=yesterday){
+            console.log(JSON.stringify(obj))
+            //console.log('checking:'+date+' and '+yesterday+'...'+(date<=yesterday).toString())
+            /*if(date<=yesterday){
                 removeTrips.append(obj['_id'])
-            }
+            }*/
         })
-        console.log('removing trips: '+JSON.stringify(results))
+        //console.log('removing trips: '+JSON.stringify(results))
         //db.collection('Trips').deleteMany({_id: { $in: removeTrips }})
     })
 });
