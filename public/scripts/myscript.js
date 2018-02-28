@@ -86,8 +86,7 @@ var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm
                                      },
                                 'phone':'(917)-441-8220',
                                 'address':['125 Columbus Ave, Fourth Floor<br />New York, NY 10023-6514','https://www.google.com/maps/place/Manhattan+New+York+Temple/@40.7729896,-73.9902794,15z/data=!4m8!1m2!2m1!1smanhattan+temple!3m4!1s0x0:0x98e2f07a82e523fb!8m2!3d40.7729958!4d-73.9817351','<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12086.00565123261!2d-73.99027944277788!3d40.77298959794535!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x98e2f07a82e523fb!2sManhattan+New+York+Temple!5e0!3m2!1sen!2sus!4v1519761863570" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>'],
-                                'notes':['<strong>Family baptistry priority times on</strong> Monday through Friday at 10:00 - 11:00 am, Friday 6:30 - 7:30 pm, and Saturdays 11:30 am - 12:30 pm',
-                                         '<strong>Living Ordinances: </strong>To schedule an appointment for living ordinances (such as your own endowment, marriage, or sealing), please call the temple.',
+                                'notes':['<strong>Living Ordinances: </strong>To schedule an appointment for living ordinances (such as your own endowment, marriage, or sealing), please call the temple.',
                                          '<strong>Temple Clothing: </strong>Clothing rental available',
                                          '<strong>Dining: </strong>There are no patron dining or vending services at the Columbus Temple. Food is not permitted on temple grounds.',
                                          '<strong>Family Names: </strong>You are encouraged to use <a href="familysearch.org">FamilySearch.org</a> to share your family names with the temple, especially if you have a large number of names.',
@@ -100,7 +99,7 @@ var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm
 
 function matchDepartDate(){
     $('.trip td[data-depart-date]').removeClass('match');
-    var trips=$('.trip td[data-depart-date]')
+    var trips=$('#trips .trip td[data-depart-date]')
     a=new Date($('#departDate').val())
     $.each(trips,function(index,trip){
         b=new Date($(this).attr('data-depart-date'))
@@ -110,7 +109,7 @@ function matchDepartDate(){
 }
 function matchReturnDate(){
     $('.trip td[data-return-date]').removeClass('match');
-    var trips=$('.trip td[data-return-date]')
+    var trips=$('#trips .trip td[data-return-date]')
     a=new Date($('#returnDate').val())
     $.each(trips,function(index,trip){
         b=new Date($(this).attr('data-depart-date'))
@@ -120,7 +119,7 @@ function matchReturnDate(){
 }
 function matchTemple(){
     $('.trip td[data-temple-dest]').removeClass('match');
-    var tmpls=$('.trip td[data-temple-dest]')
+    var tmpls=$('#trips .trip td[data-temple-dest]')
     $.each(tmpls,function(index,temple){
         if($(this).attr('data-temple-dest')==$('#temple').val())
             $(this).addClass('match')
@@ -129,7 +128,7 @@ function matchTemple(){
 
 function matchStake(){
     $('.trip td[data-stake]').removeClass('match');
-    var stakes=$('.trip td[data-stake]')
+    var stakes=$('#trips .trip td[data-stake]')
     $.each(stakes,function(index,temple){
         if($(this).attr('data-stake')==$('#stake').val())
             $(this).addClass('match')

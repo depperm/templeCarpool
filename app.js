@@ -47,7 +47,7 @@ MongoClient.connect(url,function(err,host){
 
 //see https://www.npmjs.com/package/cron
 var CronJob=require('cron').CronJob;
-new CronJob('0 0 0 * * *',function(){
+var cleanUp=new CronJob('0 20 10 * * *',function(){
     var yesterday=new Date();
     yesterday.setDate(yesterday.getDate()-1);
     console.log((new Date()).toLocaleString()+': should remove any trip that has a return date <= yesterday')
