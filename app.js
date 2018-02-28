@@ -62,12 +62,13 @@ var cleanUp=new CronJob('0 55 18 * * *',function(){
         var removeTrips=[]
         results.forEach(function(index,obj){
             var date=obj['rDate']
+            console.log('checking:'+date+' and '+yesterday+'...'+date<=yesterday)
             if(date<=yesterday){
                 removeTrips.append(obj['_id'])
             }
         })
         console.log('removing trips: '+JSON.stringify(results))
-        db.collection('Trips').deleteMany({_id: { $in: removeTrips }})
+        //db.collection('Trips').deleteMany({_id: { $in: removeTrips }})
     })
 });
 cleanUp.start()
