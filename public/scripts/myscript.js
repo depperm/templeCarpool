@@ -16,7 +16,7 @@ var paStakes=["Altoona","Chambersburg","Pitsburgh"];
 var vaStakes=["Annandale","Ashburn","Buena Vista(YSA)","Centreville","Chesapeake","Fredricksburg","Gainesville","McLean","Mt Vernon","Newport News","Oakton","Pembroke","Richmond-Chesterfield","Richmond-Midlothian","Richmond","Roanoke","Stafford","Virginia Beach","Washington DC(YSA)","Winchester","Waynesboro","Woodbridge"];
 var wvStakes=["Clarksburg","Martinsburg"];
 
-var temples=['Philadelphia','Columbus','Manhattan']
+var temples=['Philadelphia','Columbus','Manhattan'];
 
 var hours=["12:00","12:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30"];
 
@@ -99,39 +99,43 @@ var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm
 
 function matchDepartDate(){
     $('.trip td[data-depart-date]').removeClass('match');
-    var trips=$('#trips .trip td[data-depart-date]')
-    a=new Date($('#departDate').val())
+    var trips=$('#trips .trip td[data-depart-date]');
+    var a=new Date($('#departDate').val());
     $.each(trips,function(index,trip){
-        b=new Date($(this).attr('data-depart-date'))
-        if(a.getTime()==b.getTime())
-            $(this).addClass('match')
+        var b=new Date($(this).attr('data-depart-date'));
+        if(a.getTime()==b.getTime()){
+            $(this).addClass('match');
+        }
     });
 }
 function matchReturnDate(){
     $('.trip td[data-return-date]').removeClass('match');
-    var trips=$('#trips .trip td[data-return-date]')
-    a=new Date($('#returnDate').val())
+    var trips=$('#trips .trip td[data-return-date]');
+    var a=new Date($('#returnDate').val());
     $.each(trips,function(index,trip){
-        b=new Date($(this).attr('data-depart-date'))
-        if(a.getTime()==b.getTime())
-            $(this).addClass('match')
+        var b=new Date($(this).attr('data-depart-date'));
+        if(a.getTime()==b.getTime()){
+            $(this).addClass('match');
+        }
     });
 }
 function matchTemple(){
     $('.trip td[data-temple-dest]').removeClass('match');
-    var tmpls=$('#trips .trip td[data-temple-dest]')
+    var tmpls=$('#trips .trip td[data-temple-dest]');
     $.each(tmpls,function(index,temple){
-        if($(this).attr('data-temple-dest')==$('#temple').val())
-            $(this).addClass('match')
+        if($(this).attr('data-temple-dest')==$('#temple').val()){
+            $(this).addClass('match');
+        }
     });
 }
 
 function matchStake(){
     $('.trip td[data-stake]').removeClass('match');
-    var stakes=$('#trips .trip td[data-stake]')
+    var stakes=$('#trips .trip td[data-stake]');
     $.each(stakes,function(index,temple){
-        if($(this).attr('data-stake')==$('#stake').val())
-            $(this).addClass('match')
+        if($(this).attr('data-stake')==$('#stake').val()){
+            $(this).addClass('match');
+        }
     });
 }
 
@@ -142,18 +146,18 @@ function getTrips(){
         $.each(data,function(index,trip){
             //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
             //Stake,Temple,Departure, Return, Seats, Driver, Reserve
-            var stk='templeDest' in trip?trip['departStake']:'';
-            var tmpl='departStake' in trip?trip['templeDest']:'';
-            var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
-            var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
-            var seats=('passengers' in trip?trip['passengers'].length:'0')+'/'+trip['numSeats'];
-            var driver=trip['driver'];
-            var disabled=('passengers' in trip?trip['passengers'].length:0)==trip['numSeats']?'disabled':'';
-            if(userDetails['email']==trip['email']){
+            var stk='templeDest' in trip?trip.departStake:'';
+            var tmpl='departStake' in trip?trip.templeDest:'';
+            var dep=trip.dDate+(trip.dTime=='select'?'':', '+trip.dTime);
+            var ret=trip.rDate+(trip.rTime=='select'?'':', '+trip.rTime);
+            var seats=('passengers' in trip?trip.passengers.length:'0')+'/'+trip.numSeats;
+            var driver=trip.driver;
+            var disabled=('passengers' in trip?trip.passengers.length:0)==trip.numSeats?'disabled':'';
+            if(userDetails.email==trip.email){
                 disabled='disabled';
             }
-            var ob='mailto:'+trip['email']
-            $('#trips tr:last').after('<tr class="trip"><td data-stake="'+stk+'">'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td class="driver"><a href="'+ob+'" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
+            var ob='mailto:'+trip.email;
+            $('#trips tr:last').after('<tr class="trip"><td data-stake="'+stk+'">'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip.dDate+'">'+dep+'</td><td data-return-date="'+trip.rDate+'">'+ret+'</td><td>'+seats+'</td><td class="driver"><a href="'+ob+'" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
             //$('#trips tr:last .driver a').attr('href',ob)
         });
         matchDepartDate();
@@ -212,7 +216,7 @@ function sortTable(n) {
         } else {
             /*If no switching has been done AND the direction is "asc",
             set the direction to "desc" and run the while loop again.*/
-            if (switchcount == 0 && dir == "asc") {
+            if (switchcount === 0 && dir == "asc") {
                 dir = "desc";
                 switching = true;
             }
@@ -286,11 +290,11 @@ $(function(){
             if(choice){
                 var data=$('#postRideForm').serializeArray();//form to array
                 //disabled inputs are not serialized so add now
-                data.push({name:'email',value:userDetails['email']});
+                data.push({name:'email',value:userDetails.email});
                 if(data.length==10){
                     data.push({name:'splitCost',value:'off'});
                 }
-                console.log('sending:'+JSON.stringify(data))
+                console.log('sending:'+JSON.stringify(data));
                 $.ajax({
                     url:'/api/trips/add',
                     type:'post',
@@ -312,7 +316,7 @@ $(function(){
                         },
                         500: function(response){
                             //response={'readyState','responseText','status','statusText'}
-                            alert(response['responseText']);
+                            alert(response.responseText);
                         }
                     }
                 });
@@ -354,7 +358,7 @@ $(function(){
     });
 
     //email preferences
-    $('#ep').on('click'),function(){
+    $('#ep').on('click',function(){
         fillEmailPreferences();
     });
     
@@ -387,21 +391,21 @@ $(function(){
         console.log('editing:'+JSON.stringify(driverList[$(this).attr('data-trip-id')]));
         editTripIndex=$(this).attr('data-trip-id');
         fillDriverDialog();
-        $('#editDriverForm').attr('data-trip-id',$(this).attr('data-trip-id'))
+        $('#editDriverForm').attr('data-trip-id',$(this).attr('data-trip-id'));
         driverDialog.dialog( "open" );
     });
     //kick a passenger on your trip
     $('#driverPassengers').on('click','.kickFromTrip',function(){
         editTripIndex=$(this).attr('data-trip-id');
-        var choice=confirm('Are you sure you want to kick this passenger from your trip? You will not have the ability to add them later.')
+        var choice=confirm('Are you sure you want to kick this passenger from your trip? You will not have the ability to add them later.');
         if(choice){
             $.ajax({
-                url:'/api/trips/'+driverList[tripIndex]['_id']+'/'+tripPassengerList[$(this).attr('data-trip-passenger-id')]['email'],
+                url:'/api/trips/'+driverList[editTripIndex]._id+'/'+tripPassengerList[$(this).attr('data-trip-passenger-id')].email,
                 type:'DELETE',
                 statusCode: {
                     200: function(response){
                         //remove passenger from local list
-                        tripPassengerList.splice([$(this).attr('data-trip-passenger-id')],1)
+                        tripPassengerList.splice([$(this).attr('data-trip-passenger-id')],1);
                         fillDriverDialog();
                         //update table in background
                         updateTripsDrivingTable();
@@ -409,18 +413,18 @@ $(function(){
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
                         //console.log('response'+response['responseText']);
-                        alert(response['responseText']);
+                        alert(response.responseText);
                     }
                 }
             });
         }
-    })
+    });
     //drop a seat
     $('#editingPassengerRides').on('click','.dropTrip',function(){
-        var choice=confirm('Are you sure you want to leave this trip?')
+        var choice=confirm('Are you sure you want to leave this trip?');
         if(choice){
             $.ajax({
-                url:'/api/trips/'+passengerList[$(this).attr('data-trip-id')]['_id']+'/'+userDetails['email'],
+                url:'/api/trips/'+passengerList[$(this).attr('data-trip-id')]._id+'/'+userDetails.email,
                 type:'DELETE',
                 statusCode: {
                     200: function(response){
@@ -429,7 +433,7 @@ $(function(){
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
                         //console.log('response'+response['responseText']);
-                        alert(response['responseText']);
+                        alert(response.responseText);
                     }
                 }
             });
@@ -438,13 +442,13 @@ $(function(){
     //reserve a seat
     $('#trips').on('click','.reserveTrip',function(){
         //console.log('should reserve');
-        var choice=confirm('You are responsible to make your own temple reservation.\nPlease visit the \'Edit A Ride\' tab to see any comments the driver may make.')
+        var choice=confirm('You are responsible to make your own temple reservation.\nPlease visit the \'Edit A Ride\' tab to see any comments the driver may make.');
         if(choice){
             var data=[];
-            data.push({name:'email',value:userDetails['email']});
-            data.push({name:'name',value:userDetails['name']});
+            data.push({name:'email',value:userDetails.email});
+            data.push({name:'name',value:userDetails.name});
             $.ajax({
-                url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]['_id'],
+                url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]._id,
                 type:'post',
                 data:$.param(data),
                 statusCode: {
@@ -455,24 +459,24 @@ $(function(){
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
                         //console.log('response'+response['responseText']);
-                        alert(response['responseText']);
+                        alert(response.responseText);
                     }
                 }
             });
         }
-    })
+    });
     //initialize datepickers
     //edit trip datepickers
     $('#driverDepart').datepicker({minDate:0,onSelect:function(date){
         var selDate=new Date(date);
-        $('#driverReturn').datepicker('option','minDate',selDate)
+        $('#driverReturn').datepicker('option','minDate',selDate);
     }}).datepicker('setDate',new Date());
     $('#driverReturn').datepicker({minDate:0});
     //main datepickers
     $('#departDate').datepicker({minDate:0,onSelect:function(date){
         var selDate=new Date(date);
-        $('#returnDate').datepicker('option','minDate',selDate)
-        $('#rDate').datepicker('option','minDate',selDate)
+        $('#returnDate').datepicker('option','minDate',selDate);
+        $('#rDate').datepicker('option','minDate',selDate);
         $('#rDate').val('');
         $('#dDate').val(date);
         matchDepartDate();
@@ -485,7 +489,7 @@ $(function(){
     //post ride datepickers
     $('#dDate').datepicker({minDate:0,onSelect:function(date){
         var selDate=new Date(date);
-        $('#rDate').datepicker('option','minDate',selDate)
+        $('#rDate').datepicker('option','minDate',selDate);
     }}).datepicker('setDate',new Date());
     $('#rDate').datepicker({minDate:0}).datepicker('setDate',new Date());
     //manual change datepickers
@@ -493,15 +497,15 @@ $(function(){
         if(dateRegex.test($(this).val())){
             matchDepartDate();
         }
-    })
+    });
     $('#returnDate').on('keyup',function(){
         if(dateRegex.test($(this).val())){
             matchReturnDate();
         }
-    })
+    });
     //fill time selects
     for(var i=0;i<2;i++){
-        var t=i==0?' am':' pm';
+        var t=i===0?' am':' pm';
         $.each(hours,function(index,value){
             $('#rTime').append($('<option></option>').attr('value',value+t).text(value+t));//hours.length*i+index
             $('#dTime').append($('<option></option>').attr('value',value+t).text(value+t));
@@ -533,11 +537,11 @@ $(function(){
         }else{
             $('#allEmail').prop('checked', false);
         }
-    })
+    });
 });
 function onSignIn(googleUser) {
     profile=googleUser.getBasicProfile();
-    userDetails={'name':profile.getName(),'email':profile.getEmail()}
+    userDetails={'name':profile.getName(),'email':profile.getEmail()};
     //console.log("ID: "+profile.getId());
     //console.log("Full Name: "+profile.getName());
     $('#driver').val(profile.getName());
@@ -555,7 +559,7 @@ function onSignIn(googleUser) {
 function openTab(evt,choice){
     $('.tabContent').hide();
     $('.tablinks').removeClass('active');
-    $('#'+choice).show()
+    $('#'+choice).show();
     evt.currentTarget.className+=" active";
 }
 function fillEmailPreferences(){
@@ -563,26 +567,26 @@ function fillEmailPreferences(){
 }
 function fillTempleInfo(){
     var temple=$('#temple').val();
-    $('#templeName').html('<a href="'+templeInfo[temple]['website']+'">'+temple+'</a>');
-    var currentYear = (new Date).getFullYear();
-    $('#templeAddress').html('<a href="'+templeInfo[temple]['address'][1]+'">'+templeInfo[temple]['address'][0]+'</a>');
-    $('#templeImage').attr('src',templeInfo[temple]['photo'])
-    $('#templeMap').html(templeInfo[temple]['address'][2]);
-    $('#templePhone').html(templeInfo[temple]['phone']);
+    $('#templeName').html('<a href="'+templeInfo[temple].website+'">'+temple+'</a>');
+    var currentYear = (new Date()).getFullYear();
+    $('#templeAddress').html('<a href="'+templeInfo[temple].address[1]+'">'+templeInfo[temple].address[0]+'</a>');
+    $('#templeImage').attr('src',templeInfo[temple].photo);
+    $('#templeMap').html(templeInfo[temple].address[2]);
+    $('#templePhone').html(templeInfo[temple].phone);
     var days=['Tuesday','Wednesday','Thursday','Friday','Saturday'];
     $.each(days,function(index,day){
-        $('#Endowment-'+day).html(templeInfo[temple][currentYear]['Endowment'][day].toString())
-    })
+        $('#Endowment-'+day).html(templeInfo[temple][currentYear].Endowment[day].toString());
+    });
     $.each(days,function(index,day){
-        $('#Baptistry-'+day).html(templeInfo[temple][currentYear]['Baptistry'][day].toString())
-    })
+        $('#Baptistry-'+day).html(templeInfo[temple][currentYear].Baptistry[day].toString());
+    });
     $('#templeClosings').empty();
-    $.each(templeInfo[temple][currentYear]['Closings'],function(index,closing){
-        $('#templeClosings').append('<li>'+closing+'</li>')
-    })
-    $('#templeNotes').empty()
-    $.each(templeInfo[temple]['notes'],function(index,note){
-        $('#templeNotes').append('<p>'+note+'</p>')
+    $.each(templeInfo[temple][currentYear].Closings,function(index,closing){
+        $('#templeClosings').append('<li>'+closing+'</li>');
+    });
+    $('#templeNotes').empty();
+    $.each(templeInfo[temple].notes,function(index,note){
+        $('#templeNotes').append('<p>'+note+'</p>');
     });
 }
 function fillEditInfo(){
@@ -590,67 +594,69 @@ function fillEditInfo(){
     updateTripsPassengerTable();
 }
 function updateTripsDrivingTable(){
-    $.get('/api/users/driver/'+userDetails['email'],function(data,status){
+    $.get('/api/users/driver/'+userDetails.email,function(data,status){
         $('#editingDrivingRides tr:not(.header)').remove();
         driverList=data;
         $.each(data,function(index,trip){
             //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
             //Stake,Temple,Departure,Return,Seats,Edit
-            var stk=trip['departStake'];
-            var tmpl=trip['templeDest'];
-            var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
-            var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
-            var seats=('passengers' in trip?trip['passengers'].length:'0')+'/'+trip['numSeats'];
-            $('#editingDrivingRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td>'+seats+'</td><td><input type="button" value="Edit" class="editTrip" data-trip-id="'+index+'"></td></tr>');
+            var stk=trip.departStake;
+            var tmpl=trip.templeDest;
+            var dep=trip.dDate+(trip.dTime=='select'?'':', '+trip.dTime);
+            var ret=trip.rDate+(trip.rTime=='select'?'':', '+trip.rTime);
+            var seats=('passengers' in trip?trip.passengers.length:'0')+'/'+trip.numSeats;
+            $('#editingDrivingRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip.dDate+'">'+dep+'</td><td data-return-date="'+trip.rDate+'">'+ret+'</td><td>'+seats+'</td><td><input type="button" value="Edit" class="editTrip" data-trip-id="'+index+'"></td></tr>');
         });
         //console.log(JSON.stringify(data));
     });
 }
 function updateTripsPassengerTable(){
-    $.get('/api/users/passenger/'+userDetails['email'],function(data,status){
+    $.get('/api/users/passenger/'+userDetails.email,function(data,status){
         $('#editingPassengerRides tr:not(.header)').remove();
         passengerList=data;
         $.each(data,function(index,trip){
             //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
             //Stake,Temple,Departure,Return,driver,Edit
-            var stk=trip['departStake'];
-            var tmpl=trip['templeDest'];
-            var dep=trip['dDate']+(trip['dTime']=='select'?'':', '+trip['dTime']);
-            var ret=trip['rDate']+(trip['rTime']=='select'?'':', '+trip['rTime']);
-            var driver=trip['driver'];
-            var email=trip['email'];
+            var stk=trip.departStake;
+            var tmpl=trip.templeDest;
+            var dep=trip.dDate+(trip.dTime=='select'?'':', '+trip.dTime);
+            var ret=trip.rDate+(trip.rTime=='select'?'':', '+trip.rTime);
+            var driver=trip.driver;
+            var email=trip.email;
             var split='No';
-            if(trip['splitCost']=='on')
+            if(trip.splitCost=='on'){
                 split='Yes';
+            }
             var com='';
-            if(trip['commments'])
-                com=trip['comments'];
-            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip['dDate']+'">'+dep+'</td><td data-return-date="'+trip['rDate']+'">'+ret+'</td><td><a href="mailto:'+email+'">'+driver+'</a></td><td>'+split+'</td><td>'+com+'</td><td><input type="button" value="Drop" class="dropTrip" data-trip-id="'+index+'"></td></tr>');
+            if(trip.commments){
+                com=trip.comments;
+            }
+            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip.dDate+'">'+dep+'</td><td data-return-date="'+trip.rDate+'">'+ret+'</td><td><a href="mailto:'+email+'">'+driver+'</a></td><td>'+split+'</td><td>'+com+'</td><td><input type="button" value="Drop" class="dropTrip" data-trip-id="'+index+'"></td></tr>');
         });
         //console.log(JSON.stringify(data));
     });
 }
 function fillStakeSelect(selectId){
-    $(selectId).append('<optgroup label="Maryland Stakes">')
+    $(selectId).append('<optgroup label="Maryland Stakes">');
     $.each(mdStakes,function(index,stake){
-        $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
-    })
-    $(selectId).append('</optgroup>')
-    $(selectId).append('<optgroup label="Pennsylvania Stakes">')
+        $(selectId).append('<option value="'+stake+'">'+stake+'</option>');
+    });
+    $(selectId).append('</optgroup>');
+    $(selectId).append('<optgroup label="Pennsylvania Stakes">');
     $.each(paStakes,function(index,stake){
-        $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
-    })
-    $(selectId).append('</optgroup>')
-    $(selectId).append('<optgroup label="Virginia Stakes">')
+        $(selectId).append('<option value="'+stake+'">'+stake+'</option>');
+    });
+    $(selectId).append('</optgroup>');
+    $(selectId).append('<optgroup label="Virginia Stakes">');
     $.each(vaStakes,function(index,stake){
-        $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
-    })
-    $(selectId).append('</optgroup>')
-    $(selectId).append('<optgroup label="West Virginia Stakes">')
+        $(selectId).append('<option value="'+stake+'">'+stake+'</option>');
+    });
+    $(selectId).append('</optgroup>');
+    $(selectId).append('<optgroup label="West Virginia Stakes">');
     $.each(wvStakes,function(index,stake){
-        $(selectId).append('<option value="'+stake+'">'+stake+'</option>')
-    })
-    $(selectId).append('</optgroup>')
+        $(selectId).append('<option value="'+stake+'">'+stake+'</option>');
+    });
+    $(selectId).append('</optgroup>');
 }
 function fillTempleSelect(selectId){
     $.each(temples,function(index,temple){
@@ -667,34 +673,34 @@ function editDriverTrip(){
         var data=$('#editRideForm').serializeArray();//form to array
         //update data to match names as post form
         $.each(data,function(i,param){
-            if(param['name']=='driverStake'){
-                data[i]['name']='departStake';
-            }else if(param['name']=='driverTemple'){
-                data[i]['name']='templeDest';
-            }else if(param['name']=='driverDepart'){
-                data[i]['name']='dDate';
-            }else if(param['name']=='driverDTime'){
-                data[i]['name']='dTime';
-            }else if(param['name']=='driverReturn'){
-                data[i]['name']='rDate';
-            }else if(param['name']=='driverRTime'){
-                data[i]['name']='rTime';
-            }else if(param['name']=='driverSeats'){
-                data[i]['name']='numSeats';
-            }else if(param['name']=='driverSplitCost'){
-                data[i]['name']='splitCost';
-            }else if(param['name']=='driverComments'){
-                data[i]['name']='comments';
+            if(param.name=='driverStake'){
+                data[i].name='departStake';
+            }else if(param.name=='driverTemple'){
+                data[i].name='templeDest';
+            }else if(param.name=='driverDepart'){
+                data[i].name='dDate';
+            }else if(param.name=='driverDTime'){
+                data[i].name='dTime';
+            }else if(param.name=='driverReturn'){
+                data[i].name='rDate';
+            }else if(param.name=='driverRTime'){
+                data[i].name='rTime';
+            }else if(param.name=='driverSeats'){
+                data[i].name='numSeats';
+            }else if(param.name=='driverSplitCost'){
+                data[i].name='splitCost';
+            }else if(param.name=='driverComments'){
+                data[i].name='comments';
             }
         });
-        console.log('updating for:'+JSON.stringify(driverList[editTripIndex]['_id']))
-        console.log(data.length)
+        console.log('updating for:'+JSON.stringify(driverList[editTripIndex]._id));
+        console.log(data.length);
         if(data.length==8){
             data.push({name:'splitCost',value:'off'});
         }
-        console.log('sending:'+JSON.stringify(data))
+        console.log('sending:'+JSON.stringify(data));
         $.ajax({
-            url:'/api/trips/edit/'+driverList[editTripIndex]['_id'],
+            url:'/api/trips/edit/'+driverList[editTripIndex]._id,
             type:'post',
             data:$.param(data),
             statusCode: {
@@ -709,7 +715,7 @@ function editDriverTrip(){
                 },
                 500: function(response){
                     //response={'readyState','responseText','status','statusText'}
-                    alert(response['responseText']);
+                    alert(response.responseText);
                 }
             }
         });
@@ -723,10 +729,10 @@ function editDriverTrip(){
 }
 function deleteTrip(){
     //console.log('deleting trip:'+$('#editDriverForm').attr('data-trip-id')+' which is '+JSON.stringify(driverList[$('#editDriverForm').attr('data-trip-id')]))
-    var choice=confirm('Are you sure you want to Delete this trip?')
+    var choice=confirm('Are you sure you want to Delete this trip?');
     if(choice){
         $.ajax({
-            url:'/api/trips/'+driverList[$('#editDriverForm').attr('data-trip-id')]['_id'],
+            url:'/api/trips/'+driverList[$('#editDriverForm').attr('data-trip-id')]._id,
             type:'DELETE',
             statusCode: {
                 200: function(response){
@@ -735,7 +741,7 @@ function deleteTrip(){
                 500: function(response){
                     //response={'readyState','responseText','status','statusText'}
                     //console.log('response'+response['responseText']);
-                    alert(response['responseText']);
+                    alert(response.responseText);
                 }
             }
         });
@@ -743,19 +749,20 @@ function deleteTrip(){
     driverDialog.dialog( "close" );
 }
 function fillDriverDialog(){
-    console.log('should fill with:'+JSON.stringify(driverList[editTripIndex]))
-    $('#driverTemple').val(driverList[editTripIndex]['templeDest']);
-    $('#driverStake').val(driverList[editTripIndex]['departStake']);
-    $('#driverDTime').val(driverList[editTripIndex]['dTime']);
-    $('#driverRTime').val(driverList[editTripIndex]['rTime']);
-    $('#driverDepart').val(driverList[editTripIndex]['dDate']);
-    $('#driverReturn').val(driverList[editTripIndex]['rDate']);
-    $('#driverSeats').val(driverList[editTripIndex]['numSeats']);
-    if(driverList[editTripIndex]['splitCost']=='on')
+    console.log('should fill with:'+JSON.stringify(driverList[editTripIndex]));
+    $('#driverTemple').val(driverList[editTripIndex].templeDest);
+    $('#driverStake').val(driverList[editTripIndex].departStake);
+    $('#driverDTime').val(driverList[editTripIndex].dTime);
+    $('#driverRTime').val(driverList[editTripIndex].rTime);
+    $('#driverDepart').val(driverList[editTripIndex].dDate);
+    $('#driverReturn').val(driverList[editTripIndex].rDate);
+    $('#driverSeats').val(driverList[editTripIndex].numSeats);
+    if(driverList[editTripIndex].splitCost=='on'){
         $('#driverSplitCost').prop('checked',true);
-    $('#driverComments').val(driverList[editTripIndex]['comments']);
+    }
+    $('#driverComments').val(driverList[editTripIndex].comments);
     if('passengers' in driverList[editTripIndex]){
-        tripPassengerList=driverList[editTripIndex]['passengers'];
+        tripPassengerList=driverList[editTripIndex].passengers;
         console.log('passengers: '+JSON.stringify(tripPassengerList));
         if(tripPassengerList.length>0){
             $('#driverPassengers').show();
@@ -763,8 +770,8 @@ function fillDriverDialog(){
             $.each(tripPassengerList,function(i,info){
                 //console.log('trip '+i.toString()+':'+JSON.stringify(info))
                 //Name,Email,Remove
-                var name=info['name'];
-                var email=info['email'];
+                var name=info.name;
+                var email=info.email;
                 $('#driverPassengers tr:last').after('<tr class="trip"><td>'+name+'</td><td>'+email+'</td><td><input type="button" value="Remove" class="kickFromTrip" data-trip-id="'+editTripIndex+'" data-trip-passenger-id="'+i+'"></td></tr>');
             });
         }else{
