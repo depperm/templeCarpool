@@ -21,7 +21,7 @@ html,input,button,select{
   padding-top: 6px;
 }
 .sentence {
-  margin-left: 250px;
+  margin-left: 300px;
 }
 input,select{
     font-size:20px;
@@ -30,7 +30,7 @@ input,select{
 textarea{
     height:100px;
 }
-label{
+label:not(.label-right){
     display:inline-block;
     width:140px;
     text-align:right;
