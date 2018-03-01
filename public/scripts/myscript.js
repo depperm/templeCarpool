@@ -351,12 +351,12 @@ $(function(){
     //edit ride tab
     $('#er').on('click',function(){
         fillEditInfo();
-    })
+    });
 
     //email preferences
     $('#ep').on('click'),function(){
         fillEmailPreferences();
-    })
+    });
     
     //edit driver dialog
     driverDialog=$('#editDriverForm').dialog({
@@ -559,7 +559,7 @@ function openTab(evt,choice){
     evt.currentTarget.className+=" active";
 }
 function fillEmailPreferences(){
-
+    console.log('fill stuff');
 }
 function fillTempleInfo(){
     var temple=$('#temple').val();
