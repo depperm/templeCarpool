@@ -62,17 +62,18 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                         <button class="tablinks" onclick="openTab(event,'postRide')">Post A Ride</button>
                         <button class="tablinks" id='er' onclick="openTab(event,'editRide')">Edit A Ride</button>
                         <button class="tablinks" id="ti" onclick="openTab(event,'templeInfo')">Temple Info</button>
+                        <button class="tablinks" id="ep" onclick="openTab(event,'emailPreferences')">Email Preferences</button>
                     </div>
                     <div id="findRide" class="tabContent">
                         <table id="trips">
                             <tr class="header">
-                                <th>Stake<i class="fas fa-sort"></i></th>
-                                <th>Temple</th>
-                                <th>Departure</th>
-                                <th>Return</th>
-                                <th>Passengers</th>
-                                <th>Driver</th>
-                                <th>Reserve</th>
+                                <th>Stake  <i class="fas fa-sort"></i></th>
+                                <th>Temple  <i class="fas fa-sort"></i></th>
+                                <th>Departure  <i class="fas fa-sort"></i></th>
+                                <th>Return  <i class="fas fa-sort"></i></th>
+                                <th>Passengers  <i class="fas fa-sort"></i></th>
+                                <th>Driver  <i class="fas fa-sort"></i></th>
+                                <th>Reserve  <i class="fas fa-sort"></i></th>
                             </tr>
                         </table>
                     </div>
@@ -284,6 +285,46 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div id="emailPreferences" class="tabContent">
+                        <h2>User: <span id="userEmail">test@example.com</span></h2>
+                        <h3>I want to receive emails when:</h3>
+                        <form id="emailSettings">
+                            <input type="checkbox" name="noEmail" id="noEmail" class="checkmark sentence">
+                            <label for="noEmail" class="label-right">Never</label>
+                            <br />
+                            <input type="checkbox" name="allEmail" id="allEmail" class="checkmark sentence">
+                            <label for="allEmail" class="label-right">Anything Happens</label>
+                            <h4>Driver Settings</h4>
+                            <input type="checkbox" name="createATrip" id="createATrip" class="checkmark sentence emailPref">
+                            <label for="createATrip" class="label-right">I Create a Trip</label>
+                            <br />
+                            <input type="checkbox" name="passJoin" id="passJoin" class="checkmark sentence emailPref">
+                            <label for="passJoin" class="label-right">Someone Joins My Trip</label>
+                            <br />
+                            <input type="checkbox" name="passLeft" id="passLeft" class="checkmark sentence emailPref">
+                            <label for="passLeft" class="label-right">Someone Leaves My Trip</label>
+                            <br />
+                            <input type="checkbox" name="deleteTrip" id="deleteTrip" class="checkmark sentence emailPref">
+                            <label for="deleteTrip" class="label-right">I Delete a Trip</label>
+                            <h4>Passenger Settings</h4>
+                            <input type="checkbox" name="joinTrip" id="joinTrip" class="checkmark sentence emailPref">
+                            <label for="joinTrip" class="label-right">I Join a Trip</label>
+                            <br />
+                            <input type="checkbox" name="kickFromTrip" id="kickFromTrip" class="checkmark sentence emailPref">
+                            <label for="kickFromTrip" class="label-right">I'm Dropped From a Trip</label>
+                            <br />
+                            <input type="checkbox" name="dropSeat" id="dropSeat" class="checkmark sentence emailPref">
+                            <label for="dropSeat" class="label-right">I Leave a Trip</label>
+                            <br />
+                            <input type="checkbox" name="rideDeleted" id="rideDeleted" class="checkmark sentence emailPref">
+                            <label for="tripDeleted" class="label-right">A Trip is Deleted By the Driver</label>
+                            <br />
+                            <input type="checkbox" name="tripModified" id="tripModified" class="checkmark sentence emailPref">
+                            <label for="tripModified" class="label-right">A Trip is Modified By the Driver (Date, comments, temple, split cost change)</label>
+                            <br />
+                            <input type="Submit" value="Save Preferences">
+                        </form>
                     </div>
                 </div>
                 <div id='welcomeMsg' align="center">

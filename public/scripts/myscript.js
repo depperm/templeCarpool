@@ -352,6 +352,11 @@ $(function(){
     $('#er').on('click',function(){
         fillEditInfo();
     })
+
+    //email preferences
+    $('#ep').on('click'),function(){
+        fillEmailPreferences();
+    })
     
     //edit driver dialog
     driverDialog=$('#editDriverForm').dialog({
@@ -504,6 +509,31 @@ $(function(){
             $('#driverRTime').append($('<option></option>').attr('value',value+t).text(value+t));
         });
     }
+    //email preferences checkboxes
+    $('#noEmail').on('click', function() {
+        if ($(this).prop('checked')) {
+            $('.emailPref').prop('checked', false);
+            $('#allEmail').prop('checked', false);
+            $('.emailPref').prop("disabled", true);
+        } else {
+            $('.emailPref').prop("disabled", false);
+        }
+    });
+    $('#allEmail').on('click', function() {
+        if ($(this).prop('checked')) {
+            $('.emailPref').prop('checked', true);
+            $('#noEmail').prop('checked', false);
+            $('.emailPref').prop("disabled", false);
+        }
+    });
+    $('.emailPref').on('click', function() {
+        var n = $(".emailPref:checked").length;
+        if (n == 9) {
+            $('#allEmail').prop('checked', true);
+        }else{
+            $('#allEmail').prop('checked', false);
+        }
+    })
 });
 function onSignIn(googleUser) {
     profile=googleUser.getBasicProfile();
@@ -527,6 +557,9 @@ function openTab(evt,choice){
     $('.tablinks').removeClass('active');
     $('#'+choice).show()
     evt.currentTarget.className+=" active";
+}
+function fillEmailPreferences(){
+
 }
 function fillTempleInfo(){
     var temple=$('#temple').val();

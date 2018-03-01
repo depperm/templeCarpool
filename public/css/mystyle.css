@@ -14,6 +14,15 @@ html,input,button,select{
 .checkmark{
     margin-top:10px;
 }
+.label-right {
+  display: inline-block;
+  text-align: right;
+  vertical-align: top;
+  padding-top: 6px;
+}
+.sentence {
+  margin-left: 250px;
+}
 input,select{
     font-size:20px;
     margin:5px;
