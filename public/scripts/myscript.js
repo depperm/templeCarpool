@@ -228,10 +228,22 @@ $(function(){
     var alertOffset,warningOffset,infoOffset,successOffset;
     $(window).scroll(function() {
         if($('.alert:visible').length>0){
-            alertOffset=$('.alert:not(.warning):not(.success):not(.info):not(.sticky)').offset().top;
-            warningOffset=$('.alert.warning:not(.sticky)').offset().top;
-            infoOffset=$('.alert.info:not(.sticky)').offset().top;
-            successOffset=$('.alert.success:not(.sticky)').offset().top;;
+            if($('.alert:not(.warning):not(.success):not(.info):visible').length>0)
+                alertOffset=$('.alert:not(.warning):not(.success):not(.info):not(.sticky)').offset().top;
+            else
+                alertOffset=0;
+            if($('.alert.warning:visible').length>0)
+                warningOffset=$('.alert.warning:not(.sticky)').offset().top;
+            else
+                warningOffset=0;
+            if($('.alert.info:visible').length>0)
+                infoOffset=$('.alert.info:not(.sticky)').offset().top;
+            else
+                infoOffset=0;
+            if($('.alert.success:visible').length>0)
+                successOffset=$('.alert.success:not(.sticky)').offset().top;
+            else
+                successOffset=0;
             /*var sticky=$('.alert:visible').first().offset().top;//also left offset
             console.log('offset:'+sticky)
             if (window.pageYOffset >= sticky) {
