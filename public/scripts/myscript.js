@@ -547,16 +547,16 @@ $(function(){
     });
 });
 function setWarning(msg){
-    $('.alert.warning').html('<span class="closebtn">&times;</span>'+msg).show()
+    $('.alert.warning span').text(msg).show()
 }
 function setSuccess(msg){
-    $('.alert.success').html('<span class="closebtn">&times;</span>'+msg).show()
+    $('.alert.success span').text(msg).show()
 }
 function setInfo(msg){
-    $('.alert.info').html('<span class="closebtn">&times;</span>'+msg).show()
+    $('.alert.info span').text(msg).show()
 }
 function setAlert(msg){
-    $('.alert:not(.warning):not(.success):not(.info)').html('<span class="closebtn">&times;</span>'+msg).show()
+    $('.alert:not(.warning):not(.success):not(.info) span').text(msg).show()
 }
 function onSignIn(googleUser) {
     profile=googleUser.getBasicProfile();
