@@ -230,7 +230,7 @@ $(function(){
         if($('.alert:visible').length>0){
             console.log('some alert visible')
             var sticky=$('.alert:visible').first().offset();
-            console.log('offset:'+sticky)
+            console.log('offset:'+JSON.stringify(sticky))
             if (window.pageYOffset >= sticky) {
                 $('.alert:visible').classList.add("sticky")
             } else {
