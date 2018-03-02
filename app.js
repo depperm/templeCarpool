@@ -92,7 +92,7 @@ app.post('/api/users/emailPrefs/:email',function(req,res){
         //console.log(results)
         res.send(results)
     })*/
-    db.collection('Users').update({'email':req.params.email},{$set:(req.body)},function(err,result){
+    db.collection('Users').update({'email':req.params.email},{$set:(req.body)},{upsert: true, safe: false},function(err,result){
         if(err){
             res.status(500).send('Some error:'+err)
             return
