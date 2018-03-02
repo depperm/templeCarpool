@@ -142,8 +142,12 @@ label:not(.label-right){
 #navbar li a:hover{
     background-color:#111;
 }
+#langSelect{
+    float:left;
+}
 .oauth{
     padding:5px;
+    float:right;
 }
 html,body{
     height:100%;

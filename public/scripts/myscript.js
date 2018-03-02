@@ -598,6 +598,14 @@ $(function(){
         console.log('hit close');
         $(this).parent().hide(600);
     });
+    //language select
+    $('#langSelect').on('change',function(){
+        if($(this).val()=='en'){
+            window.location.href = "https://www.templecarpool.com";
+        }else if($(this).val()=='sp'){
+            window.location.href = "https://www.templecarpool.com/sp";
+        }
+    })
 });
 function setWarning(msg){
     $('.alert.warning .msg').text(msg).parent().show()

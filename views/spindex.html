@@ -1,3 +1,4 @@
+305 lines (299 sloc)  17.9 KB
 <!DOCTYPE html>
 <html lang="en">
     <script type="text/javascript"> //<![CDATA[ 
@@ -12,7 +13,8 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
         <script type='text/javascript' src='scripts/config.js'></script>
         <meta name="google-signin-scope" content="profile email">
         <meta name="google-signin-client_id" content="312484233782-6q2cd48kt6ptu0tlcs5mv59vk1n9q9hp.apps.googleusercontent.com">
-        <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+        <!--see https://vuejsdevelopers.com/2017/05/20/vue-js-safely-jquery-plugin/-->
+        <!--<script src="https://unpkg.com/vue"></script>-->
         <script src="https://apis.google.com/js/platform.js?onload-init" async defer></script>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -28,12 +30,8 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
             <div id="body">
                 <ul id="navbar">
                     <li><img src="images/templecarpoolLogo.png" width="36" style="padding:5px"></li>
-                    <li>Home-In Testing</li>
+                    <li><a href="/">Inicio-In Testing</a></li>
                     <li style="float:right">
-                        <select id="langSelect">
-                            <option selected val='en'>English</option>
-                            <option val='sp'>Spanish</option>
-                        </select>
                         <div class="g-signin2 oauth" data-onsuccess="onSignIn" data-theme="light"></div>
                         <div class="g-signout2 oauth" data-theme="light" hidden>
                         <div style="height:36px;width:120px;" class="abcRioButton abcRioButtonLightBlue">
@@ -46,82 +44,63 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                                 </div>
                             </div>
                             <span style="font-size:13px;line-height:34px;" class="abcRioButtonContents">
-                                <span>Sign Out</span>
+                                <span>Desconectar</span>
                             </span>
                         </div>
                     </div>
                     </div>
                     </li>
                 </ul>
-                <div class="alert" hidden>
-                    <span class="closebtn">&times;</span>  
-                    <strong>Danger!</strong><span class='msg'> Indicates a dangerous or potentially negative action.</span>
-                </div>
-
-                <div class="alert success" hidden>
-                    <span class="closebtn">&times;</span>  
-                    <strong>Success!</strong><span class='msg'> Indicates a successful or positive action.</span>
-                </div>
-
-                <div class="alert info" hidden>
-                    <span class="closebtn">&times;</span>  
-                    <strong>Info!</strong><span class='msg'> Indicates a neutral informative change or action.</span>
-                </div>
-
-                <div class="alert warning" hidden>
-                    <span class="closebtn">&times;</span>  
-                    <strong>Warning!</strong><span class='msg'> Indicates a warning that might need attention.</span>
-                </div>
+                
                 <div id="content" hidden>
                     <div id="filter">
-                        Stake: <select id="stake"></select>
-                        Temple: <select id="temple"></select>
-                        Departure Date: <input type="text" id="departDate">
-                        Return Date: <input type="text" id="returnDate">
+                        Estaca: <select id="stake"></select>
+                        Templo: <select id="temple"></select>
+                        Fecha de Salida: <input type="text" id="departDate">
+                        Fecha de Regreso: <input type="text" id="returnDate">
                     </div>
                     <div class="tab">
                         <button class="tablinks" id="fa" onclick="openTab(event,'findRide')">Find A Ride</button>
-                        <button class="tablinks" id="pr" onclick="openTab(event,'postRide')">Post A Ride</button>
+                        <button class="tablinks" onclick="openTab(event,'postRide')">Post A Ride</button>
                         <button class="tablinks" id='er' onclick="openTab(event,'editRide')">Edit A Ride</button>
-                        <button class="tablinks" id="ti" onclick="openTab(event,'templeInfo')">Temple Info</button>
-                        <button class="tablinks" id="ep" onclick="openTab(event,'emailPreferences')">Email Preferences</button>
+                        <button class="tablinks" id="ti" onclick="openTab(event,'templeInfo')">Informacion del Templo</button>
                     </div>
                     <div id="findRide" class="tabContent">
                         <table id="trips">
                             <tr class="header">
-                                <th>Stake  <i class="fas fa-sort"></i></th>
-                                <th>Temple  <i class="fas fa-sort"></i></th>
-                                <th>Departure  <i class="fas fa-sort"></i></th>
-                                <th>Return  <i class="fas fa-sort"></i></th>
-                                <th>Passengers  <i class="fas fa-sort"></i></th>
-                                <th>Driver  <i class="fas fa-sort"></i></th>
-                                <th>Reserve  <i class="fas fa-sort"></i></th>
+                                <th>Estaca</th>
+                                <th>Templo</th>
+                                <th>Salida</th>
+                                <th>Regreso</th>
+                                <th>Pasajeros</th>
+                                <th>Conductor</th>
+                                <th>Guardar</th>
                             </tr>
                         </table>
                     </div>
                     <div id="postRide" class="tabContent">
                         <form action="/postRide" id="postRideForm" method="post">
                             <fieldset>
-                                <label for="name">Driver:*</label>
+                                <label for="name">Conductor:*</label>
                                 <input type="text" id="driver" name="driver" placeholder="" required />
                                 <br />
-                                <label for="email">Email:*</label>
+                                <label for="email">Correo Electronico:*</label>
                                 <input type="email" id="email" name="email" placeholder="" required disabled />
                                 <br />
-                                <label for="dDate">Departure Date:*</label>
+                                <label for="dDate">Fecha de Salida:*</label>
                                 <input type="text" id="dDate" name="dDate" required />
 
-                                <label for="dTime">Departure Time:</label>
+                                <label for="dTime">Hora de Salida:</label>
                                 <select id="dTime" name="dTime">
-                                    <option value='select'>--select--</option>
+                                    <option value='select'>--elige--</option>
                                 </select>
                                 <br />
-                                <label for="rDate">Return Date:*</label>
+                                <label for="rDate">Fecha de Regreso:*</label>
                                 <input type="text" id="rDate" name="rDate" required />
 
-                                <label for="rTime">Return Time:</label>
+                                <label for="rTime">Hora de Regreso:</label>
                                 <select id="rTime" name="rTime">
-                                    <option value='select'>--select--</option>
+                                    <option value='select'>--elige--</option>
                                 </select>
                                 <br />
                                 <label for="numSeats">Number of Seats:*</label>
@@ -307,46 +286,6 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="emailPreferences" class="tabContent">
-                        <h2>User: <span id="userEmail">test@example.com</span></h2>
-                        <h3>I want to receive emails when:</h3>
-                        <form id="emailSettings">
-                            <input type="checkbox" name="noEmail" id="noEmail" class="checkmark sentence">
-                            <label for="noEmail" class="label-right">Never</label>
-                            <br />
-                            <input type="checkbox" name="allEmail" id="allEmail" class="checkmark sentence">
-                            <label for="allEmail" class="label-right">Anything Happens</label>
-                            <h4>Driver Settings</h4>
-                            <input type="checkbox" name="createATrip" id="createATrip" class="checkmark sentence emailPref">
-                            <label for="createATrip" class="label-right">I Create a Trip</label>
-                            <br />
-                            <input type="checkbox" name="passJoin" id="passJoin" class="checkmark sentence emailPref">
-                            <label for="passJoin" class="label-right">Someone Joins My Trip</label>
-                            <br />
-                            <input type="checkbox" name="passLeft" id="passLeft" class="checkmark sentence emailPref">
-                            <label for="passLeft" class="label-right">Someone Leaves My Trip</label>
-                            <br />
-                            <input type="checkbox" name="deleteTrip" id="deleteTrip" class="checkmark sentence emailPref">
-                            <label for="deleteTrip" class="label-right">I Delete a Trip</label>
-                            <h4>Passenger Settings</h4>
-                            <input type="checkbox" name="joinTrip" id="joinTrip" class="checkmark sentence emailPref">
-                            <label for="joinTrip" class="label-right">I Join a Trip</label>
-                            <br />
-                            <input type="checkbox" name="kickFromTrip" id="kickFromTrip" class="checkmark sentence emailPref">
-                            <label for="kickFromTrip" class="label-right">I'm Dropped From a Trip</label>
-                            <br />
-                            <input type="checkbox" name="dropSeat" id="dropSeat" class="checkmark sentence emailPref">
-                            <label for="dropSeat" class="label-right">I Leave a Trip</label>
-                            <br />
-                            <input type="checkbox" name="rideDeleted" id="rideDeleted" class="checkmark sentence emailPref">
-                            <label for="tripDeleted" class="label-right">A Trip is Deleted By the Driver</label>
-                            <br />
-                            <input type="checkbox" name="tripModified" id="tripModified" class="checkmark sentence emailPref">
-                            <label for="tripModified" class="label-right">A Trip is Modified By the Driver (Date, comments, temple, split cost change)</label>
-                            <br />
-                            <input type="Submit" value="Save Preferences">
-                        </form>
                     </div>
                 </div>
                 <div id='welcomeMsg' align="center">
