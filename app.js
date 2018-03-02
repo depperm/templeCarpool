@@ -79,7 +79,7 @@ app.get('/api/trips',function(req,res){
 
 //get email preferences
 app.get('/api/users/emailPrefs/:email',function(req,res){
-    var cursor=db.collection('Users').find({'email':req.params.trip}).toArray(function(err, results) {
+    var cursor=db.collection('Users').find({'email':req.params.email}).toArray(function(err, results) {
         //console.log(results)
         res.send(results)
     })
@@ -92,6 +92,14 @@ app.post('/api/users/emailPrefs/:email',function(req,res){
         //console.log(results)
         res.send(results)
     })*/
+    db.collection('Users').update({'email':req.params.email},{$set:(req.body)},function(err,result){
+        if(err){
+            res.status(500).send('Some error:'+err)
+            return
+        }
+        console.log('updated preferences')
+        res.send('Updated your preferences')
+    })
 })
 
 //create a trip
