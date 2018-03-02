@@ -542,7 +542,7 @@ $(function(){
         }
     });
     //close alerts
-    $('.closebtn').on('click',function(){
+    $('.closebtn').on('click','.alert',function(){
         setTimeout($(this).parent().hide(), 600);
     });
 });
