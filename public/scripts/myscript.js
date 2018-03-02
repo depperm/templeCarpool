@@ -813,8 +813,7 @@ function fillTempleSelect(selectId){
     });
 }
 function editDriverTrip(){
-    //TODO validate
-    var editValidator = $('#postRideForm').validate();
+    var editValidator = $('#editRideForm').validate();
     if(editValidator.valid()){
         //console.log('should update')
         var data=$('#editRideForm').serializeArray();//form to array
@@ -879,8 +878,10 @@ function editDriverTrip(){
 function deleteTrip(){
     //console.log('deleting trip:'+$('#editDriverForm').attr('data-trip-id')+' which is '+JSON.stringify(driverList[$('#editDriverForm').attr('data-trip-id')]))
     //var choice=confirm('Are you sure you want to Delete this trip?');
-    var choice=confirmation('Are you sure you want to Delete this trip?');
-    console.log(choice);
+    confirmation('Are you sure you want to Delete this trip?').then(function(answer){
+        var choice=Boolean.parse(answer.toString());
+        console.log(choice);
+    });
     return;
     if(choice){
         $.ajax({
