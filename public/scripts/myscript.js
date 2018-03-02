@@ -328,7 +328,7 @@ $(function(){
         e.preventDefault();
         var data=$('#emailSettings').serializeArray();//form to array
         console.log('serialized:'+JSON.stringify(data));
-        $.each($('input[type=checkbox',this).filter(function(idx){
+        $.each($('input[type=checkbox]',this).filter(function(idx){
             return $(this).prop('checked')===false;
         }),
         function(idx,el){
