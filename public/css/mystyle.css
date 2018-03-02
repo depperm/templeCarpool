@@ -137,7 +137,7 @@ label:not(.label-right){
     overflow:hidden;
     background-color:#333;
 }
-li h3{
+#pageTitle{
     font-family: 'Majestic', Arial, Helvetica, san-serif;
 }
 #navbar li{
