@@ -167,19 +167,7 @@ function getTrips(){
         //console.log(JSON.stringify(data));
     });
 }
-// When the user scrolls the page, execute myFunction 
-window.onscroll = function() {myFunction()};
-// Add the sticky class to the alerts when you reach its scroll position. Remove "sticky" when you leave the scroll position
-function myFunction() {
-    if($('.alert:visible').length>0){
-        var sticky=$('.alert:visible').first().offset();
-        if (window.pageYOffset >= sticky) {
-            $('.alert:visible').classList.add("sticky")
-        } else {
-            $('.alert').classList.remove("sticky");
-        }
-    }
-}
+
 //from https://www.w3schools.com/howto/howto_js_sort_table.asp
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -237,7 +225,19 @@ function sortTable(n) {
 }
 
 $(function(){
-    //console.log('ready');
+    $(window).scroll(function() {
+        console.log('scrolling');
+        if($('.alert:visible').length>0){
+            console.log('some alert visible')
+            var sticky=$('.alert:visible').first().offset();
+            console.log('offset:'+sticky)
+            if (window.pageYOffset >= sticky) {
+                $('.alert:visible').classList.add("sticky")
+            } else {
+                $('.alert').classList.remove("sticky");
+            }
+        }
+    })
 
     if(!$('#welcomeMsg').is(":visible")){
         getTrips();
