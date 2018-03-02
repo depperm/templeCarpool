@@ -232,9 +232,9 @@ $(function(){
             var sticky=$('.alert:visible').first().offset().top;//also left offset
             console.log('offset:'+sticky)
             if (window.pageYOffset >= sticky) {
-                $('.alert:visible').classList.add("sticky")
+                $('.alert:visible').addClass("sticky")
             } else {
-                $('.alert').classList.remove("sticky");
+                $('.alert').removeClass("sticky");
             }
         }
     })
