@@ -578,6 +578,8 @@ $(function(){
         var n = $(".emailPref:checked").length;
         if (n == 9) {
             $('#allEmail').prop('checked', true);
+        }else if(n==0){
+            $('#noEmail').prop('checked', true);
         }else{
             $('#allEmail').prop('checked', false);
         }
@@ -639,19 +641,6 @@ function fillEmailPreferences(){
             });
         }
         console.log('email pref:'+JSON.stringify(data));
-        /*$('#editingDrivingRides tr:not(.header)').remove();
-        driverList=data;
-        $.each(data,function(index,trip){
-            //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
-            //Stake,Temple,Departure,Return,Seats,Edit
-            var stk=trip.departStake;
-            var tmpl=trip.templeDest;
-            var dep=trip.dDate+(trip.dTime=='select'?'':', '+trip.dTime);
-            var ret=trip.rDate+(trip.rTime=='select'?'':', '+trip.rTime);
-            var seats=('passengers' in trip?trip.passengers.length:'0')+'/'+trip.numSeats;
-            $('#editingDrivingRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip.dDate+'">'+dep+'</td><td data-return-date="'+trip.rDate+'">'+ret+'</td><td>'+seats+'</td><td><input type="button" value="Edit" class="editTrip" data-trip-id="'+index+'"></td></tr>');
-        });*/
-        //console.log(JSON.stringify(data));
     });
 }
 function fillTempleInfo(){
