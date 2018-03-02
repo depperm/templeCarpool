@@ -6,7 +6,7 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
 //]]>
 </script>
     <head>
-        <title>Temple Carpool</title>
+        <title>Compartir Vehiculo al Templo</title>
         <link rel="icon" href="images/templecarpoolLogo.png" sizes="400x400">
         <meta charset="utf-8">
         <script type='text/javascript' src='scripts/config.js'></script>
@@ -55,22 +55,22 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                 </ul>
                 <div class="alert" hidden>
                     <span class="closebtn">&times;</span>  
-                    <strong>Danger!</strong><span class='msg'> Indicates a dangerous or potentially negative action.</span>
+                    <strong>Peligro!</strong><span class='msg'> Indica una accion peligrosa o potencialmente negativa.</span>
                 </div>
 
                 <div class="alert success" hidden>
                     <span class="closebtn">&times;</span>  
-                    <strong>Success!</strong><span class='msg'> Indicates a successful or positive action.</span>
+                    <strong>Exito!</strong><span class='msg'> Indica una accion exitosa o positiva.</span>
                 </div>
 
                 <div class="alert info" hidden>
                     <span class="closebtn">&times;</span>  
-                    <strong>Info!</strong><span class='msg'> Indicates a neutral informative change or action.</span>
+                    <strong>Informacion!</strong><span class='msg'> Indica un cambio o una accion informativo neutral.</span>
                 </div>
 
                 <div class="alert warning" hidden>
                     <span class="closebtn">&times;</span>  
-                    <strong>Warning!</strong><span class='msg'> Indicates a warning that might need attention.</span>
+                    <strong>Advertencia!</strong><span class='msg'> Indica una advertencia que quisas necesita atencion.</span>
                 </div>
                 <div id="content" hidden>
                     <div id="filter">
@@ -80,11 +80,11 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                         Fecha de Regreso: <input type="text" id="returnDate">
                     </div>
                     <div class="tab">
-                        <button class="tablinks" id="fa" onclick="openTab(event,'findRide')">Find A Ride</button>
-                        <button class="tablinks" id="pr" onclick="openTab(event,'postRide')">Post A Ride</button>
-                        <button class="tablinks" id='er' onclick="openTab(event,'editRide')">Edit A Ride</button>
+                        <button class="tablinks" id="fa" onclick="openTab(event,'findRide')">Encontrar Un Paseo</button>
+                        <button class="tablinks" id="pr" onclick="openTab(event,'postRide')">Publicar Un Paseo</button>
+                        <button class="tablinks" id='er' onclick="openTab(event,'editRide')">Editar Un Paseo</button>
                         <button class="tablinks" id="ti" onclick="openTab(event,'templeInfo')">Informacion del Templo</button>
-                        <button class="tablinks" id="ep" onclick="openTab(event,'emailPreferences')">Email Preferences</button>
+                        <button class="tablinks" id="ep" onclick="openTab(event,'emailPreferences')">Preferencias de Correo Electronico</button>
                     </div>
                     <div id="findRide" class="tabContent">
                         <table id="trips">
@@ -124,61 +124,61 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                                     <option value='select'>--elige--</option>
                                 </select>
                                 <br />
-                                <label for="numSeats">Number of Seats:*</label>
+                                <label for="numSeats">Numero de Asientos:*</label>
                                 <input type="number" min=1 id="numSeats" name="numSeats" value="1" required />
                                 <br />
-                                <label for="departStake">Departing Stake:</label>
+                                <label for="departStake">Estaca de Salida:</label>
                                 <select id="departStake" name="departStake">
                                 </select>
                                 <br />
-                                <label for="templeDest">Temple:</label>
+                                <label for="templeDest">Templo:</label>
                                 <select id="templeDest" name="templeDest">
                                 </select>
                                 <br>
-                                <label for="splitCost">Split Cost:</label>
+                                <label for="splitCost">Costo Dividido:</label>
                                 <input type="checkbox" id="splitCost" name="splitCost" class="checkmark">
                                 <br />
-                                <label for="comments">Optional Comments:</label>
-                                <textarea id="comments" name="comments" placeholder="Any comments for passengers such as phone number, pick up location, car rules, etc"></textarea>
+                                <label for="comments">Comentarios Opcionales:</label>
+                                <textarea id="comments" name="comments" placeholder="Cualquier comentarios para los pasajeros como el numero de telefono, el lugar de recogida, las reglas de carro, etc."></textarea>
                                 <br />
-                                <input type="submit" value="Post a Ride" />
+                                <input type="submit" value="Publicar Un Paseo" />
                             </fieldset>
                         </form>
                     </div>
                     <div id="editRide" class="tabContent">
-                        <div id="editDriverForm" title="Edit a Trip" data-trip-id="">
-                            <p class="validateTips">All form fields with * are required.</p>
+                        <div id="editDriverForm" title="Editar Un Viaje" data-trip-id="">
+                            <p class="validateTips">Todas las areas con * son requeridas.</p>
                              
                             <form id="editRideForm">
                                 <fieldset>
-                                    <label for="driverStake">Stake*</label>
+                                    <label for="driverStake">Estaca*</label>
                                     <select name="driverStake" id="driverStake" class="text ui-widget-content ui-corner-all"></select>
                                     <br />
-                                    <label for="driverTemple">Temple*</label>
+                                    <label for="driverTemple">Templo*</label>
                                     <select name="driverTemple" id="driverTemple" class="text ui-widget-content ui-corner-all"></select>
                                     <br />
-                                    <label for="driverDepart">Departure*</label>
+                                    <label for="driverDepart">Salida*</label>
                                     <input type="text" name="driverDepart" id="driverDepart" required class="text ui-widget-content ui-corner-all">
                                     <select name="driverDTime" id="driverDTime" class="text ui-widget-content ui-corner-all">
-                                    <option value='select'>--select--</option>
+                                    <option value='select'>--elige--</option>
                                     </select>
                                     <br />
-                                    <label for="driverReturn">Return*</label>
+                                    <label for="driverReturn">Regreso*</label>
                                     <input type="text" name="driverReturn" id="driverReturn" required class="text ui-widget-content ui-corner-all">
                                     <select name="driverRTime" id="driverRTime" class="text ui-widget-content ui-corner-all">
-                                    <option value='select'>--select--</option>
+                                    <option value='select'>--elige--</option>
                                     </select>
                                     <br />
-                                    <label for="driverSeats">Max Seats*</label>
+                                    <label for="driverSeats">Asientos Maximos*</label>
                                     <input type="number" name="driverSeats" id="driverSeats" min=1 required class="text ui-widget-content ui-corner-all">
                                     <br />
-                                    <label for="driverSplitCost">Split Cost:</label>
+                                    <label for="driverSplitCost">Costo Dividido:</label>
                                     <input type="checkbox" id="driverSplitCost" name="driverSplitCost" class="checkmark">
                                     <br />
-                                    <label for="driverComments">Optional Comments:</label>
-                                    <textarea id="driverComments" name="driverComments" placeholder="Any comments for passengers such as phone number, pick up location, car rules, etc"></textarea>
+                                    <label for="driverComments">Comentario Opcional:</label>
+                                    <textarea id="driverComments" name="driverComments" placeholder="Cualquier comentario para los pasajeros come el numero de telefono, el lugar de recogida, las reglas de carro, etc."></textarea>
                                     <br />
-                                    <label for="driverPassengers">Passengers</label>
+                                    <label for="driverPassengers">Pasajeros</label>
                                     <table name="driverPassengers" id="driverPassengers">
                                         <tr class="header">
                                             <th>Name</th>
@@ -191,34 +191,34 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                                 </fieldset>
                             </form>
                         </div>
-                        <h2>Trips You're Driving For</h2>
+                        <h2>Los Viajes Que Usted Conduce </h2>
                         <table id="editingDrivingRides">
                             <tr class="header">
-                                <th>Stake</th>
-                                <th>Temple</th>
-                                <th>Departure</th>
-                                <th>Return</th>
-                                <th>Passengers</th>
-                                <th>Edit</th>
+                                <th>Estaca</th>
+                                <th>Templo</th>
+                                <th>Salida</th>
+                                <th>Regreso</th>
+                                <th>Pasajeros</th>
+                                <th>Editar</th>
                             </tr>
                         </table>
                         <br />
-                        <h2>Trips You're A Passenger For</h2>
+                        <h2>Los Viajes Que Usted Es Pasajero</h2>
                         <table id="editingPassengerRides">
                             <tr class="header">
-                                <th>Stake</th>
-                                <th>Temple</th>
-                                <th>Departure</th>
-                                <th>Return</th>
-                                <th>Driver</th>
-                                <th>Split Cost</th>
-                                <th>Comments</th>
-                                <th>Edit</th>
+                                <th>Estaca</th>
+                                <th>Templo</th>
+                                <th>Salida</th>
+                                <th>Regreso</th>
+                                <th>Conductor</th>
+                                <th>Costo Dividido</th>
+                                <th>Comentarios</th>
+                                <th>Editar</th>
                             </tr>
                         </table>
                     </div>
                     <div id="templeInfo" class="tabContent">
-                        <h2 id="templeName">Name</h2>
+                        <h2 id="templeName">Nombre</h2>
                         <div class='columns'>
                             <div class='col-2'>
                                 <div id="templeAddress">
@@ -237,52 +237,52 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                         <br />
                         <div class='columns'>
                             <div class='col-2' id="templeEndowment">
-                                <h3>Endowments</h3>
-                                <p>Please double check the temple website for the date and time you are planning on visiting.</p>
+                                <h3>Investiduras</h3>
+                                <p>Por favor verificar Por segued a vez el sitio web del templo por la fecha y la hora que esta planificando visitar.</p>
                                 <table>
                                     <tr>
-                                    <td>Tuesday</td>
+                                    <td>Martes</td>
                                     <td id="Endowment-Tuesday">TBA</td>
                                     </tr>
                                     <tr>
-                                    <td>Wednesday</td>
+                                    <td>Miercoles</td>
                                     <td id="Endowment-Wednesday">TBA</td>
                                     </tr>
                                     <tr>
-                                    <td>Thursday</td>
+                                    <td>Jueves</td>
                                     <td id="Endowment-Thursday">TBA</td>
                                     </tr>
                                     <tr>
-                                    <td>Friday</td>
+                                    <td>Viernes</td>
                                     <td id="Endowment-Friday">TBA</td>
                                     </tr>
                                     <tr>
-                                    <td>Saturday</td>
+                                    <td>Sabado</td>
                                     <td id="Endowment-Saturday">TBA</td>
                                     </tr>
                                 </table>
                             </div>
                             <div class='col-2' id="templeBaptistry">
-                                <h3>Baptistry(Appointment Required)</h3>
+                                <h3>La Pila Bautismal(Cita Requerida)</h3>
                                 <table>
                                     <tr>
-                                    <td>Tuesday</td>
+                                    <td>Martes</td>
                                     <td id="Baptistry-Tuesday">TBA</td>
                                     </tr>
                                     <tr>
-                                    <td>Wednesday</td>
+                                    <td>Miercoles</td>
                                     <td id="Baptistry-Wednesday">TBA</td>
                                     </tr>
                                     <tr>
-                                    <td>Thursday</td>
+                                    <td>Jueves</td>
                                     <td id="Baptistry-Thursday">TBA</td>
                                     </tr>
                                     <tr>
-                                    <td>Friday</td>
+                                    <td>Viernes</td>
                                     <td id="Baptistry-Friday">TBA</td>
                                     </tr>
                                     <tr>
-                                    <td>Saturday</td>
+                                    <td>Sabado</td>
                                     <td id="Baptistry-Saturday">TBA</td>
                                     </tr>
                                 </table>
@@ -291,66 +291,66 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                         <br />
                         <div class='columns'>
                             <div class='col-2'>
-                                <h3>Closings</h3>
-                                The temple is closed every Sunday and Monday.
+                                <h3>Cierres</h3>
+                                El templo esta cerrado cada Domingo y Lunes.
                                 <br />
-                                <strong>Holiday Closings</strong>
+                                <strong>Cierres de Vacaciones</strong>
                                 <br />
                                 <ul id="templeClosings">
-                                    <li>Christmas</li>
+                                    <li>La Navidad</li>
                                 </ul>
                             </div>
                             <div class='col-2'>
-                                <h3>Notes</h3>
+                                <h3>Notas</h3>
                                 <div id="templeNotes">
-                                    <p>There is no distribution center.</p>
+                                    <p>No hay un centro de distribucion.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div id="emailPreferences" class="tabContent">
-                        <h2>User: <span id="userEmail">test@example.com</span></h2>
-                        <h3>I want to receive emails when:</h3>
+                        <h2>Usuario: <span id="userEmail">prueba@ejemplo.com</span></h2>
+                        <h3>Quiero recibir los correos electronicos cuando:</h3>
                         <form id="emailSettings">
                             <input type="checkbox" name="noEmail" id="noEmail" class="checkmark sentence">
-                            <label for="noEmail" class="label-right">Never</label>
+                            <label for="noEmail" class="label-right">Nunca</label>
                             <br />
                             <input type="checkbox" name="allEmail" id="allEmail" class="checkmark sentence">
-                            <label for="allEmail" class="label-right">Anything Happens</label>
-                            <h4>Driver Settings</h4>
+                            <label for="allEmail" class="label-right">Cualquier Cosa Occure</label>
+                            <h4>Configuracion de Conductor</h4>
                             <input type="checkbox" name="createATrip" id="createATrip" class="checkmark sentence emailPref">
-                            <label for="createATrip" class="label-right">I Create a Trip</label>
+                            <label for="createATrip" class="label-right">Yo Creo Un Viaje</label>
                             <br />
                             <input type="checkbox" name="passJoin" id="passJoin" class="checkmark sentence emailPref">
-                            <label for="passJoin" class="label-right">Someone Joins My Trip</label>
+                            <label for="passJoin" class="label-right">Alguien se Une a Un Viaje</label>
                             <br />
                             <input type="checkbox" name="passLeft" id="passLeft" class="checkmark sentence emailPref">
-                            <label for="passLeft" class="label-right">Someone Leaves My Trip</label>
+                            <label for="passLeft" class="label-right">Alguien Deja Un Viaje</label>
                             <br />
                             <input type="checkbox" name="deleteTrip" id="deleteTrip" class="checkmark sentence emailPref">
-                            <label for="deleteTrip" class="label-right">I Delete a Trip</label>
-                            <h4>Passenger Settings</h4>
+                            <label for="deleteTrip" class="label-right">Yo Borro Un Viaje</label>
+                            <h4>Configuracion de Pasajeros</h4>
                             <input type="checkbox" name="joinTrip" id="joinTrip" class="checkmark sentence emailPref">
-                            <label for="joinTrip" class="label-right">I Join a Trip</label>
+                            <label for="joinTrip" class="label-right">Me Uno a Un Viaje</label>
                             <br />
                             <input type="checkbox" name="kickFromTrip" id="kickFromTrip" class="checkmark sentence emailPref">
-                            <label for="kickFromTrip" class="label-right">I'm Dropped From a Trip</label>
+                            <label for="kickFromTrip" class="label-right">Soy Despedido de Un Viaje</label>
                             <br />
                             <input type="checkbox" name="dropSeat" id="dropSeat" class="checkmark sentence emailPref">
-                            <label for="dropSeat" class="label-right">I Leave a Trip</label>
+                            <label for="dropSeat" class="label-right">Yo Dejo Un Viaje</label>
                             <br />
                             <input type="checkbox" name="rideDeleted" id="rideDeleted" class="checkmark sentence emailPref">
-                            <label for="tripDeleted" class="label-right">A Trip is Deleted By the Driver</label>
+                            <label for="tripDeleted" class="label-right">El Conductor Borra Un Viaje</label>
                             <br />
                             <input type="checkbox" name="tripModified" id="tripModified" class="checkmark sentence emailPref">
-                            <label for="tripModified" class="label-right">A Trip is Modified By the Driver (Date, comments, temple, split cost change)</label>
+                            <label for="tripModified" class="label-right">El Conductor Modifica Un Viaje (fecha, comentarios, templo, un cambio en la division del costo)</label>
                             <br />
-                            <input type="Submit" value="Save Preferences">
+                            <input type="Submit" value="Guardar Preferencias">
                         </form>
                     </div>
                 </div>
                 <div id='welcomeMsg' align="center">
-                    Please sign in to view this site.
+                    Por favor inicia sesion para usar el sitio web.
                 </div>
             </div>
             <div class="footer">
