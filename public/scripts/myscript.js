@@ -286,45 +286,82 @@ $(function(){
     $('#postRideForm').submit(function(e){
         e.preventDefault();
         if(validator.valid()){
-            var choice=confirm("Are you sure the temple is open on the dates you've selected?\nAlso please remember to call to make a reservation.");
-            if(choice){
-                var data=$('#postRideForm').serializeArray();//form to array
-                //disabled inputs are not serialized so add now
-                data.push({name:'email',value:userDetails.email});
-                if(data.length==10){
-                    data.push({name:'splitCost',value:'off'});
-                }
-                console.log('sending:'+JSON.stringify(data));
-                $.ajax({
-                    url:'/api/trips/add',
-                    type:'post',
-                    data:$.param(data),
-                    statusCode: {
-                        200: function(response){
-                            if(response=='Your ride has been posted'){
-                                //clear form
-                                $('#dDate').val('');
-                                $('#dTime').val('select');
-                                $('#rDate').val('');
-                                $('#rTime').val('select');
-                                $('#numSeats').val(1);
-                                //alert(response);
-                                setSuccess(response);
-                            }else if(response.indexOf('You already have scheduled')>=0){
-                                //alert(response);
-                                setWarning(response)
-                            }
-                            console.log(response);
-                        },
-                        500: function(response){
-                            //response={'readyState','responseText','status','statusText'}
-                            //alert(response.responseText);
-                            setAlert(response.responseText);
-                        }
-                    }
-                });
+            var data=$('#postRideForm').serializeArray();//form to array
+            //disabled inputs are not serialized so add now
+            data.push({name:'email',value:userDetails.email});
+            if(data.length==10){
+                data.push({name:'splitCost',value:'off'});
             }
+            console.log('sending:'+JSON.stringify(data));
+            $.ajax({
+                url:'/api/trips/add',
+                type:'post',
+                data:$.param(data),
+                statusCode: {
+                    200: function(response){
+                        if(response=='Your ride has been posted'){
+                            //clear form
+                            $('#dDate').val('');
+                            $('#dTime').val('select');
+                            $('#rDate').val('');
+                            $('#rTime').val('select');
+                            $('#numSeats').val(1);
+                            //alert(response);
+                            setSuccess(response);
+                        }else if(response.indexOf('You already have scheduled')>=0){
+                            //alert(response);
+                            setWarning(response)
+                        }
+                        console.log(response);
+                    },
+                    500: function(response){
+                        //response={'readyState','responseText','status','statusText'}
+                        //alert(response.responseText);
+                        setAlert(response.responseText);
+                    }
+                }
+            });
         }
+    });
+    //update email preferences
+    $('#emailSettings').submit(function(e){
+        e.preventDefault();
+        var data=$('#emailSettings').serializeArray();//form to array
+        //disabled inputs are not serialized so add now
+        //data.push({name:'email',value:userDetails.email});
+        /*if(data.length==10){
+            data.push({name:'splitCost',value:'off'});
+        }*/
+        console.log('sending:'+JSON.stringify(data));
+        $.ajax({
+            url:'/api/users/emailPrefs/'+userDetails.email,
+            type:'post',
+            data:$.param(data),
+            statusCode: {
+                200: function(response){
+                    /*if(response=='Your ride has been posted'){
+                        //clear form
+                        $('#dDate').val('');
+                        $('#dTime').val('select');
+                        $('#rDate').val('');
+                        $('#rTime').val('select');
+                        $('#numSeats').val(1);
+                        //alert(response);
+                        setSuccess(response);
+                    }else if(response.indexOf('You already have scheduled')>=0){
+                        //alert(response);
+                        setWarning(response)
+                    }*/
+                    console.log(response);
+                },
+                500: function(response){
+                    //response={'readyState','responseText','status','statusText'}
+                    console.log(response.responseText);
+                    //setAlert(response.responseText);
+                }
+            }
+        });
+
     });
 
     //Sign out user
@@ -349,6 +386,11 @@ $(function(){
     $('#fa').on('click',function(){
         getTrips();
     });
+
+    //post ride tab
+    $('#pr').on('click',function(){
+        setInfo('Double check that the temple is open on the dates you\'d like to visit before posting a trip.\nAlso please remember to call to make a reservation beforehand.');
+    })
     
     //temple info tab
     $('#ti').on('click',function(){
@@ -360,7 +402,7 @@ $(function(){
         fillEditInfo();
     });
 
-    //email preferences
+    //email preferences tab
     $('#ep').on('click',function(){
         fillEmailPreferences();
     });
@@ -416,7 +458,7 @@ $(function(){
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
                         //console.log('response'+response['responseText']);
-                        alert(response.responseText);
+                        setAlert(response.responseText);
                     }
                 }
             });
@@ -436,7 +478,7 @@ $(function(){
                     500: function(response){
                         //response={'readyState','responseText','status','statusText'}
                         //console.log('response'+response['responseText']);
-                        alert(response.responseText);
+                        setAlert(response.responseText);
                     }
                 }
             });
@@ -445,28 +487,27 @@ $(function(){
     //reserve a seat
     $('#trips').on('click','.reserveTrip',function(){
         //console.log('should reserve');
-        var choice=confirm('You are responsible to make your own temple reservation.\nPlease visit the \'Edit A Ride\' tab to see any comments the driver may make.');
-        if(choice){
-            var data=[];
-            data.push({name:'email',value:userDetails.email});
-            data.push({name:'name',value:userDetails.name});
-            $.ajax({
-                url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]._id,
-                type:'post',
-                data:$.param(data),
-                statusCode: {
-                    200: function(response){
-                        alert(response);
-                        getTrips();
-                    },
-                    500: function(response){
-                        //response={'readyState','responseText','status','statusText'}
-                        //console.log('response'+response['responseText']);
-                        alert(response.responseText);
-                    }
+        setInfo('You are responsible to make your own temple reservation.\nPlease visit the \'Edit A Ride\' tab to see any comments the driver may make or have made.');
+
+        var data=[];
+        data.push({name:'email',value:userDetails.email});
+        data.push({name:'name',value:userDetails.name});
+        $.ajax({
+            url:'/api/trips/'+tripList[$(this).attr('data-trip-id')]._id,
+            type:'post',
+            data:$.param(data),
+            statusCode: {
+                200: function(response){
+                    setSuccess(response);
+                    getTrips();
+                },
+                500: function(response){
+                    //response={'readyState','responseText','status','statusText'}
+                    //console.log('response'+response['responseText']);
+                    setAlert(response.responseText);
                 }
-            });
-        }
+            }
+        });
     });
     //initialize datepickers
     //edit trip datepickers
@@ -544,7 +585,7 @@ $(function(){
     //close alerts
     $('.closebtn').on('click',function(){
         console.log('hit close');
-        $(this).parent().hide("slow");
+        $(this).parent().hide(600);
     });
 });
 function setWarning(msg){
@@ -585,6 +626,10 @@ function openTab(evt,choice){
 function fillEmailPreferences(){
     $('#userEmail').html(userDetails.email);
     $.get('/api/users/emailPrefs/'+userDetails.email,function(data,status){
+        if(data.length==0){
+            $('#allEmail').prop('checked',true);
+            $('.emailPref').prop('checked',true);
+        }
         console.log('email pref:'+JSON.stringify(data));
         /*$('#editingDrivingRides tr:not(.header)').remove();
         driverList=data;
@@ -747,11 +792,13 @@ function editDriverTrip(){
                     $('#rTime').val('select');
                     $('#numSeats').val(1);*/
                     //alert('successfully update your trip')
-                    alert(response);
+                    //alert(response);
+                    setSuccess(response);
                 },
                 500: function(response){
                     //response={'readyState','responseText','status','statusText'}
-                    alert(response.responseText);
+                    //alert(response.responseText);
+                    setAlert(response.responseText);
                 }
             }
         });
@@ -777,7 +824,7 @@ function deleteTrip(){
                 500: function(response){
                     //response={'readyState','responseText','status','statusText'}
                     //console.log('response'+response['responseText']);
-                    alert(response.responseText);
+                    setAlert(response.responseText);
                 }
             }
         });
