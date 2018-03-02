@@ -547,16 +547,16 @@ $(function(){
     });
 });
 function setWarning(msg){
-    $('.alert.warning span').text(msg).show()
+    $('.alert.warning .msg').text(msg).show()
 }
 function setSuccess(msg){
-    $('.alert.success span').text(msg).show()
+    $('.alert.success .msg').text(msg).show()
 }
 function setInfo(msg){
-    $('.alert.info span').text(msg).show()
+    $('.alert.info .msg').text(msg).show()
 }
 function setAlert(msg){
-    $('.alert:not(.warning):not(.success):not(.info) span').text(msg).show()
+    $('.alert:not(.warning):not(.success):not(.info) .msg').text(msg).show()
 }
 function onSignIn(googleUser) {
     profile=googleUser.getBasicProfile();
