@@ -228,19 +228,19 @@ $(function(){
     var alertOffset,warningOffset,infoOffset,successOffset;
     $(window).scroll(function() {
         if($('.alert:visible').length>0){
-            if($('.alert:not(.warning):not(.success):not(.info):visible').length>0)
+            if($('.alert:not(.warning):not(.success):not(.info):visible').length>0 && $('.alert:not(.warning):not(.success):not(.info):not(.sticky):visible').length)
                 alertOffset=$('.alert:not(.warning):not(.success):not(.info):not(.sticky)').offset().top;
             else
                 alertOffset=0;
-            if($('.alert.warning:visible').length>0)
+            if($('.alert.warning:visible').length>0 && $('.alert.warning:not(.sticky):visible').length)
                 warningOffset=$('.alert.warning:not(.sticky)').offset().top;
             else
                 warningOffset=0;
-            if($('.alert.info:visible').length>0)
+            if($('.alert.info:visible').length>0 && $('.alert.info:not(.sticky):visible').length)
                 infoOffset=$('.alert.info:not(.sticky)').offset().top;
             else
                 infoOffset=0;
-            if($('.alert.success:visible').length>0)
+            if($('.alert.success:visible').length>0 && $('.alert.success:not(.sticky):visible').length)
                 successOffset=$('.alert.success:not(.sticky)').offset().top;
             else
                 successOffset=0;
