@@ -227,12 +227,11 @@ function sortTable(n) {
 $(function(){
     var alertOffset,warningOffset,infoOffset,successOffset;
     $(window).scroll(function() {
-        console.log('scrolling');
         if($('.alert:visible').length>0){
-            alertOffset=$('.alert:not(.warning):not(.success):not(.info)').offset().top;
-            warningOffset=$('.alert.warning').offset().top;
-            infoOffset=$('.alert.info').offset().top;
-            successOffset=$('.alert.success').offset().top;;
+            alertOffset=$('.alert:not(.warning):not(.success):not(.info):not(.sticky)').offset().top;
+            warningOffset=$('.alert.warning:not(.sticky)').offset().top;
+            infoOffset=$('.alert.info:not(.sticky)').offset().top;
+            successOffset=$('.alert.success:not(.sticky)').offset().top;;
             /*var sticky=$('.alert:visible').first().offset().top;//also left offset
             console.log('offset:'+sticky)
             if (window.pageYOffset >= sticky) {
