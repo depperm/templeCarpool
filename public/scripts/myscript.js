@@ -880,6 +880,7 @@ function deleteTrip(){
     //console.log('deleting trip:'+$('#editDriverForm').attr('data-trip-id')+' which is '+JSON.stringify(driverList[$('#editDriverForm').attr('data-trip-id')]))
     //var choice=confirm('Are you sure you want to Delete this trip?');
     var choice=confirmation('Are you sure you want to Delete this trip?');
+    console.log(choice);
     return;
     if(choice){
         $.ajax({
