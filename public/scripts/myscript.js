@@ -544,7 +544,7 @@ $(function(){
     //close alerts
     $('.closebtn').on('click',function(){
         console.log('hit close');
-        setTimeout($(this).parent().hide(), 600);
+        $(this).parent().hide("slow");
     });
 });
 function setWarning(msg){
