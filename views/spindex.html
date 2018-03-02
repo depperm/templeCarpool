@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <script type="text/javascript"> //<![CDATA[ 
 var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "http://www.trustlogo.com/");
 document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
@@ -12,8 +12,7 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
         <script type='text/javascript' src='scripts/config.js'></script>
         <meta name="google-signin-scope" content="profile email">
         <meta name="google-signin-client_id" content="312484233782-6q2cd48kt6ptu0tlcs5mv59vk1n9q9hp.apps.googleusercontent.com">
-        <!--see https://vuejsdevelopers.com/2017/05/20/vue-js-safely-jquery-plugin/-->
-        <!--<script src="https://unpkg.com/vue"></script>-->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
         <script src="https://apis.google.com/js/platform.js?onload-init" async defer></script>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -28,8 +27,8 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
         <div id="holder">
             <div id="body">
                 <ul id="navbar">
-                    <li><img src="images/templecarpoolLogo.png" width="36" style="padding:5px"></li>
-                    <li><h3>Inicio-In Testing</h3></li>
+                    <li><h3>Templo</h3></li>
+                    <li><img src="images/templecarpoolLogo.png" width="36"></li>
                     <li style="float:right">
                         <select id="langSelect">
                             <option value='en'>English</option>
@@ -82,7 +81,7 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                     </div>
                     <div class="tab">
                         <button class="tablinks" id="fa" onclick="openTab(event,'findRide')">Find A Ride</button>
-                        <button class="tablinks" onclick="openTab(event,'postRide')">Post A Ride</button>
+                        <button class="tablinks" id="pr" onclick="openTab(event,'postRide')">Post A Ride</button>
                         <button class="tablinks" id='er' onclick="openTab(event,'editRide')">Edit A Ride</button>
                         <button class="tablinks" id="ti" onclick="openTab(event,'templeInfo')">Informacion del Templo</button>
                         <button class="tablinks" id="ep" onclick="openTab(event,'emailPreferences')">Email Preferences</button>
@@ -90,13 +89,13 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
                     <div id="findRide" class="tabContent">
                         <table id="trips">
                             <tr class="header">
-                                <th>Estaca</th>
-                                <th>Templo</th>
-                                <th>Salida</th>
-                                <th>Regreso</th>
-                                <th>Pasajeros</th>
-                                <th>Conductor</th>
-                                <th>Guardar</th>
+                                <th>Estaca  <i class="fas fa-sort"></i></th>
+                                <th>Templo  <i class="fas fa-sort"></i></th>
+                                <th>Salida  <i class="fas fa-sort"></i></th>
+                                <th>Regreso  <i class="fas fa-sort"></i></th>
+                                <th>Pasajeros  <i class="fas fa-sort"></i></th>
+                                <th>Conductor  <i class="fas fa-sort"></i></th>
+                                <th>Guardar  <i class="fas fa-sort"></i></th>
                             </tr>
                         </table>
                     </div>

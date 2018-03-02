@@ -123,6 +123,9 @@ label:not(.label-right){
     border 1px solid #ccc;
     border-top:none;
 }
+.abcRioButton{
+    margin-top:3px;
+}
 #navbar{
     list-style-type:none;
     margin:0;
@@ -135,9 +138,11 @@ label:not(.label-right){
     color: white;
     text-align:center;
     text-decoration:none;
+    margin-bottom:-4px;
 }
 #langSelect{
     float:left;
+    margin-top:13px;
 }
 .oauth{
     padding:5px;
