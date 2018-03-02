@@ -371,7 +371,7 @@ $(function(){
         });
 
     });
-
+    $(".alert").sticky({topSpacing:0});
     //Sign out user
     $('.g-signout2').on('click',function(e){
         $('#trips tr:not(.header)').remove();
