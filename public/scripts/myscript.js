@@ -327,12 +327,20 @@ $(function(){
     $('#emailSettings').submit(function(e){
         e.preventDefault();
         var data=$('#emailSettings').serializeArray();//form to array
+        console.log('serialized:'+JSON.stringify(data));
+        $.each($('input[type=checkbox',this).filter(function(idx){
+            return $(this).prop('checked')===false;
+        }),
+        function(idx,el){
+            data.push({'name':$(el).attr('name'),'value':'off'})
+        })
         //disabled inputs are not serialized so add now
         //data.push({name:'email',value:userDetails.email});
         /*if(data.length==10){
             data.push({name:'splitCost',value:'off'});
         }*/
         console.log('sending:'+JSON.stringify(data));
+        //data.push({name:'splitCost',value:'off'});
         $.ajax({
             url:'/api/users/emailPrefs/'+userDetails.email,
             type:'post',
@@ -373,6 +381,7 @@ $(function(){
             $('.g-signout2').hide();
             //hide content
             $('#content').hide();
+            $('.alert').hide();
             //clear table
             $('#trips tr:not(.header)').remove();
             //show message and signin
