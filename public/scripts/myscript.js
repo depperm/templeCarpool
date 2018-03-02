@@ -225,16 +225,46 @@ function sortTable(n) {
 }
 
 $(function(){
+    var alertOffset,warningOffset,infoOffset,successOffset;
     $(window).scroll(function() {
         console.log('scrolling');
         if($('.alert:visible').length>0){
-            console.log('some alert visible')
-            var sticky=$('.alert:visible').first().offset().top;//also left offset
+            alertOffset=$('.alert:not(.warning):not(.success):not(.info)').offset().top;
+            warningOffset=$('.alert.warning').offset().top;
+            infoOffset=$('.alert.info').offset().top;
+            successOffset=$('.alert.success').offset().top;;
+            /*var sticky=$('.alert:visible').first().offset().top;//also left offset
             console.log('offset:'+sticky)
             if (window.pageYOffset >= sticky) {
                 $('.alert:visible').addClass("sticky")
             } else {
                 $('.alert').removeClass("sticky");
+            }*/
+            var winOffset=window.pageYOffset;
+            var top=0;
+            if(alertOffset>0 && winOffset>=alertOffset){
+                $('.alert:not(.warning):not(.success):not(.info)').addClass("sticky").css('top',top);
+                top+=$('.alert:not(.warning):not(.success):not(.info)').height();
+            }else{
+                $('.alert:not(.warning):not(.success):not(.info)').removeClass("sticky");
+            }
+            if(warningOffset>0 && winOffset>=warningOffset){
+                $('.alert.warning').addClass("sticky").css('top',top);
+                top+=$('.alert.warning').height();
+            }else{
+                $('.alert.warning').removeClass("sticky");
+            }
+            if(infoOffset>0 && winOffset>=infoOffset){
+                $('.alert.info').addClass("sticky").css('top',top);
+                top+=$('.alert.info').height();
+            }else{
+                $('.alert.info').removeClass("sticky");
+            }
+            if(successOffset>0 && winOffset>=successOffset){
+                $('.alert.success').addClass("sticky").css('top',top);
+                top+=$('.alert.success').height();
+            }else{
+                $('.alert.success').removeClass("sticky");
             }
         }
     })

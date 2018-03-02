@@ -38,6 +38,7 @@ label:not(.label-right){
     padding-top:6px;
 }
 .alert {
+    box-sizing: border-box;
     padding: 20px;
     background-color: #f44336;
     color: white;
@@ -151,7 +152,7 @@ label:not(.label-right){
 /* The sticky class is added to the navbar with JS when it reaches its scroll position */
 .sticky {
   position: fixed;
-  top: 0;
+  /*top: 0;*/
   width: 100%
 }
 
