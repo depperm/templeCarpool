@@ -229,8 +229,8 @@ $(function(){
         console.log('scrolling');
         if($('.alert:visible').length>0){
             console.log('some alert visible')
-            var sticky=$('.alert:visible').first().offset();
-            console.log('offset:'+JSON.stringify(sticky))
+            var sticky=$('.alert:visible').first().offset().top;//also left offset
+            console.log('offset:'+sticky)
             if (window.pageYOffset >= sticky) {
                 $('.alert:visible').classList.add("sticky")
             } else {
