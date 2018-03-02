@@ -628,45 +628,6 @@ $(function(){
         }
     })
 });
-function confirmation(question) {
-    var defer = $.Deferred();
-    $('#dialog-confirm')
-        .html(question)
-        .dialog({
-            autoOpen: true,
-            modal: true,
-            title: 'Confirmation',
-            buttons: {
-                "Yes": function () {
-                    //defer.resolve("true");//this text 'true' can be anything. But for this usage, it should be true or false.
-                    $(this).dialog("close");
-                    $.ajax({
-                        url:'/api/trips/'+driverList[$('#editDriverForm').attr('data-trip-id')]._id,
-                        type:'DELETE',
-                        statusCode: {
-                            200: function(response){
-                                fillEditInfo();
-                            },
-                            500: function(response){
-                                //response={'readyState','responseText','status','statusText'}
-                                //console.log('response'+response['responseText']);
-                                setAlert(response.responseText);
-                            }
-                        }
-                    });
-                },
-                "Cancel": function () {
-                    //defer.resolve("false");//this text 'false' can be anything. But for this usage, it should be true or false.
-                    $(this).dialog("close");
-                }
-            },
-            close: function () {
-                $(this).remove();
-                //defer.resolve("false");
-            }
-        });
-    //return defer.promise();
-}
 function setWarning(msg){
     $('.alert:not(.warning)').hide();
     $('.alert.warning .msg').text(msg).parent().show();
@@ -891,11 +852,8 @@ function editDriverTrip(){
 }
 function deleteTrip(){
     //console.log('deleting trip:'+$('#editDriverForm').attr('data-trip-id')+' which is '+JSON.stringify(driverList[$('#editDriverForm').attr('data-trip-id')]))
-    //var choice=confirm('Are you sure you want to Delete this trip?');
-    //var choice=false;
-    confirmation('Are you sure you want to Delete this trip?');
-    //return;
-    /*if(choice){
+    var choice=confirm('Are you sure you want to Delete this trip?');
+    if(choice){
         $.ajax({
             url:'/api/trips/'+driverList[$('#editDriverForm').attr('data-trip-id')]._id,
             type:'DELETE',
@@ -910,7 +868,7 @@ function deleteTrip(){
                 }
             }
         });
-    }*/
+    }
     driverDialog.dialog( "close" );
 }
 function fillDriverDialog(){
