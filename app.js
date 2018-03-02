@@ -5,6 +5,13 @@ const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
+const nodemailer = require('nodemailer')
+const mg = require('nodemailer-mailgun-transport')
+var config = require('./config')
+
+var auth = config.mailer
+
+var nodemailerMailgun = nodemailer.createTransport(mg(auth));
 
 const options={
     requestCert: true, //This will request the client certificate
@@ -361,6 +368,20 @@ app.get('/sp',function(req,res) {
 /*app.get('/.well-known/pki-validation/:filename',function(req,res){
     res.sendFile(path.join(__dirname+'/.well-known/pki-validation/'+req.params.filename));
 })*/
+function sendEmail(recipients,msg,reason){
+    nodemailerMailgun.sendMail({
+        from: 'no-reply@templecarpool.com',
+        bcc:recipients,
+        subject:reason,
+        text:msg
+    },function(err,info){
+        if(err){
+            console.log('Email Error: '+err);
+        }else{
+            console.log('Response: '+info);
+        }
+    });
+}
 app.use(function(req,res,next){
     res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
 })
