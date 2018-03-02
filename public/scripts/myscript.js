@@ -308,15 +308,18 @@ $(function(){
                                 $('#rDate').val('');
                                 $('#rTime').val('select');
                                 $('#numSeats').val(1);
-                                alert(response);
+                                //alert(response);
+                                setSuccess(response);
                             }else if(response.indexOf('You already have scheduled')>=0){
-                                alert(response);
+                                //alert(response);
+                                setWarning(response)
                             }
                             console.log(response);
                         },
                         500: function(response){
                             //response={'readyState','responseText','status','statusText'}
-                            alert(response.responseText);
+                            //alert(response.responseText);
+                            setAlert(response.responseText);
                         }
                     }
                 });
@@ -538,7 +541,23 @@ $(function(){
             $('#allEmail').prop('checked', false);
         }
     });
+    //close alerts
+    $('.closebtn').on('click',function(){
+        setTimeout($(this).parent().hide(), 600);
+    });
 });
+function setWarning(msg){
+    $('.alert.warning').html('<span class="closebtn">&times;</span>'+msg).show()
+}
+function setSuccess(msg){
+    $('.alert.success').html('<span class="closebtn">&times;</span>'+msg).show()
+}
+function setInfo(msg){
+    $('.alert.info').html('<span class="closebtn">&times;</span>'+msg).show()
+}
+function setAlert(msg){
+    $('.alert:not(.warning):not(.success):not(.info)').html('<span class="closebtn">&times;</span>'+msg).show()
+}
 function onSignIn(googleUser) {
     profile=googleUser.getBasicProfile();
     userDetails={'name':profile.getName(),'email':profile.getEmail()};
@@ -563,7 +582,23 @@ function openTab(evt,choice){
     evt.currentTarget.className+=" active";
 }
 function fillEmailPreferences(){
-    console.log('fill stuff');
+    $('#userEmail').html(userDetails.email);
+    $.get('/api/users/emailPrefs/'+userDetails.email,function(data,status){
+        console.log('email pref:'+JSON.stringify(data));
+        /*$('#editingDrivingRides tr:not(.header)').remove();
+        driverList=data;
+        $.each(data,function(index,trip){
+            //console.log('trip '+index.toString()+':'+JSON.stringify(trip))
+            //Stake,Temple,Departure,Return,Seats,Edit
+            var stk=trip.departStake;
+            var tmpl=trip.templeDest;
+            var dep=trip.dDate+(trip.dTime=='select'?'':', '+trip.dTime);
+            var ret=trip.rDate+(trip.rTime=='select'?'':', '+trip.rTime);
+            var seats=('passengers' in trip?trip.passengers.length:'0')+'/'+trip.numSeats;
+            $('#editingDrivingRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip.dDate+'">'+dep+'</td><td data-return-date="'+trip.rDate+'">'+ret+'</td><td>'+seats+'</td><td><input type="button" value="Edit" class="editTrip" data-trip-id="'+index+'"></td></tr>');
+        });*/
+        //console.log(JSON.stringify(data));
+    });
 }
 function fillTempleInfo(){
     var temple=$('#temple').val();

@@ -77,6 +77,14 @@ app.get('/api/trips',function(req,res){
     })
 })
 
+//get email preferences
+app.get('/api/users/emailPrefs/:email',function(req,res){
+    var cursor=db.collection('Users').find({'email':req.params.trip}).toArray(function(err, results) {
+        //console.log(results)
+        res.send(results)
+    })
+})
+
 //create a trip
 app.post('/api/trips/add',function(req,res){
     console.log('adding trip:'+JSON.stringify(req.body));
