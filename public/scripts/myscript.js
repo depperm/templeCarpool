@@ -352,12 +352,12 @@ $(function(){
                         //alert(response);
                         setWarning(response)
                     }*/
-                    console.log(response);
+                    setSuccess(response);
                 },
                 500: function(response){
                     //response={'readyState','responseText','status','statusText'}
-                    console.log(response.responseText);
-                    //setAlert(response.responseText);
+                    //console.log(response.responseText);
+                    setAlert(response.responseText);
                 }
             }
         });
@@ -629,6 +629,14 @@ function fillEmailPreferences(){
         if(data.length==0){
             $('#allEmail').prop('checked',true);
             $('.emailPref').prop('checked',true);
+        }else{
+            $('.sentence').prop('checked',false);
+            $.each( data[0], function( key, value ) {
+                //alert( key + ": " + value );
+                if(key!='_id' && key!='email'){
+                    $('#'+key).prop('checked',true);
+                }
+            });
         }
         console.log('email pref:'+JSON.stringify(data));
         /*$('#editingDrivingRides tr:not(.header)').remove();
