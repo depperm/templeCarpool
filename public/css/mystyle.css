@@ -1,3 +1,7 @@
+@font-face {
+    font-family: 'Majestic';
+    src: url(https://templecarpool.com/public/fonts/Majestic Personal Use.ttf);
+}
 /* based on https://pearsonified.com/typography */
 html,input,button,select{
     font-family:'Georgia';
@@ -132,6 +136,9 @@ label:not(.label-right){
     margin:0;
     overflow:hidden;
     background-color:#333;
+}
+li h3{
+    font-family: 'Majestic', Arial, Helvetica, san-serif;
 }
 #navbar li{
     float:left;
