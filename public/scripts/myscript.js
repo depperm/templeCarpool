@@ -602,9 +602,9 @@ $(function(){
     $('#langSelect').on('change',function(){
         console.log($(this).val())
         if($(this).val()=='en'){
-            window.location.href = "https://www.templecarpool.com";
+            window.location.href = "https://templecarpool.com";
         }else if($(this).val()=='sp'){
-            window.location.href = "https://www.templecarpool.com/sp";
+            window.location.href = "https://templecarpool.com/sp";
         }
     })
 });
