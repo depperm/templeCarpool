@@ -2,6 +2,8 @@ var profile;
 var userDetails={};
 var tripList;
 
+var language='english';
+
 var editTripIndex;
 var driverList;
 var passengerList;
@@ -414,7 +416,24 @@ $(function(){
     $('#ep').on('click',function(){
         fillEmailPreferences();
     });
-    
+    //confirmation dialog
+    /*$( "#dialog-confirm" ).dialog({
+        autoOpen:false,
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+            "Confirm": function() {
+                $( this ).dialog( "close" );
+                callback(true);
+            },
+            Cancel: function() {
+                $( this ).dialog( "close" );
+                callback(false);
+            }
+        }
+    });*/
     //edit driver dialog
     driverDialog=$('#editDriverForm').dialog({
         autoOpen:false,
@@ -602,16 +621,45 @@ $(function(){
         console.log($(this).val())
         if($(this).val()=='en'){
             window.location.href = "https://templecarpool.com";
+            language='english';
         }else if($(this).val()=='sp'){
             window.location.href = "https://templecarpool.com/sp";
+            language='spanish';
         }
     })
 });
+function confirmation(question) {
+    var defer = $.Deferred();
+    $('#dialog-confirm')
+        .html(question)
+        .dialog({
+            autoOpen: true,
+            modal: true,
+            title: 'Confirmation',
+            buttons: {
+                "Yes": function () {
+                    defer.resolve("true");//this text 'true' can be anything. But for this usage, it should be true or false.
+                    $(this).dialog("close");
+                },
+                "Cancel": function () {
+                    defer.resolve("false");//this text 'false' can be anything. But for this usage, it should be true or false.
+                    $(this).dialog("close");
+                }
+            },
+            close: function () {
+                $(this).remove();
+                defer.resolve("false");
+            }
+        });
+    return defer.promise();
+}
 function setWarning(msg){
+    $('.alert:not(.warning)').hide();
     $('.alert.warning .msg').text(msg).parent().show();
     window.scrollTo(0, 0);
 }
 function setSuccess(msg){
+    $('.alert:not(.success)').hide();
     $('.alert.success .msg').text(msg).parent().show();
     window.scrollTo(0, 0);
 }
@@ -620,6 +668,7 @@ function setInfo(msg){
     window.scrollTo(0, 0);
 }
 function setAlert(msg){
+    $('.alert.success').hide();
     $('.alert:not(.warning):not(.success):not(.info) .msg').text(msg).parent().show()
 }
 function onSignIn(googleUser) {
@@ -829,7 +878,9 @@ function editDriverTrip(){
 }
 function deleteTrip(){
     //console.log('deleting trip:'+$('#editDriverForm').attr('data-trip-id')+' which is '+JSON.stringify(driverList[$('#editDriverForm').attr('data-trip-id')]))
-    var choice=confirm('Are you sure you want to Delete this trip?');
+    //var choice=confirm('Are you sure you want to Delete this trip?');
+    var choice=confirmation('Are you sure you want to Delete this trip?');
+    return;
     if(choice){
         $.ajax({
             url:'/api/trips/'+driverList[$('#editDriverForm').attr('data-trip-id')]._id,
