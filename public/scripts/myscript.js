@@ -644,7 +644,7 @@ function fillEmailPreferences(){
             $('.sentence').prop('checked',false);
             $.each( data[0], function( key, value ) {
                 //alert( key + ": " + value );
-                if(key!='_id' && key!='email'){
+                if(key!='_id' && key!='email' && value=='on'){
                     $('#'+key).prop('checked',true);
                 }
             });
