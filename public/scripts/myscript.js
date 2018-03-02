@@ -543,20 +543,21 @@ $(function(){
     });
     //close alerts
     $('.closebtn').on('click','.alert',function(){
+        console.log('hit close');
         setTimeout($(this).parent().hide(), 600);
     });
 });
 function setWarning(msg){
-    $('.alert.warning .msg').text(msg).show()
+    $('.alert.warning .msg').text(msg).parent().show()
 }
 function setSuccess(msg){
-    $('.alert.success .msg').text(msg).show()
+    $('.alert.success .msg').text(msg).parent().show()
 }
 function setInfo(msg){
-    $('.alert.info .msg').text(msg).show()
+    $('.alert.info .msg').text(msg).parent().show()
 }
 function setAlert(msg){
-    $('.alert:not(.warning):not(.success):not(.info) .msg').text(msg).show()
+    $('.alert:not(.warning):not(.success):not(.info) .msg').text(msg).parent().show()
 }
 function onSignIn(googleUser) {
     profile=googleUser.getBasicProfile();
