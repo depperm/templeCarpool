@@ -878,12 +878,11 @@ function editDriverTrip(){
 function deleteTrip(){
     //console.log('deleting trip:'+$('#editDriverForm').attr('data-trip-id')+' which is '+JSON.stringify(driverList[$('#editDriverForm').attr('data-trip-id')]))
     //var choice=confirm('Are you sure you want to Delete this trip?');
+    var choice=false;
     confirmation('Are you sure you want to Delete this trip?').then(function(answer){
-        var choice=answer=='true';
-        console.log(answer)
-        console.log(choice);
+        choice=answer=='true';
     });
-    return;
+    //return;
     if(choice){
         $.ajax({
             url:'/api/trips/'+driverList[$('#editDriverForm').attr('data-trip-id')]._id,
