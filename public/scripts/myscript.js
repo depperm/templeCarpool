@@ -225,60 +225,6 @@ function sortTable(n) {
 }
 
 $(function(){
-    var alertOffset,warningOffset,infoOffset,successOffset;
-    $(window).scroll(function() {
-        if($('.alert:visible').length>0){
-            if($('.alert:not(.warning):not(.success):not(.info):visible').length>0 && $('.alert:not(.warning):not(.success):not(.info):not(.sticky):visible').length)
-                alertOffset=$('.alert:not(.warning):not(.success):not(.info):not(.sticky)').offset().top;
-            else
-                alertOffset=0;
-            if($('.alert.warning:visible').length>0 && $('.alert.warning:not(.sticky):visible').length)
-                warningOffset=$('.alert.warning:not(.sticky)').offset().top;
-            else
-                warningOffset=0;
-            if($('.alert.info:visible').length>0 && $('.alert.info:not(.sticky):visible').length)
-                infoOffset=$('.alert.info:not(.sticky)').offset().top;
-            else
-                infoOffset=0;
-            if($('.alert.success:visible').length>0 && $('.alert.success:not(.sticky):visible').length)
-                successOffset=$('.alert.success:not(.sticky)').offset().top;
-            else
-                successOffset=0;
-            /*var sticky=$('.alert:visible').first().offset().top;//also left offset
-            console.log('offset:'+sticky)
-            if (window.pageYOffset >= sticky) {
-                $('.alert:visible').addClass("sticky")
-            } else {
-                $('.alert').removeClass("sticky");
-            }*/
-            var winOffset=window.pageYOffset;
-            var top=0;
-            if(alertOffset>0 && winOffset>=alertOffset){
-                $('.alert:not(.warning):not(.success):not(.info)').addClass("sticky").css('top',top);
-                top+=$('.alert:not(.warning):not(.success):not(.info)').height();
-            }else{
-                $('.alert:not(.warning):not(.success):not(.info)').removeClass("sticky");
-            }
-            if(warningOffset>0 && winOffset>=warningOffset){
-                $('.alert.warning').addClass("sticky").css('top',top);
-                top+=$('.alert.warning').height();
-            }else{
-                $('.alert.warning').removeClass("sticky");
-            }
-            if(infoOffset>0 && winOffset>=infoOffset){
-                $('.alert.info').addClass("sticky").css('top',top);
-                top+=$('.alert.info').height();
-            }else{
-                $('.alert.info').removeClass("sticky");
-            }
-            if(successOffset>0 && winOffset>=successOffset){
-                $('.alert.success').addClass("sticky").css('top',top);
-                top+=$('.alert.success').height();
-            }else{
-                $('.alert.success').removeClass("sticky");
-            }
-        }
-    })
 
     if(!$('#welcomeMsg').is(":visible")){
         getTrips();
@@ -662,13 +608,16 @@ $(function(){
     })
 });
 function setWarning(msg){
-    $('.alert.warning .msg').text(msg).parent().show()
+    $('.alert.warning .msg').text(msg).parent().show();
+    window.scrollTo(0, 0);
 }
 function setSuccess(msg){
-    $('.alert.success .msg').text(msg).parent().show()
+    $('.alert.success .msg').text(msg).parent().show();
+    window.scrollTo(0, 0);
 }
 function setInfo(msg){
-    $('.alert.info .msg').text(msg).parent().show()
+    $('.alert.info .msg').text(msg).parent().show();
+    window.scrollTo(0, 0);
 }
 function setAlert(msg){
     $('.alert:not(.warning):not(.success):not(.info) .msg').text(msg).parent().show()
