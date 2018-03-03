@@ -282,7 +282,17 @@ app.post('/api/trips/:trip',function(req,res){
         })
     })
 })
-
+/*var emails=[]
+function appendEmail(email){
+    checkEmailPref(email,'tripModified').then(function(shouldEmail){
+        if(shouldEmail){
+            console.log('should send to '+JSON.stringify(trip[0].passengers[i]))
+            sendEmail(email,'The driver has modified your trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to see the Trip changes.')
+        }else{
+            console.log('should not send')
+        }
+    })
+}*/
 //update a trip as driver
 app.post('/api/trips/edit/:trip',function(req,res){
     console.log('trip:'+req.params.trip)
@@ -335,47 +345,20 @@ app.post('/api/trips/edit/:trip',function(req,res){
             if (error) throw error;
             console.log('the trip:'+JSON.stringify(trip))
             if('passengers' in trip[0] && trip[0].passengers.length>0){
-                //for(var i=0;i<trip[0].passengers.length;i++){
-                for(var i=0,p=Promise.resolve();i<trip[0].passengers.length;i++){
+                emails=[]
+                for(let i=0;i<trip[0].passengers.length;i++){
+                    appendEmail(trip[0].passengers[i].email)
                     console.log('checking: '+JSON.stringify(trip[0].passengers[i]))
-                    p=p.then(_=>new Promise(resolve=>
-                        db.collection('Users').find({'email':trip[0].passengers[i].email}).toArray(function(err, results) {
-                            console.log('Users email pref:'+JSON.stringify(results))
-                            if(results[0]['noEmail']=='on' || results[0][setting]=='off'){
-                                resolve()
-                            }
-                            else{
-                                sendEmail(trip[0].passengers[i].email,'The driver has modified your trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to see the Trip changes.')
-                                resolve()
-                            }
-                            /*if(results[0]['allEmail']=='on'){
-                                console.log('all email')
-                                //return true;
-                                resolve(true);
-                            }else if(results[0]['noEmail']=='on'){
-                                console.log('no email')
-                                //return false;
-                                resolve(false);
-                            }else if(results[0][setting]=='off'){
-                                console.log('no match pref')
-                                //return false;
-                                resolve(false);
-                            }
-                            console.log('match pref')
-                            //return true;
-                            resolve(true);*/
-                        })
-                    ))
-                        /*if(shouldEmail){
+                    checkEmailPref(trip[0].passengers[i].email,'tripModified').then(function(shouldEmail){
+                        if(shouldEmail){
                             console.log('should send to '+JSON.stringify(trip[0].passengers[i]))
                             sendEmail(trip[0].passengers[i].email,'The driver has modified your trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to see the Trip changes.')
-                            i++;
                         }else{
                             console.log('should not send')
                         }
                     },function(reason){
                         console.log('Error sending email because '+reason)
-                    })*/
+                    })
                 }
             }
         })
