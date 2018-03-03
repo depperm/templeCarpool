@@ -282,17 +282,7 @@ app.post('/api/trips/:trip',function(req,res){
         })
     })
 })
-/*var emails=[]
-function appendEmail(email){
-    checkEmailPref(email,'tripModified').then(function(shouldEmail){
-        if(shouldEmail){
-            console.log('should send to '+JSON.stringify(trip[0].passengers[i]))
-            sendEmail(email,'The driver has modified your trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to see the Trip changes.')
-        }else{
-            console.log('should not send')
-        }
-    })
-}*/
+
 //update a trip as driver
 app.post('/api/trips/edit/:trip',function(req,res){
     console.log('trip:'+req.params.trip)
@@ -347,8 +337,6 @@ app.post('/api/trips/edit/:trip',function(req,res){
             if('passengers' in trip[0] && trip[0].passengers.length>0){
                 emails=[]
                 for(let i=0;i<trip[0].passengers.length;i++){
-                    //appendEmail(trip[0].passengers[i].email)
-                    console.log('checking: '+JSON.stringify(trip[0].passengers[i]))
                     checkEmailPref(trip[0].passengers[i].email,'tripModified').then(function(shouldEmail){
                         if(shouldEmail){
                             console.log('should send to '+JSON.stringify(trip[0].passengers[i]))
@@ -397,7 +385,7 @@ app.delete('/api/trips/:trip',function(req,res){
             }
         })
         //check if should email passengers
-        for(var i=0;i<passengers.length;i++){
+        for(let i=0;i<passengers.length;i++){
             checkEmailPref(passengers[i].email,'tripDeleted').then(function(shouldEmail){
                 if(shouldEmail){
                     console.log('should send')
