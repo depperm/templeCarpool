@@ -154,12 +154,13 @@ function getTrips(){
             var ret=trip.rDate+(trip.rTime=='select'?'':', '+trip.rTime);
             var seats=('passengers' in trip?trip.passengers.length:'0')+'/'+trip.numSeats;
             var driver=trip.driver;
+            var reserveBtn=language=='english'?'Reserve':'Reservar';
             var disabled=('passengers' in trip?trip.passengers.length:0)==trip.numSeats?'disabled':'';
             if(userDetails.email==trip.email){
                 disabled='disabled';
             }
             var ob='mailto:'+trip.email;
-            $('#trips tr:last').after('<tr class="trip"><td data-stake="'+stk+'">'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip.dDate+'">'+dep+'</td><td data-return-date="'+trip.rDate+'">'+ret+'</td><td>'+seats+'</td><td class="driver"><a href="'+ob+'" target="_top">'+driver+'</a></td><td><input type="button" value="Reserve" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
+            $('#trips tr:last').after('<tr class="trip"><td data-stake="'+stk+'">'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip.dDate+'">'+dep+'</td><td data-return-date="'+trip.rDate+'">'+ret+'</td><td>'+seats+'</td><td class="driver"><a href="'+ob+'" target="_top">'+driver+'</a></td><td><input type="button" value="'+reserveBtn+'" class="reserveTrip" data-trip-id="'+index+'" '+disabled+'></td></tr>');
             //$('#trips tr:last .driver a').attr('href',ob)
         });
         matchDepartDate();
@@ -416,24 +417,6 @@ $(function(){
     $('#ep').on('click',function(){
         fillEmailPreferences();
     });
-    //confirmation dialog
-    /*$( "#dialog-confirm" ).dialog({
-        autoOpen:false,
-        resizable: false,
-        height: "auto",
-        width: 400,
-        modal: true,
-        buttons: {
-            "Confirm": function() {
-                $( this ).dialog( "close" );
-                callback(true);
-            },
-            Cancel: function() {
-                $( this ).dialog( "close" );
-                callback(false);
-            }
-        }
-    });*/
     //edit driver dialog
     driverDialog=$('#editDriverForm').dialog({
         autoOpen:false,
@@ -726,8 +709,9 @@ function updateTripsDrivingTable(){
             var tmpl=trip.templeDest;
             var dep=trip.dDate+(trip.dTime=='select'?'':', '+trip.dTime);
             var ret=trip.rDate+(trip.rTime=='select'?'':', '+trip.rTime);
+            var editBtn=language=='english'?'Edit':'Editar';
             var seats=('passengers' in trip?trip.passengers.length:'0')+'/'+trip.numSeats;
-            $('#editingDrivingRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip.dDate+'">'+dep+'</td><td data-return-date="'+trip.rDate+'">'+ret+'</td><td>'+seats+'</td><td><input type="button" value="Edit" class="editTrip" data-trip-id="'+index+'"></td></tr>');
+            $('#editingDrivingRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip.dDate+'">'+dep+'</td><td data-return-date="'+trip.rDate+'">'+ret+'</td><td>'+seats+'</td><td><input type="button" value="'+editBtn+'" class="editTrip" data-trip-id="'+index+'"></td></tr>');
         });
         //console.log(JSON.stringify(data));
     });
