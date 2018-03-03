@@ -11,6 +11,9 @@ var config = require('./config')
 
 var auth = config.mailer
 
+/*var transporter = nodemailer.createTransport({
+    auth:auth
+})*/
 var nodemailerMailgun = nodemailer.createTransport(mg(auth));
 
 const options={
@@ -49,6 +52,24 @@ MongoClient.connect(url,function(err,host){
 
 //see https://www.npmjs.com/package/cron
 var CronJob=require('cron').CronJob;
+var testEmail=new CronJob('0 11 0 * * *',function(){
+    var today=new Date();
+    console.log(today.toLocaleString())
+    sendEmail('epper.marshall@gmail.com','test node','node fun')
+    /*var mailOptions={
+        from:'no-reply@mailgun.templecarpool.com',
+        bcc:'epper.marshall@gmail.com',
+        subject:'test',
+        text:'node fun'
+    }
+    transporter.sendMail(mailOptions,function(err,info){
+        if(err)
+            console.log(err)
+        else
+            console.log(info)
+    })*/
+})
+testEmail.start()
 var cleanUp=new CronJob('0 0 5 * * *',function(){
     var yesterday=new Date();
     //console.log(yesterday.getHours())
@@ -368,10 +389,10 @@ app.get('/sp',function(req,res) {
 /*app.get('/.well-known/pki-validation/:filename',function(req,res){
     res.sendFile(path.join(__dirname+'/.well-known/pki-validation/'+req.params.filename));
 })*/
-function sendEmail(recipients,msg,reason){
+function sendEmail(recipient,msg,reason){
     nodemailerMailgun.sendMail({
-        from: 'no-reply@templecarpool.com',
-        bcc:recipients,
+        from: 'no-reply@mailgun.templecarpool.com',
+        to:recipient,
         subject:reason,
         text:msg
     },function(err,info){
