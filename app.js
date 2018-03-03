@@ -259,19 +259,19 @@ app.post('/api/trips/:trip',function(req,res){
 
                     console.log('reserved seat on trip ');
                     //check if joining passenger gets email
-                    checkEmailPref(trip.email,'passJoin').then(function(shouldEmail){
+                    checkEmailPref(req.body.email,'passJoin').then(function(shouldEmail){
                         if(shouldEmail){
                             console.log('should send')
-                            sendEmail(trip.email,'You have joined a trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to leave the Trip.')
+                            sendEmail(trip.email,'You have joined a trip from '+trip.dDate+'-'+trip.rDate+'. Please visit templecarpool.com to change your email preferences or to leave the Trip.')
                         }else{
                             console.log('should not send')
                         }
                     })
                     //check if driver gets email
-                    checkEmailPref(req.body.email,'joinTrip').then(function(shouldEmail){
+                    checkEmailPref(trip.email,'joinTrip').then(function(shouldEmail){
                         if(shouldEmail){
                             console.log('should send')
-                            sendEmail(req.body.email,'A passenger has joined your trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to modify your Trip.')
+                            sendEmail(req.body.email,req.body.name+' has joined your trip from '+trip.dDate+'-'+trip.rDate+'. Please visit templecarpool.com to change your email preferences or to modify your Trip.')
                         }else{
                             console.log('should not send')
                         }
@@ -338,7 +338,7 @@ app.post('/api/trips/edit/:trip',function(req,res){
                 for(var i=0;i<trip[0].passengers.length;i++){
                     checkEmailPref(trip[0].passengers[i].email,'tripModified').then(function(shouldEmail){
                         if(shouldEmail){
-                            console.log('should send')
+                            console.log('should send to '+trip[0].passengers[i])
                             sendEmail(trip[0].passengers[i].email,'The driver has modified your trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to see the Trip changes.')
                         }else{
                             console.log('should not send')
@@ -400,19 +400,22 @@ app.delete('/api/trips/:trip/:email',function(req,res){
     console.log('drop trip:'+req.params.trip)
     console.log('drop email:'+req.params.email)
     //TODO check that passenger is a passenger for said trip?
-    db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $pull: { 'passengers': {'email':req.params.email}} },function(err, results) {
-        if (err) throw err;
-        console.log('You have kicked a passenger/cancelled your seat')
-        //check if driver gets email
-        checkEmailPref(req.params.email,'kickFromTrip').then(function(shouldEmail){
-            if(shouldEmail){
-                console.log('should send')
-                sendEmail(req.params.email,'You have been dropped as a passenger for the trip on '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to find a new Trip.')
-            }else{
-                console.log('should not send')
-            }
+    db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(err,result){
+        var trip=result[0];
+        db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $pull: { 'passengers': {'email':req.params.email}} },function(err, results) {
+            if (err) throw err;
+            console.log('You have kicked a passenger/cancelled your seat')
+            //check if driver gets email
+            checkEmailPref(req.params.email,'kickFromTrip').then(function(shouldEmail){
+                if(shouldEmail){
+                    console.log('should send')
+                    sendEmail(req.params.email,'You have been dropped as a passenger for the trip on '+trip.dDate+'-'+trip.rDate+'. Please visit templecarpool.com to change your email preferences or to find a new Trip.')
+                }else{
+                    console.log('should not send')
+                }
+            })
+            res.send('You have cancelled a seat')
         })
-        res.send('You have cancelled a seat')
     })
 })
 //get list of trip ids with driver id
