@@ -827,10 +827,6 @@ function editDriverTrip(){
             }
         });
     }
-    //TODO put/update trip
-    //editDriverTrip();
-    //TODO update edit table
-    //post/put to server
     updateTripsDrivingTable();
     driverDialog.dialog( "close" );
 }
