@@ -115,7 +115,7 @@ function matchReturnDate(){
     var trips=$('#trips .trip td[data-return-date]');
     var a=new Date($('#returnDate').val());
     $.each(trips,function(index,trip){
-        var b=new Date($(this).attr('data-depart-date'));
+        var b=new Date($(this).attr('data-return-date'));
         if(a.getTime()==b.getTime()){
             $(this).addClass('match');
         }
@@ -612,12 +612,10 @@ $(function(){
     })
 });
 function setWarning(msg){
-    $('.alert:not(.warning)').hide();
     $('.alert.warning .msg').text(msg).parent().show();
     window.scrollTo(0, 0);
 }
 function setSuccess(msg){
-    $('.alert:not(.success)').hide();
     $('.alert.success .msg').text(msg).parent().show();
     window.scrollTo(0, 0);
 }
@@ -626,7 +624,6 @@ function setInfo(msg){
     window.scrollTo(0, 0);
 }
 function setAlert(msg){
-    $('.alert.success').hide();
     $('.alert:not(.warning):not(.success):not(.info) .msg').text(msg).parent().show()
 }
 function onSignIn(googleUser) {
