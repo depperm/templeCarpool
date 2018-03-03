@@ -176,8 +176,12 @@ app.post('/api/trips/add',function(req,res){
                 console.log('saved trip to db')
                 //email when you create trip
                 var shouldEmail=checkEmailPref(req.body.email,'createATrip')
-                if(shouldEmail)
+                if(shouldEmail){
+                    console.log('should send')
                     sendEmail(req.body.email,'You have created a trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to modify your Trip.')
+                }else{
+                    console.log('should not send')
+                }
             })
             //res.redirect('/')
             res.send('Your ride has been posted')
@@ -427,6 +431,7 @@ app.get('/sp',function(req,res) {
 })*/
 function checkEmailPref(email,setting){
     db.collection('Users').find({'email':email}).toArray(function(err, results) {
+        print('Users email pref:'+JSON.stringify(results))
         if(results[0]['allEmail']=='on'){
             return true;
         }else if(results[0]['noEmail']=='on'){
