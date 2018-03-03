@@ -844,6 +844,7 @@ function deleteTrip(){
             statusCode: {
                 200: function(response){
                     fillEditInfo();
+                    setSuccess('Your trip has been deleted.')
                 },
                 500: function(response){
                     //response={'readyState','responseText','status','statusText'}

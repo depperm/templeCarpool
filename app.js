@@ -433,12 +433,16 @@ function checkEmailPref(email,setting){
     db.collection('Users').find({'email':email}).toArray(function(err, results) {
         console.log('Users email pref:'+JSON.stringify(results))
         if(results[0]['allEmail']=='on'){
+            console.log('all email')
             return true;
         }else if(results[0]['noEmail']=='on'){
+            console.log('no email')
             return false;
         }else if(results[0][setting]=='off'){
+            console.log('no match pref')
             return false;
         }
+        console.log('match pref')
         return true;
     })
 }
