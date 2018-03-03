@@ -333,7 +333,7 @@ app.post('/api/trips/edit/:trip',function(req,res){
         //check passengers
         db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(error, trip) {
             if (error) throw error;
-            //console.log(JSON.stringify(trip))
+            console.log(JSON.stringify(trip))
             if('passengers' in trip[0] && trip[0].passengers.length>0){
                 for(var i=0;i<trip[0].passengers.length;i++){
                     checkEmailPref(trip[0].passengers[i].email,'tripModified').then(function(shouldEmail){
@@ -343,6 +343,8 @@ app.post('/api/trips/edit/:trip',function(req,res){
                         }else{
                             console.log('should not send')
                         }
+                    },function(reason){
+                        console.log('Error sending email because '+reason)
                     })
                 }
             }
