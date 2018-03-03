@@ -175,13 +175,21 @@ app.post('/api/trips/add',function(req,res){
 
                 console.log('saved trip to db')
                 //email when you create trip
-                var shouldEmail=checkEmailPref(req.body.email,'createATrip')
+                checkEmailPref(req.body.email,'createATrip').then(function(shouldEmail){
+                    if(shouldEmail){
+                        console.log('should send')
+                        sendEmail(req.body.email,'You have created a trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to modify your Trip.')
+                    }else{
+                        console.log('should not send')
+                    }
+                })
+                /*var shouldEmail=checkEmailPref(req.body.email,'createATrip')
                 if(shouldEmail){
                     console.log('should send')
                     sendEmail(req.body.email,'You have created a trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to modify your Trip.')
                 }else{
                     console.log('should not send')
-                }
+                }*/
             })
             //res.redirect('/')
             res.send('Your ride has been posted')
@@ -258,13 +266,14 @@ app.post('/api/trips/:trip',function(req,res){
 
                     console.log('reserved seat on trip ');
                     //check if joining passenger gets email
-                    var shouldEmail=checkEmailPref(trip.email,'passJoin');
+                    /*var shouldEmail=checkEmailPref(trip.email,'passJoin');
                     if(shouldEmail)
                         sendEmail(trip.email,'You have joined a trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to leave the Trip.')
                     //check if driver gets email
                     shouldEmail=checkEmailPref(req.body.email,'joinTrip');
                     if(shouldEmail)
                         sendEmail(req.body.email,'A passenger has joined your trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to modify your Trip.')
+                    */
                 })
                 res.send('Your seat has been reservd')
             }
@@ -320,9 +329,9 @@ app.post('/api/trips/edit/:trip',function(req,res){
             //console.log(JSON.stringify(trip))
             if('passengers' in trip[0] && trip[0].passengers.length>0){
                 for(var i=0;i<trip[0].passengers.length;i++){
-                    shouldEmail=checkEmailPref(trip[0].passengers.email,'tripModified');
+                    /*shouldEmail=checkEmailPref(trip[0].passengers.email,'tripModified');
                     if(shouldEmail)
-                        sendEmail(trip[0].passengers.email,'The driver has modified your trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to see the Trip changes.')
+                        sendEmail(trip[0].passengers.email,'The driver has modified your trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to see the Trip changes.')*/
                 }
             }
         })
@@ -352,14 +361,14 @@ app.delete('/api/trips/:trip',function(req,res){
         }
         console.log('deleted trip')
         //check if driver gets email
-        var shouldEmail=checkEmailPref(yourEmail,'deleteTrip');
+        /*var shouldEmail=checkEmailPref(yourEmail,'deleteTrip');
         if(shouldEmail)
-            sendEmail(yourEmail,'You have deleted your trip scheduled on '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to create a new Trip.')
+            sendEmail(yourEmail,'You have deleted your trip scheduled on '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to create a new Trip.')*/
         //check if should email passengers
         for(var i=0;i<passengers.length;i++){
-            shouldEmail=checkEmailPref(passengers.email,'tripDeleted');
+            /*shouldEmail=checkEmailPref(passengers.email,'tripDeleted');
             if(shouldEmail)
-                sendEmail(passengers.email,'The driver has deleted the trip you had a seat scheduled on '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to find a new Trip.')
+                sendEmail(passengers.email,'The driver has deleted the trip you had a seat scheduled on '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to find a new Trip.')*/
         }
         res.send('The trip has been deleted')
     })
@@ -373,9 +382,9 @@ app.delete('/api/trips/:trip/:email',function(req,res){
         if (err) throw err;
         console.log('You have kicked a passenger/cancelled your seat')
         //check if driver gets email
-        var shouldEmail=checkEmailPref(req.params.email,'kickFromTrip');
+        /*var shouldEmail=checkEmailPref(req.params.email,'kickFromTrip');
         if(shouldEmail)
-            sendEmail(req.params.email,'You have dropped as a passenger for the trip scheduled on '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to find a new Trip.')
+            sendEmail(req.params.email,'You have dropped as a passenger for the trip scheduled on '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to find a new Trip.')*/
         res.send('You have cancelled a seat')
     })
 })
@@ -429,21 +438,27 @@ app.get('/sp',function(req,res) {
 /*app.get('/.well-known/pki-validation/:filename',function(req,res){
     res.sendFile(path.join(__dirname+'/.well-known/pki-validation/'+req.params.filename));
 })*/
-function checkEmailPref(email,setting){
-    db.collection('Users').find({'email':email}).toArray(function(err, results) {
-        console.log('Users email pref:'+JSON.stringify(results))
-        if(results[0]['allEmail']=='on'){
-            console.log('all email')
-            return true;
-        }else if(results[0]['noEmail']=='on'){
-            console.log('no email')
-            return false;
-        }else if(results[0][setting]=='off'){
-            console.log('no match pref')
-            return false;
-        }
-        console.log('match pref')
-        return true;
+var checkEmailPref=function(email,setting){
+    return new Promise(function(resolve,reject){
+        db.collection('Users').find({'email':email}).toArray(function(err, results) {
+            console.log('Users email pref:'+JSON.stringify(results))
+            if(results[0]['allEmail']=='on'){
+                console.log('all email')
+                //return true;
+                resolve(true);
+            }else if(results[0]['noEmail']=='on'){
+                console.log('no email')
+                //return false;
+                resolve(false);
+            }else if(results[0][setting]=='off'){
+                console.log('no match pref')
+                //return false;
+                resolve(false);
+            }
+            console.log('match pref')
+            //return true;
+            resolve(true);
+        })
     })
 }
 function sendEmail(recipient,msg,reason='Temple Carpool Notification'){
