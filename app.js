@@ -342,11 +342,11 @@ app.post('/api/trips/edit/:trip',function(req,res){
                         db.collection('Users').find({'email':trip[0].passengers[i].email}).toArray(function(err, results) {
                             console.log('Users email pref:'+JSON.stringify(results))
                             if(results[0]['noEmail']=='on' || results[0][setting]=='off'){
-                                resolve(false)
+                                resolve()
                             }
                             else{
                                 sendEmail(trip[0].passengers[i].email,'The driver has modified your trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to see the Trip changes.')
-                                resolve(true)
+                                resolve()
                             }
                             /*if(results[0]['allEmail']=='on'){
                                 console.log('all email')
