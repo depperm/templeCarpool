@@ -508,8 +508,11 @@ $(function(){
             data:$.param(data),
             statusCode: {
                 200: function(response){
+                  if(response=='Your seat has been reserved')
                     setSuccess(response);
-                    getTrips();
+                  else
+                    setWarning(response);
+                  getTrips();
                 },
                 500: function(response){
                     //response={'readyState','responseText','status','statusText'}

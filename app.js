@@ -277,7 +277,7 @@ app.post('/api/trips/:trip',function(req,res){
                         }
                     })
                 })
-                res.send('Your seat has been reservd')
+                res.send('Your seat has been reserved')
             }
         })
     })
