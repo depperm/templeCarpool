@@ -309,7 +309,7 @@ $(function(){
                             $('#rTime').val('select');
                             $('#numSeats').val(1);
                             //alert(response);
-                            setSuccess(response);
+                            setSuccess(response+'. If you want to change anything go to the \'Edit A Ride\' tab.');
                         }else if(response.indexOf('You already have scheduled')>=0){
                             //alert(response);
                             setWarning(response)
@@ -497,7 +497,6 @@ $(function(){
     //reserve a seat
     $('#trips').on('click','.reserveTrip',function(){
         //console.log('should reserve');
-        setInfo('You are responsible to make your own temple reservation.\nPlease visit the \'Edit A Ride\' tab to see any comments the driver may make or have made.');
 
         var data=[];
         data.push({name:'email',value:userDetails.email});
@@ -508,10 +507,13 @@ $(function(){
             data:$.param(data),
             statusCode: {
                 200: function(response){
-                  if(response=='Your seat has been reserved')
+                  if(response=='Your seat has been reserved'){
                     setSuccess(response);
-                  else
+                    setInfo('You are responsible to make your own temple reservation.\nPlease visit the \'Edit A Ride\' tab to see any comments the driver may make or has made.');
+                  }
+                  else{
                     setWarning(response);
+                  }
                   getTrips();
                 },
                 500: function(response){
@@ -733,6 +735,7 @@ function updateTripsPassengerTable(){
             var ret=trip.rDate+(trip.rTime=='select'?'':', '+trip.rTime);
             var driver=trip.driver;
             var email=trip.email;
+            var dropBtn=language=='en'?'Drop':'Dejo';
             var split='No';
             if(trip.splitCost=='on'){
                 split='Yes';
@@ -741,7 +744,7 @@ function updateTripsPassengerTable(){
             if(trip.commments){
                 com=trip.comments;
             }
-            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip.dDate+'">'+dep+'</td><td data-return-date="'+trip.rDate+'">'+ret+'</td><td><a href="mailto:'+email+'">'+driver+'</a></td><td>'+split+'</td><td>'+com+'</td><td><input type="button" value="Drop" class="dropTrip" data-trip-id="'+index+'"></td></tr>');
+            $('#editingPassengerRides tr:last').after('<tr class="trip"><td>'+stk+'</td><td data-temple-dest="'+tmpl+'">'+tmpl+'</td><td data-depart-date="'+trip.dDate+'">'+dep+'</td><td data-return-date="'+trip.rDate+'">'+ret+'</td><td><a href="mailto:'+email+'">'+driver+'</a></td><td>'+split+'</td><td>'+com+'</td><td><input type="button" value="'+dropBtn+'" class="dropTrip" data-trip-id="'+index+'"></td></tr>');
         });
         //console.log(JSON.stringify(data));
     });

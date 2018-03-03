@@ -251,7 +251,7 @@ app.post('/api/trips/:trip',function(req,res){
                 }
                 else{
                     console.log('already have a seat')
-                    res.send('You already have a seat reserved. If you\'d like to reserve more than one email the driver and have them reduce the number of seats on the trip.')
+                    res.send('You already have a seat reserved. If you\'d like to reserve more than one email the driver and have them reduce the number of seats on the trip or have your friend log in and make a reservation.')
                 }
             }else{
                 db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $push: { "passengers": req.body }},function(err,res){
