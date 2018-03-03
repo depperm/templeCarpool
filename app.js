@@ -337,7 +337,7 @@ app.post('/api/trips/edit/:trip',function(req,res){
             if('passengers' in trip[0] && trip[0].passengers.length>0){
                 //for(var i=0;i<trip[0].passengers.length;i++){
                 var i=0;
-                while(i<trip[0].passengers.length)
+                while(i<trip[0].passengers.length){
                     console.log('checking: '+JSON.stringify(trip[0].passengers[i]))
                     checkEmailPref(trip[0].passengers[i].email,'tripModified').then(function(shouldEmail){
                         if(shouldEmail){
