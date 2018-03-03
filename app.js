@@ -333,9 +333,10 @@ app.post('/api/trips/edit/:trip',function(req,res){
         //check passengers
         db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(error, trip) {
             if (error) throw error;
-            console.log(JSON.stringify(trip))
+            console.log('the trip:'+JSON.stringify(trip))
             if('passengers' in trip[0] && trip[0].passengers.length>0){
                 for(var i=0;i<trip[0].passengers.length;i++){
+                    console.log('checking: '+trip[0].passengers[i])
                     checkEmailPref(trip[0].passengers[i].email,'tripModified').then(function(shouldEmail){
                         if(shouldEmail){
                             console.log('should send to '+trip[0].passengers[i])
