@@ -336,10 +336,10 @@ app.post('/api/trips/edit/:trip',function(req,res){
             console.log('the trip:'+JSON.stringify(trip))
             if('passengers' in trip[0] && trip[0].passengers.length>0){
                 for(var i=0;i<trip[0].passengers.length;i++){
-                    console.log('checking: '+trip[0].passengers[i])
+                    console.log('checking: '+JSON.stringify(trip[0].passengers[i]))
                     checkEmailPref(trip[0].passengers[i].email,'tripModified').then(function(shouldEmail){
                         if(shouldEmail){
-                            console.log('should send to '+trip[0].passengers[i])
+                            console.log('should send to '+JSON.stringify(trip[0].passengers[i]))
                             sendEmail(trip[0].passengers[i].email,'The driver has modified your trip from '+req.body.dDate+'-'+req.body.rDate+'. Please visit templecarpool.com to change your email preferences or to see the Trip changes.')
                         }else{
                             console.log('should not send')
