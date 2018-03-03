@@ -431,7 +431,7 @@ app.get('/sp',function(req,res) {
 })*/
 function checkEmailPref(email,setting){
     db.collection('Users').find({'email':email}).toArray(function(err, results) {
-        print('Users email pref:'+JSON.stringify(results))
+        console.log('Users email pref:'+JSON.stringify(results))
         if(results[0]['allEmail']=='on'){
             return true;
         }else if(results[0]['noEmail']=='on'){
