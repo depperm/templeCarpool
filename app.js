@@ -339,7 +339,7 @@ app.post('/api/trips/edit/:trip',function(req,res){
                 for(var i=0,p=Promise.resolve();i<trip[0].passengers.length;i++){
                     console.log('checking: '+JSON.stringify(trip[0].passengers[i]))
                     p=p.then(_=>new Promise(resolve=>
-                        db.collection('Users').find({'email':email}).toArray(function(err, results) {
+                        db.collection('Users').find({'email':trip[0].passengers[i].email}).toArray(function(err, results) {
                             console.log('Users email pref:'+JSON.stringify(results))
                             if(results[0]['noEmail']=='on' || results[0][setting]=='off'){
                                 resolve(false)
