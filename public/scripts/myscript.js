@@ -615,19 +615,23 @@ $(function(){
     })
 });
 function setWarning(msg){
-    $('.alert.warning .msg').text(msg).parent().show();
+    $('.alert.warning .msg').text(msg);
+    $('.alert.warning').show();
     window.scrollTo(0, 0);
 }
 function setSuccess(msg){
-    $('.alert.success .msg').text(msg).parent().show();
+    $('.alert.success .msg').text(msg);
+    $('.alert.success').show();
     window.scrollTo(0, 0);
 }
 function setInfo(msg){
-    $('.alert.info .msg').text(msg).parent().show();
+    $('.alert.info .msg').text(msg);
+    $('.alert.info').show();
     window.scrollTo(0, 0);
 }
 function setAlert(msg){
-    $('.alert:not(.warning):not(.success):not(.info) .msg').text(msg).parent().show()
+    $('.alert:not(.warning):not(.success):not(.info) .msg').text(msg);
+    $('.alert:not(.warning):not(.success):not(.info)').show();
 }
 function onSignIn(googleUser) {
     profile=googleUser.getBasicProfile();
