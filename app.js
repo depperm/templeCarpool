@@ -83,7 +83,6 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 //get all trips
 app.get('/api/trips',function(req,res){
-    getLanguage(req);
     var cursor=db.collection('Trips').find().toArray(function(err, results) {
         //console.log(results)
         res.send(results)
@@ -545,14 +544,6 @@ function sendEmail(recipient,msg,reason='Temple Carpool Notification'){
             console.log('Response: '+info);
         }
     });
-}
-function getLanguage(req){
-    console.log('host:'+req.get('host'));
-    console.log('url:'+req.originalUrl)
-    console.log('url2:'+req.url)
-    console.log('url3:'+req.baseUrl)
-    console.log('param:'+JSON.stringify(req.params))
-    console.log('path:'+req.path)
 }
 app.use(function(req,res,next){
     res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
