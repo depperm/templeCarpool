@@ -218,12 +218,6 @@ function matchStake(){
 }
 
 function getTrips(){
-    var t= window.location.pathname.substring(1);
-    if(t.length==0){
-      language=='en';
-    }else{
-      language==t;
-    }
     $.get('/api/trips',function(data,status){
         $('#trips tr:not(.header)').remove();
         tripList=data;
@@ -310,6 +304,13 @@ function sortTable(n) {
 }
 
 $(function(){
+    //get the language
+    var t= window.location.pathname.substring(1);
+    if(t.length==0){
+      language=='en';
+    }else{
+      language==t;
+    }
 
     if(!$('#welcomeMsg').is(":visible")){
         getTrips();
