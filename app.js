@@ -83,7 +83,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 //get all trips
 app.get('/api/trips',function(req,res){
-    getLanguage()
+    getLanguage(req)
     var cursor=db.collection('Trips').find().toArray(function(err, results) {
         //console.log(results)
         res.send(results)
@@ -546,7 +546,7 @@ function sendEmail(recipient,msg,reason='Temple Carpool Notification'){
         }
     });
 }
-function getLanguage(){
+function getLanguage(req){
     var language = req.originalUrl;
     console.log(language)
 }
