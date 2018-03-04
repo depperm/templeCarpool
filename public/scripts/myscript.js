@@ -307,9 +307,9 @@ $(function(){
     //get the language
     var t= window.location.pathname.substring(1);
     if(t.length==0){
-      language=='en';
+      language='en';
     }else{
-      language==t;
+      language=t;
     }
 
     if(!$('#welcomeMsg').is(":visible")){
