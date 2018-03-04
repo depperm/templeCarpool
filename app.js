@@ -513,8 +513,7 @@ var checkEmailPref=function(email,setting){
             if(results.length==0){
                 console.log('haven\'t set prefs should email')
                 resolve(true);
-            }
-            if(results[0]['allEmail']=='on'){
+            }else if(results[0]['allEmail']=='on'){
                 console.log('all email')
                 //return true;
                 resolve(true);
