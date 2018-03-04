@@ -98,6 +98,82 @@ var templeInfo={'Philadelphia':{2018:{'Endowment':{'Tuesday':['6:30 pm','8:00 pm
                                 'photo':'https://mobile-cdn.lds.org/17/a7/17a7a46cb0e9f59b3c5d9409ae7fdd8e7f3fedc1/manhattan_temple_lds.jpg'
                                 }
                 };
+var templeInfoSp={'Philadelphia':{2018:{'Endowment':{'Martes':['6:30 pm','8:00 pm'],
+                                                   'Miercoles':['10:00 am','11:30 am','6:30 pm','8:00 pm'], 
+                                                   'Jueves':['6:30 pm','8:00 pm'],
+                                                   'Viernes':['10:00 am','11:30 am','6:30 pm','8:00 pm'],
+                                                   'Sabado':['7:00 am(Spanish 1st and 3rd Sat)','8:30 am','10:00 am', '11:30 am', '1:00 pm','2:30 pm(Spanish 2nd Sat)']},
+                                      'Baptistry':{'Martes':['6:00 - 9:30 pm'],
+                                                   'Miercoles':['10:30 am - 1:30 pm','6:00 - 9:30 pm'], 
+                                                   'Jueves':['6:00 - 9:30 pm'],
+                                                   'Viernes':['10:30 am - 1:30 pm','6:00 - 9:30 pm'],
+                                                   'Sabado':['7:30 am - 4:30 pm']},
+                                      'Closings':['19 de Marzo-2 de Abril(Cierre de Mantenimiento)','4 de Julio(Dia de la Independencia)','17 de Septiembre-1 de Octubre (Cierre de Mantenimiento)','6 de Octubre (Conferencia General)','21-22 de Noviembre (Dia de Accion de Gracias)','25 de Diciembre (Navidad)']
+                                     },
+                                'phone':'(215)-398-3040',
+                                'address':['1739 Vine Street<br />Philadelphia, PA 19103','https://www.google.com/maps/place/1739+Vine+St,+Philadelphia,+PA+19103/@39.9590674,-75.1704057,17z/data=!3m1!4b1!4m5!3m4!1s0x89c6c632c60581e1:0x63c8ff5ad48bf115!8m2!3d39.9590674!4d-75.168217?q=1739+Vine+Street,+Philadelphia,+PA+19103&um=1&ie=UTF-8&sa=X&ved=0ahUKEwij5djRs6HZAhWENd8KHXTfDrUQ_AUICigB','<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.209550692896!2d-75.17040568461795!3d39.959067379420915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c6c632c60581e1%3A0x63c8ff5ad48bf115!2s1739+Vine+St%2C+Philadelphia%2C+PA+19103!5e0!3m2!1sen!2sus!4v1518473790164" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>'],
+                                'notes':['<strong>Las familias tienen prioridad</strong> en la Pila Bautismal los Viernes de 6pm a 7:30pm y los Sabado de 12pm a 1:30pm',
+                                         '<strong>Reservaciones:</strong> Todas las ordenanzas vivientes y citas para los bautismos deben programarse con anticipación. Se recomiendan fuertemente las reservas para todas las investiduras por poderes. Las reservaciones de la investidura serán dadas a los que no tienen reservaciones 15 minutos antes de empezar la sesión.',
+                                         '<strong>Ropa del Templo:</strong> Si necesita, la ropa del templo se puede arrendar en el templo. No hay un centro de distribución al templo de Philadelphia. Por favor visite <> en la Internet por sus necesidades de ropa.',
+                                         '<strong>Comida:</strong> No hay servicios de comida en el templo de Philadelphia, pero hay muchos restaurantes cerca. La comida no se permite en el terreno del templo, incluyendo el Centro de Llegada.',
+                                         '<strong>Estacionamiento:</strong> Estacionamiento en el garaje está disponible. Entre por 18th Street. Boletos deben ser validados al escritorio de recomendaciones.',
+                                         '<strong>Nombres de Familia: </strong>Se le anima usar <a href="familysearch.org">FamilySearch.org</a> para compartir sus nombres de familia con el templo, especialmente si tiene muchos nombres.',
+                                         '<strong>Centro de Llegado:</strong> El Centro de Llegado a lado del templo está disponible por los que esperan sus amigos y familia.',
+                                         '<strong>Hijos:</strong> El Centro de Jóvenes adentro del templo es para los hijos que están esperando ser sellados a sus padres o para observar el sellamiento de sus hermanos a sus padres.',
+                                         '<strong>Dispositivos Electrónicos:</strong> Si elige traer un dispositivo electrónico (tal como una camera, teléfono, o tablet) al templo, tiene que apagarlo y ponérselo adentro del armario.',
+                                         '<strong>Recomendaciones:</strong> Una recomendación del templo de su obispo y presidente de estaca es necesario para entrar el templo. Una recomendación para las ordenanzas vivientes también es necesario por los miembros recibiendo las investiduras o siendo sellados a un esposo. Los juventud debe tener al menos 12 años de edad para hacer bautismos del templo y debe tener una recomendación de uso limitado de su obispo. Los varones debe poseer el sacerdocio.',
+                                         '<strong>Idiomas:</strong> Inglés es disponible en todas las sesiones de investidura. Muchos idiomas, incluyendo el lenguaje de signos americano, son disponibles a pedido.<br />Las sesiones de investidura en español<ul><li>1ra y 3ra Sábado del mes: 7 am</li><li>2do y 4to Sábado del mes: 2:30pm</li></ul>'],
+                                'website':'https://www.lds.org/temples/details/philadelphia-pennsylvania-temple?lang=eng',
+                                'photo':'https://mobile-cdn.lds.org/59/16/5916071b741c877495e34b70b5c6443a1a732cc6/philadelphia_pennsylvania_temple_exterior.jpg'
+                                },
+                'Columbus':{2018:{'Endowment':{'Martes':['11:00 am','1:00 pm','6:00 pm','7:30 pm'],
+                                                   'Miercoles':['9:00 am','11:00 am','1:00 pm','6:00 pm','7:30 pm'], 
+                                                   'Jueves':['11:00 am','1:00 pm','6:00 pm','7:30 pm'],
+                                                   'Viernes':['11:00 am','1:00 pm','6:00 pm','7:30 pm'],
+                                                   'Sabado':['9:00 am','11:00 am','1:00 pm', '3:00 pm', '5:00 pm']},
+                                      'Baptistry':{'Martes':['10:00 - 11:00 am','6:30 - 7:30 pm'],
+                                                   'Miercoles':['10:00 - 11:00 am','6:30 - 7:30 pm'], 
+                                                   'Jueves':['10:00 - 11:00 am','6:30 - 7:30 pm'],
+                                                   'Viernes':['10:00 - 11:00 am','6:30 - 7:30 pm'],
+                                                   'Sabado':['7:30 - 8:30 am','9:30 - 10:30 am','11:30 am - 12:30 pm','1:30 - 2:30 pm','3:30 - 4:30 pm']},
+                                      'Closings':['20 de Marzo -31 de Marzo (Cierre de Mantenimiento)','4 de Julio (Dia de la Independencia)','25 de Septiembre-6 de Octubre (Cierre de Mantenimiento)','21-22 de Noviembre (Dia de Accion de Gracias)','25-26 de Diciembre (Navidad)']
+                                     },
+                                'phone':'(614)-351-5001',
+                                'address':['3870 Gateway Blvd<br />Columbus, OH 43228-9747','https://www.google.com/maps/place/Columbus+Ohio+Temple/@39.9937324,-83.1150495,17z/data=!4m13!1m7!3m6!1s0x883891a5a2f32d5f:0xa1b2442d0db9c04d!2s3870+Gateway+Blvd,+Columbus,+OH+43228!3b1!8m2!3d39.9937283!4d-83.1128608!3m4!1s0x883891a50c45f185:0x3f1ae281f17229b0!8m2!3d39.9940836!4d-83.1132708','<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3056.65867843366!2d-83.11504948437536!3d39.99373238917973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883891a50c45f185%3A0x3f1ae281f17229b0!2sColumbus+Ohio+Temple!5e0!3m2!1sen!2sus!4v1518479032638" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>'],
+                                'notes':['<strong>Las familias tienen prioridad</strong> en la Pila Bautismal los Lunes a Viernes de 10-11am, los Viernes de 6:30-7:30pm, y los Sábados de 11:30am-12:30pm.',
+                                         '<strong>Las Ordenanzas Vivientes:</strong> Para hacer una cita por las ordenanzas vivientes (tal como su propia investidura, matrimonio, o sellamiento), por favor llame el templo.',
+                                         '<strong>La Ropa del Templo:</strong> No se puede arrendar la ropa del templo. No hay un Centro de Distribución cerca del templo de Columbus. Por favor visite <a href="store.lds.org">store.lds.org</a> en el internet por sus necesidades de ropa.',
+                                         '<strong>Comida: </strong>No hay servicios de comida en el templo de Columbus, pero hay muchos restaurantes cerca. La comida no se permite en el terreno del templo, incluyendo el Centro de Llegada.',
+                                         '<strong>Nombres de Familia: </strong>Se le anima usar <a href="familysearch.org">FamilySearch.org</a> para compartir sus nombres de familia con el templo, especialmente si tiene muchos nombres.',
+                                         '<strong>Dispositivos Electrónicos:</strong> Si elige traer un dispositivo electrónico (tal como una camera, teléfono, o tablet) al templo, tiene que apagarlo y ponérselo adentro del armario.',
+                                         '<strong>Recomendaciones:</strong> Una recomendación del templo de su obispo y presidente de estaca es necesario para entrar el templo. Una recomendación para las ordenanzas vivientes también es necesario por los miembros recibiendo las investiduras o siendo sellados a un esposo. Los juventud debe tener al menos 12 años de edad para hacer bautismos del templo y debe tener una recomendación de uso limitado de su obispo. Los varones debe poseer el sacerdocio.'],
+                                'website':'https://www.lds.org/temples/details/columbus-ohio-temple?lang=eng',
+                                'photo':'https://mobile-cdn.lds.org/bc/15/bc15b87bf1cf4aba1268814df4ef0cebc4177049/temple_exterior_columbus_ohio.jpg'
+                                },
+                'Manhattan':{2018:{'Endowment':{'Martes':['11:00 am','12:30 pm','2:00 pm','6:15 pm','7:45 pm'],
+                                                   'Miercoles':['11:00 am','12:30 pm','2:00 pm','6:15 pm','7:45 pm'], 
+                                                   'Jueves':['6:30 am','8:00 am','11:00 am','12:30 pm','2:00 pm','6:15 pm','7:45 pm(Spanish 2nd and 4th Thur)'],
+                                                   'Viernes':['11:00 am','12:30 pm','2:00 pm','4:00 pm','5:30 pm','7:00 pm','8:30 pm'],
+                                                   'Sabado':['6:30 am(Spanish)','8:00 am','9:30 am(Spanish)','11:00 am','12:30 pm(Spanish)','2:00 pm', '3:30 pm', '5:00 pm']},
+                                      'Baptistry':{'Martes':['11:00 am - 12:00 pm','2:30 -3:30 pm','6:00 - 7:45 pm'],
+                                                   'Miercoles':['11:00 am - 12:00 pm','2:30 -3:30 pm','6:00 - 7:45 pm'], 
+                                                   'Jueves':['7:00 - 7:45 am','11:00 am - 12:00 pm','2:30 -3:30 pm','6:00 - 7:45 pm'],
+                                                   'Viernes':['11:00 am - 12:00 pm','2:30 -3:30 pm','4:00 - 5:00 pm','6:30 - 8:30 pm'],
+                                                   'Sabado':['6:30 am - 12:30 pm','1:30 - 5:00 pm']},
+                                      'Closings':['31 de Marzo','4 de Julio (Dia de la Independencia)','23 de Julio - 6 de Agosto (Cierre de Mantenimiento)','6 de Octubre','21-22 de Noviembre (Dia de Accion de Gracias)']
+                                     },
+                                'phone':'(917)-441-8220',
+                                'address':['125 Columbus Ave, Fourth Floor<br />New York, NY 10023-6514','https://www.google.com/maps/place/Manhattan+New+York+Temple/@40.7729896,-73.9902794,15z/data=!4m8!1m2!2m1!1smanhattan+temple!3m4!1s0x0:0x98e2f07a82e523fb!8m2!3d40.7729958!4d-73.9817351','<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12086.00565123261!2d-73.99027944277788!3d40.77298959794535!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x98e2f07a82e523fb!2sManhattan+New+York+Temple!5e0!3m2!1sen!2sus!4v1519761863570" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>'],
+                                'notes':['<strong>Las Ordenanzas Vivientes:</strong> Para hacer una cita por las ordenanzas vivientes (tal como su propia investidura, matrimonio, o sellamiento), por favor llame el templo.',
+                                         '<strong>La Ropa del Templo:</strong> Se puede arrendar la ropa del templo.',
+                                         '<strong>Comida:</strong> No hay servicios de comida en el templo de Manhattan, pero hay muchos restaurantes cerca. La comida no se permite en el terreno del templo, incluyendo el Centro de Llegada.',
+                                         '<strong>Nombres de Familia: </strong>Se le anima usar <a href="familysearch.org">FamilySearch.org</a> para compartir sus nombres de familia con el templo, especialmente si tiene muchos nombres.',
+                                         '<strong>Dispositivos Electrónicos:</strong> Si elige traer un dispositivo electrónico (tal como una camera, teléfono, o tablet) al templo, tiene que apagarlo y ponérselo adentro del armario.',
+                                         '<strong>Recomendaciones:</strong> Una recomendación del templo de su obispo y presidente de estaca es necesario para entrar el templo. Una recomendación para las ordenanzas vivientes también es necesario por los miembros recibiendo las investiduras o siendo sellados a un esposo. Los juventud debe tener al menos 12 años de edad para hacer bautismos del templo y debe tener una recomendación de uso limitado de su obispo. Los varones debe poseer el sacerdocio.'],
+                                'website':'https://www.lds.org/temples/details/manhattan-new-york-temple?lang=eng',
+                                'photo':'https://mobile-cdn.lds.org/17/a7/17a7a46cb0e9f59b3c5d9409ae7fdd8e7f3fedc1/manhattan_temple_lds.jpg'
+                                }
+                };
 
 function matchDepartDate(){
     $('.trip td[data-depart-date]').removeClass('match');
@@ -400,7 +476,12 @@ $(function(){
 
     //post ride tab
     $('#pr').on('click',function(){
-        setInfo('Double check that the temple is open on the dates you\'d like to visit before posting a trip.\nAlso please remember to call to make a reservation beforehand.');
+        if(language=='sp'){
+          setInfo('Double check that the temple is open on the dates you\'d like to visit before posting a trip.\nAlso please remember to call to make a reservation beforehand.');
+        }
+        else{
+          setInfo('Double check that the temple is open on the dates you\'d like to visit before posting a trip.\nAlso please remember to call to make a reservation beforehand.');
+        }
     })
     
     //temple info tab
@@ -510,7 +591,11 @@ $(function(){
                 200: function(response){
                   if(response=='Your seat has been reserved'){
                     setSuccess(response);
-                    setInfo('You are responsible to make your own temple reservation.\nPlease visit the \'Edit A Ride\' tab to see any comments the driver may make or has made.');
+                    if(language=='sp'){
+                      setInfo('Tiene la responsibilidad de hacer su propia reservacion con el templo.\nPor favor visita la pagina de \'Editar Un Paseo\' para ver cualquier comentarios el conductor ha hecho o hara.');
+                    }else{
+                      setInfo('You are responsible to make your own temple reservation.\nPlease visit the \'Edit A Ride\' tab to see any comments the driver may make or has made.');
+                    }
                   }
                   else{
                     setWarning(response);
@@ -680,26 +765,42 @@ function fillEmailPreferences(){
 function fillTempleInfo(){
     var temple=$('#temple').val();
     $('#templeName').html('<a href="'+templeInfo[temple].website+'">'+temple+'</a>');
-    var currentYear = (new Date()).getFullYear();
     $('#templeAddress').html('<a href="'+templeInfo[temple].address[1]+'">'+templeInfo[temple].address[0]+'</a>');
     $('#templeImage').attr('src',templeInfo[temple].photo);
     $('#templeMap').html(templeInfo[temple].address[2]);
     $('#templePhone').html(templeInfo[temple].phone);
-    var days=['Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    $.each(days,function(index,day){
-        $('#Endowment-'+day).html(templeInfo[temple][currentYear].Endowment[day].toString());
-    });
-    $.each(days,function(index,day){
-        $('#Baptistry-'+day).html(templeInfo[temple][currentYear].Baptistry[day].toString());
-    });
+    var currentYear = (new Date()).getFullYear();
     $('#templeClosings').empty();
-    $.each(templeInfo[temple][currentYear].Closings,function(index,closing){
-        $('#templeClosings').append('<li>'+closing+'</li>');
-    });
     $('#templeNotes').empty();
-    $.each(templeInfo[temple].notes,function(index,note){
-        $('#templeNotes').append('<p>'+note+'</p>');
-    });
+    if(language=='sp'){
+        var days=['Martes','Miercoles','Jueves','Viernes','Sabado'];
+        $.each(days,function(index,day){
+            $('#Endowment-'+day).html(templeInfoSp[temple][currentYear].Endowment[day].toString());
+        });
+        $.each(days,function(index,day){
+            $('#Baptistry-'+day).html(templeInfoSp[temple][currentYear].Baptistry[day].toString());
+        });
+        $.each(templeInfoSp[temple][currentYear].Closings,function(index,closing){
+            $('#templeClosings').append('<li>'+closing+'</li>');
+        });
+        $.each(templeInfoSp[temple].notes,function(index,note){
+            $('#templeNotes').append('<p>'+note+'</p>');
+        });
+    }else{
+        var days=['Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        $.each(days,function(index,day){
+            $('#Endowment-'+day).html(templeInfo[temple][currentYear].Endowment[day].toString());
+        });
+        $.each(days,function(index,day){
+            $('#Baptistry-'+day).html(templeInfo[temple][currentYear].Baptistry[day].toString());
+        });
+        $.each(templeInfo[temple][currentYear].Closings,function(index,closing){
+            $('#templeClosings').append('<li>'+closing+'</li>');
+        });
+        $.each(templeInfo[temple].notes,function(index,note){
+            $('#templeNotes').append('<p>'+note+'</p>');
+        });
+    }
 }
 function fillEditInfo(){
     updateTripsDrivingTable();
