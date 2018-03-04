@@ -83,6 +83,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 //get all trips
 app.get('/api/trips',function(req,res){
+    getLanguage()
     var cursor=db.collection('Trips').find().toArray(function(err, results) {
         //console.log(results)
         res.send(results)
@@ -114,8 +115,7 @@ app.post('/api/users/emailPrefs/:email',function(req,res){
 //create a trip
 app.post('/api/trips/add',function(req,res){
     console.log('adding trip:'+JSON.stringify(req.body));
-    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-    console.log(fullUrl)
+    
     //verify body
     var keys=Object.keys(req.body);
     //check number of keys
@@ -545,6 +545,10 @@ function sendEmail(recipient,msg,reason='Temple Carpool Notification'){
             console.log('Response: '+info);
         }
     });
+}
+function getLanguage(){
+    var language = req.originalUrl;
+    console.log(language)
 }
 app.use(function(req,res,next){
     res.status(404).sendFile(path.join(__dirname+'/views/404.html'));

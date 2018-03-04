@@ -484,7 +484,7 @@ $(function(){
     //post ride tab
     $('#pr').on('click',function(){
         if(language=='sp'){
-          setInfo('Double check that the temple is open on the dates you\'d like to visit before posting a trip.\nAlso please remember to call to make a reservation beforehand.');
+          setInfo('Verifique que el templo esta abierto en las fechas que desea visitar antes de publicar un viaje.\nTambién recuerde llamar para hacer una reservacion antemano.');
         }
         else{
           setInfo('Double check that the temple is open on the dates you\'d like to visit before posting a trip.\nAlso please remember to call to make a reservation beforehand.');
