@@ -400,6 +400,29 @@ app.delete('/api/trips/:trip',function(req,res){
 })
 //remove a passenger from a trip
 app.delete('/api/trips/:trip/:email',function(req,res){
+    console.log('kick trip:'+req.params.trip)
+    console.log('kick email:'+req.params.email)
+    //TODO check that passenger is a passenger for said trip?
+    db.collection('Trips').find({'_id':ObjectId(req.params.trip)}).toArray(function(err,result){
+        var trip=result[0];
+        db.collection('Trips').update({'_id':ObjectId(req.params.trip)},{ $pull: { 'passengers': {'email':req.params.email}} },function(err, results) {
+            if (err) throw err;
+            console.log('You have kicked a passenger from your trip')
+            //check if passenger gets email
+            checkEmailPref(req.params.email,'kickFromTrip').then(function(shouldEmail){
+                if(shouldEmail){
+                    console.log('should send')
+                    sendEmail(req.params.email,'You have been removed as a passenger for the trip on '+trip.dDate+'-'+trip.rDate+'. Please visit templecarpool.com to change your email preferences or to find a new Trip.')
+                }else{
+                    console.log('should not send')
+                }
+            })
+            res.send('You have removed a passenger from your trip')
+        })
+    })
+})
+//drop a seat
+app.delete('/api/trips/drop/:trip/:email',function(req,res){
     console.log('drop trip:'+req.params.trip)
     console.log('drop email:'+req.params.email)
     //TODO check that passenger is a passenger for said trip?
@@ -409,15 +432,27 @@ app.delete('/api/trips/:trip/:email',function(req,res){
             if (err) throw err;
             console.log('You have kicked a passenger/cancelled your seat')
             //check if driver gets email
-            checkEmailPref(req.params.email,'kickFromTrip').then(function(shouldEmail){
+            checkEmailPref(trip.email,'passLeft').then(function(shouldEmail){
                 if(shouldEmail){
                     console.log('should send')
-                    sendEmail(req.params.email,'You have been dropped as a passenger for the trip on '+trip.dDate+'-'+trip.rDate+'. Please visit templecarpool.com to change your email preferences or to find a new Trip.')
+                    var who = trip.passengers.filter(function (el) {
+                      return el.email == req.params.email;
+                    })[0];
+                    sendEmail(trip.email,who.name+' has dropped their seat for the trip on '+trip.dDate+'-'+trip.rDate+'. Please visit templecarpool.com to change your email preferences or to find a edit your Trip.')
                 }else{
                     console.log('should not send')
                 }
             })
-            res.send('You have cancelled a seat')
+            //check if you get an email
+            checkEmailPref(req.params.email,'dropSeat').then(function(shouldEmail){
+                if(shouldEmail){
+                    console.log('should send')
+                    sendEmail(req.params.email,'You have been dropped your seat for the trip on '+trip.dDate+'-'+trip.rDate+'. Please visit templecarpool.com to change your email preferences or to find a new Trip.')
+                }else{
+                    console.log('should not send')
+                }
+            })
+            res.send('You have dropped your seat')
         })
     })
 })

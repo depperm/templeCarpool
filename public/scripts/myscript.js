@@ -479,10 +479,11 @@ $(function(){
         var choice=confirm('Are you sure you want to leave this trip?');
         if(choice){
             $.ajax({
-                url:'/api/trips/'+passengerList[$(this).attr('data-trip-id')]._id+'/'+userDetails.email,
+                url:'/api/trips/drop/'+passengerList[$(this).attr('data-trip-id')]._id+'/'+userDetails.email,
                 type:'DELETE',
                 statusCode: {
                     200: function(response){
+                        setSuccess(response);
                         updateTripsPassengerTable();
                     },
                     500: function(response){
