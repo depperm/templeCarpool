@@ -228,7 +228,7 @@ function getTrips(){
             var tmpl='departStake' in trip?trip.templeDest:'';
             var dep=trip.dDate+(trip.dTime=='select'?'':', '+trip.dTime);
             var ret=trip.rDate+(trip.rTime=='select'?'':', '+trip.rTime);
-            var seats=('passengers' in trip?trip.passengers.length:'0')+'/'+trip.numSeats;
+            var seats=trip.numSeats-('passengers' in trip?trip.passengers.length:0);
             var driver=trip.driver;
             var reserveBtn=language=='en'?'Reserve':'Reservar';
             var disabled=('passengers' in trip?trip.passengers.length:0)==trip.numSeats?'disabled':'';
@@ -456,7 +456,6 @@ $(function(){
         });
 
     });
-    //$(".alert").sticky({topSpacing:0});
     //Sign out user
     $('.g-signout2').on('click',function(e){
         $('#trips tr:not(.header)').remove();
